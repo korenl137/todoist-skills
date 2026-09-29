@@ -13,22 +13,13 @@ metadata:
 
 Complete, reopen, or delete Todoist tasks.
 
-## Tools
-
-| Need | Required | Options | Without it |
-|---|---|---|---|
-| Todoist access | yes | Todoist MCP, or the `td` CLI (below) | stop and tell the user how to set one up |
-
-For Todoist access, either of these; nothing else is required.
-
-- **Todoist MCP** (tools such as `find-tasks`, `complete-tasks`), or
-- **`td`**, the official Todoist CLI: `npm install -g @doist/todoist-cli`
-  (Node 24+), then `td auth login`.
+## Todoist connection
 
 Use `backend` from `$TODOIST_SKILLS_CONFIG` or
-`~/.config/todoist-skills/config.toml` if set; otherwise the MCP when its
-tools are available, else `td` when `td auth status` succeeds. With
-neither, stop and tell the user these two options.
+`~/.config/todoist-skills/config.toml` when present; otherwise use Todoist
+MCP if available, then the authenticated `td` CLI. If neither is available,
+tell the user to connect Todoist MCP or install `td` (`npm install -g
+@doist/todoist-cli`, Node 24+) and run `td auth login`.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|

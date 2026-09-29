@@ -14,22 +14,13 @@ metadata:
 
 Modify an existing Todoist task.
 
-## Tools
+## Todoist connection
 
-| Need | Required | Options | Without it |
-|---|---|---|---|
-| Todoist access | yes | Todoist MCP, or the `td` CLI (below) | stop and tell the user how to set one up |
-| Jev suggestions | no | Python 3.11+, `TYPESAFE_API_KEY`, and `[jev] enabled = true` in the settings | choose the project and labels yourself |
-
-For Todoist access, either of these; nothing else is required.
-
-- **Todoist MCP** (tools such as `find-tasks`, `update-tasks`), or
-- **`td`**, the official Todoist CLI: `npm install -g @doist/todoist-cli`
-  (Node 24+), then `td auth login`.
-
-Use `backend` from the settings file if set; otherwise the MCP when its
-tools are available, else `td` when `td auth status` succeeds. With
-neither, stop and tell the user these two options.
+Use the `backend` setting when present; otherwise use Todoist MCP if
+available, then the authenticated `td` CLI. If neither is available, tell
+the user to connect Todoist MCP or install `td` (`npm install -g
+@doist/todoist-cli`, Node 24+) and run `td auth login`. Jev is optional;
+without it, choose the project and labels yourself.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|

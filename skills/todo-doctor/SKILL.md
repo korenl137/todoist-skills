@@ -15,22 +15,13 @@ metadata:
 Read-only health check for Todoist task hygiene. It only reports; fixing a
 finding is a separate request that needs confirmation.
 
-## Tools
+## Todoist connection
 
-| Need | Required | Options | Without it |
-|---|---|---|---|
-| Todoist access | yes | Todoist MCP, or the `td` CLI (below) | stop and tell the user how to set one up |
-| Jev fast audit | no | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN`, and `[jev] enabled = true` in the settings | audit the task list yourself |
-
-For Todoist access, either of these; nothing else is required.
-
-- **Todoist MCP** (tools such as `find-tasks`), or
-- **`td`**, the official Todoist CLI: `npm install -g @doist/todoist-cli`
-  (Node 24+), then `td auth login` (`--read-only` is enough to audit).
-
-Use `backend` from the settings file if set; otherwise the MCP when its
-tools are available, else `td` when `td auth status` succeeds. With
-neither, stop and tell the user these two options.
+Use the `backend` setting when present; otherwise use Todoist MCP if
+available, then the authenticated `td` CLI (read-only login is enough).
+If neither is available, tell the user to connect Todoist MCP or install
+`td` (`npm install -g @doist/todoist-cli`, Node 24+) and run `td auth login`.
+Jev is optional; without it, audit the tasks yourself.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|

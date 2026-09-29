@@ -1,0 +1,45 @@
+[
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "Mark 'buy milk' as done",
+    "files": [],
+    "expected_behavior": [
+      "Finds the task, then completes it (complete-tasks or td task complete)",
+      "Does not ask for confirmation, since completion is reversible"
+    ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "그 작업 완전히 지워줘 (the task was just shown)",
+    "files": [],
+    "expected_behavior": [
+      "Confirms the specific task with the user before deleting, even though the target is unambiguous",
+      "Does not complete the task instead; deleting is a separate, irreversible action"
+    ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "Delete the 'fix bug' task (two open tasks named 'fix bug' exist in different projects)",
+    "files": [],
+    "expected_behavior": [
+      "Asks which task is meant before doing anything"
+    ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "I finished 'water the plants' (a daily recurring task)",
+    "files": [],
+    "expected_behavior": [
+      "Completes the task normally, which advances it to the next date",
+      "Does not stop the recurrence (e.g. td task complete --forever) since the user did not ask for that"
+    ]
+  }
+]

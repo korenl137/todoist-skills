@@ -1,0 +1,71 @@
+[
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Audit my Todoist labels. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Reads the fixture settings fresh instead of assuming a label list",
+      "Audits active tasks and skips the Inbox",
+      "Flags tasks missing an kind/* label and tasks with labels outside the allowlist or in [labels.retired], without flagging the ignored label imported",
+      "Groups findings by type with counts and a few examples for large categories",
+      "Does not modify any task or label, and does not ask for confirmation to run the audit"
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Check label consistency in the Community Site project only. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Narrows the audit to that project instead of scanning all tasks",
+      "Applies the same checks (required kind/*, allowlist, vague titles, areas) within that scope"
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Fix all of those (after an audit reported 8 tasks missing kind/* and 3 tasks with the retired label old-shopping). Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Shows the per-task changes and asks for confirmation before the bulk edit",
+      "Replaces old-shopping only with its mapped replacement kind/buy, and proposes kind/* labels per task instead of guessing silently",
+      "Sends full label lists and does not change due dates through the due string"
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Anything stale or worth grouping? Todoist has three loose event-planning tasks in one project; one points at a document path that no longer exists, and one says to start after a task that is already completed. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Reports the three event-planning tasks as one grouping candidate and names a 'Group: ' header they could go under",
+      "Reports the missing path and the completed prerequisite as stale references, with the newer fact next to the old one",
+      "Checks the prerequisite in completed tasks rather than assuming",
+      "Does not create, move, complete, or edit any task"
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Audit my tasks. No settings file exists.",
+    "files": [],
+    "expected_behavior": [
+      "Runs only the checks that need no rules (vague titles, stale references, labels on tasks that are missing from the label list)",
+      "Does not invent a label taxonomy or flag tasks for missing kind/* labels"
+    ]
+  }
+]

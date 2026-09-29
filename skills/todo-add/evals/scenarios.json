@@ -1,0 +1,81 @@
+[
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add 'draft the quarterly report' due tomorrow, P2. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Looks up existing projects, sections, and labels (through the Todoist MCP or td) before adding the task",
+      "Keeps the stated due date (tomorrow) and priority (P2) exactly",
+      "Uses only labels from the fixture's allowlist, including exactly one kind/* label (kind/write)",
+      "Does not create a new project, section, or label"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "이 내용 작업으로 등록해줘 (referring to a prior discussion about fixing a flaky CI test)",
+    "files": [],
+    "expected_behavior": [
+      "Derives a concrete, actionable title from the discussion (naming the flaky test or CI job), not a vague one like 'check this'",
+      "Puts only useful context in the description, not the whole conversation"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add milk to my shopping list. No settings file exists. The user's Todoist has a 'Groceries' project and labels 'errands' and 'home'.",
+    "files": [],
+    "expected_behavior": [
+      "Places the task in the existing Groceries project and picks from the existing labels, without inventing kind/* or other new labels",
+      "Does not ask the user for a project or label"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add three follow-ups from this session: confirm the venue, print the invitations, and order refreshments. The Community / Event project already has one related loose task from the same event. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Searches the destination project for a header task starting with 'Group: ' or related loose tasks before adding",
+      "Creates one 'Group: <group>' header that is non-completable and has no kind/* label",
+      "Adds the three tasks under the header and moves the existing related task under it",
+      "Dates any changing state it writes into descriptions"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Remind me to email my manager this week's test results. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Labels the task kind/contact (sending an email), not kind/write",
+      "Adds project/community-site only if the conversation names the community site; otherwise no project/* label",
+      "Does not use a retired label (old-shopping, kind/do)"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add 'renew passport'. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml. Neither a Todoist MCP server nor the td CLI is available.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Stops without pretending the task was created",
+      "Tells the user the two ways to connect: a Todoist MCP server, or installing td (npm install -g @doist/todoist-cli, then td auth login)"
+    ]
+  }
+]

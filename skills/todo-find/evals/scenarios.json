@@ -1,0 +1,47 @@
+[
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "What's on my list today?",
+    "files": [],
+    "expected_behavior": [
+      "Uses a date lookup (find-tasks-by-date with today, or td today) rather than a text search",
+      "Lists results without asking for confirmation"
+    ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "What's left in the Community Site project?",
+    "files": [],
+    "expected_behavior": [
+      "Resolves the project name to the project before listing its tasks",
+      "Reports a concise summary rather than every task field"
+    ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "Find tasks in the project 'Nonexistent Project'",
+    "files": [],
+    "expected_behavior": [
+      "States plainly that nothing matches instead of broadening the search or making up results"
+    ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "Find everything related to the community event. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml. No label or project covers the event.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Does not run the Jev script, since the fixture has Jev disabled",
+      "Falls back to text search and says topic matching was not available"
+    ]
+  }
+]

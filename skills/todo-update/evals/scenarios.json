@@ -1,0 +1,59 @@
+[
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Move the 'weekly report draft' task to next Friday (it is a recurring weekly task). Only the td CLI is connected.",
+    "files": [],
+    "expected_behavior": [
+      "Finds the task with td task list or td task view before editing, rather than guessing an ID",
+      "Uses td task reschedule for the date-only change, not td task update --due, so the recurrence is kept"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "그 작업에 urgent 라벨 추가해줘 (the task was just shown and already has label 'work')",
+    "files": [],
+    "expected_behavior": [
+      "Reads the current labels and sends the union ['work', 'urgent'], since setting labels replaces the whole list",
+      "Does not ask for confirmation, since the target is unambiguous"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Raise the priority of the 'fix bug' task (two open tasks named 'fix bug' exist in different projects)",
+    "files": [],
+    "expected_behavior": [
+      "Asks which task is meant instead of picking one"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Update the 'API docs cleanup' task: it's all done now",
+    "files": [],
+    "expected_behavior": [
+      "Recognizes the update as a completion, adds the note as a comment or in the description, and completes the task",
+      "Does not ask for confirmation, since completion is reversible"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Move this task to where it belongs and fix its labels (task 'Pay electricity bill' in Work / Admin with labels ['old-shopping', 'imported']). Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Proposes a Personal project, since the fixture's areas put personal admin under Personal",
+      "Replaces the retired label old-shopping with its mapped replacement kind/buy and keeps the ignored label imported",
+      "Does not run the Jev script, since the fixture has Jev disabled"
+    ]
+  }
+]

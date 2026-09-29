@@ -1,0 +1,31 @@
+# Fixture settings for eval scenarios (a fictional user).
+[labels]
+required_prefix = "kind/"
+ignore = ["imported"]
+
+[labels.allowed]
+"kind/write" = "write or revise a document, note, or report"
+"kind/code" = "write or change code"
+"kind/buy" = "buy or order something"
+"kind/contact" = "email, call, or message someone"
+"kind/plan" = "plan work or put it on a calendar"
+"kind/review" = "check or evaluate existing work"
+"kind/maintain" = "clean up, fix, or tidy equipment, files, or setups"
+"topic/food" = "recipes, cooking, groceries"
+
+[labels.projects]
+"project/community-site" = "the community site project"
+
+[labels.retired]
+"old-shopping" = "kind/buy"
+"kind/do" = ""
+
+[areas]
+Personal = "home, health, hobbies, personal admin"
+Work = "job projects, meetings, reports"
+
+[grouping]
+header_prefix = "Group: "
+
+[jev]
+enabled = false

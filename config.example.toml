@@ -1,0 +1,60 @@
+# Optional user settings for the todo-* skills.
+# Copy to ~/.config/todoist-skills/config.toml, or point TODOIST_SKILLS_CONFIG at another path.
+# Every key is optional. Without this file the skills follow your existing Todoist projects and labels.
+# What you say in a request always wins over this file.
+
+# Which Todoist connection to use: "auto" (Todoist MCP if connected, else the td CLI), "mcp", or "td".
+backend = "auto"
+
+# Your own written conventions (any text or Markdown file). The skills read it before labeling or
+# auditing; where it disagrees with this file, the guide's prose wins and this file's lists are used
+# for checks.
+# guide = "~/notes/todoist-conventions.md"
+
+[labels]
+# If set, every task (except a header that only groups subtasks) carries exactly one label with this prefix.
+required_prefix = "kind/"
+# Labels that are never flagged, e.g. markers written by a sync tool.
+ignore = []
+
+# The labels tasks may carry, with what each means. If both tables below are empty or missing,
+# any existing label is allowed and the skills pick from your current Todoist labels.
+[labels.allowed]
+"kind/write" = "write or revise a document, note, or report"
+"kind/code" = "write or change code"
+"kind/read" = "read papers, books, or documentation"
+"kind/buy" = "buy or order something"
+"kind/contact" = "email, call, or message someone"
+"kind/plan" = "plan work or put it on a calendar"
+"kind/review" = "check or evaluate existing work"
+"topic/food" = "recipes, cooking, groceries"
+
+# Labels naming a specific project; added only when the task explicitly belongs to that project.
+[labels.projects]
+"project/community-site" = "the community site project"
+
+# Labels you no longer use. Map each to its replacement (several comma-separated), or to "" to decide per task.
+# todo-doctor reports them and never changes them without your confirmation.
+[labels.retired]
+# "old-shopping" = "kind/buy"
+# "kind/do" = ""
+
+# Top-level Todoist projects that split your tasks into areas, and what belongs in each.
+# Used to suggest where a task goes and to flag tasks filed in the wrong area. Leave out if unused.
+[areas]
+# Personal = "home, health, hobbies, personal admin"
+# Work = "job projects, meetings, reports"
+
+[grouping]
+# Title prefix of a header task that groups related subtasks (a non-completable parent).
+# If set, related tasks are added under one header instead of side by side. "" turns grouping off.
+header_prefix = ""
+
+# Optional TypeSafe Jev suggestions (https://typesafe.ai). Off by default.
+# Needs Python 3.11+, TYPESAFE_API_KEY, and for todo-find/todo-doctor also TODOIST_API_TOKEN
+# (environment, or ~/.config/typesafe/.env and ~/.config/todoist/.env).
+# Task titles, parent titles, project and label names are sent to TypeSafe.
+[jev]
+enabled = false
+# Also send up to 1500 characters of task descriptions.
+send_descriptions = false

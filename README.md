@@ -102,6 +102,26 @@ python3 -m unittest discover -s tests
 
 The tests fail when a copy is out of date.
 
+Check the `td` examples in each `SKILL.md` against the installed CLI without
+accessing Todoist:
+
+```bash
+python3 dev/check_td_commands.py
+```
+
+The optional live check uses `TODOIST_API_TOKEN` (or
+`~/.config/todoist/.env`), reads Todoist, creates one `[td-test]` task in
+Inbox, checks update/reschedule/move behavior, and deletes the task even if a
+check fails:
+
+```bash
+python3 dev/check_td_commands.py --live
+```
+
+The script uses `td` with Node 24+; otherwise it runs
+`npx -y @doist/todoist-cli`. Keep this network/account check separate from
+the default unit tests.
+
 ## License
 
 [MIT](LICENSE).

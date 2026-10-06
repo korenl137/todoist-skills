@@ -2,12 +2,13 @@
 name: todo-update
 description: >
   Edits an existing Todoist task's title, description, priority, due date,
-  deadline, project/section, or labels from natural conversation. Triggers
+  deadline, project/section, or labels from natural conversation, including
+  reflecting confirmed session progress and plan changes. Triggers
   include "change this task's priority", "push the due date to next week",
   "add a label", "move this task", "우선순위 P1로 바꿔줘", "마감일 다음 주로
-  옮겨줘", "라벨 추가해줘".
+  옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # todo-update
@@ -75,9 +76,19 @@ The user rarely gives an ID.
   project with `confidence >= 0.7`; treat the action label as a hint. On
   exit 2, 3, or any failure, decide yourself without mentioning Jev.
 
+## Reflecting session changes in an existing plan
+
+When asked to reflect session progress or an agreed plan change, read the
+current task description and relevant child tasks. Apply only confirmed
+progress and decisions from the conversation, not proposals or intended work.
+Preserve the existing format and unrelated content: mark completed description
+items, revise changed items, or update actual child tasks where the plan lives.
+Complete only confirmed finished child tasks; partial progress does not
+complete the parent. Do not add a session-summary comment unless requested.
+
 ## Progress updates that are really completion
 
-If an "update" says the task is done ("update it, this is all finished"),
+If the user says the whole task is done ("update it, this is all finished"),
 add the note as a comment (or in the description if that is where the
 user keeps notes), then complete the task. Completion is reversible, so no
 confirmation is needed. If the progress is partial, only edit.

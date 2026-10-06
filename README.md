@@ -7,7 +7,7 @@ complete, and audit tasks. Each skill is a self-contained folder under
 | Skill | Does | Changes tasks |
 |---|---|---|
 | `todo-add` | Creates a task with title, description, priority, due date, project, and labels inferred from the conversation | yes |
-| `todo-update` | Edits an existing task; keeps recurrence when only the date changes | yes |
+| `todo-update` | Edits an existing task, including confirmed session changes to its plan; keeps recurrence when only the date changes | yes |
 | `todo-find` | Lists tasks by date, project, label, text, or topic; answers what was completed | no |
 | `todo-complete` | Completes or reopens tasks; deletes only after confirmation | yes |
 | `todo-doctor` | Audits tasks against your label and naming rules | no |
@@ -108,6 +108,9 @@ accessing Todoist:
 ```bash
 python3 dev/check_td_commands.py
 ```
+
+For session-based plan edits, review the manual decision cases in
+[`dev/todo-update-scenarios.md`](dev/todo-update-scenarios.md).
 
 The optional live check uses `TODOIST_API_TOKEN` (or
 `~/.config/todoist/.env`), reads Todoist, creates one `[td-test]` task in

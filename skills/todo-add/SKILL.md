@@ -12,6 +12,15 @@ metadata:
 
 # todo-add
 
+## Contents
+
+- Todoist connection
+- Settings (optional)
+- Creating a task
+- Explicit values vs inference
+- Task quality
+- Execution
+
 Capture a Todoist task from natural conversation. Detect the intent from
 meaning, not trigger phrases, and do not require a fixed command format.
 

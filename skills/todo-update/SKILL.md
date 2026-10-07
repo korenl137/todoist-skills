@@ -13,6 +13,16 @@ metadata:
 
 # todo-update
 
+## Contents
+
+- Todoist connection
+- Settings (optional)
+- Resolving the target task
+- Applying the change
+- Reflecting session changes in an existing plan
+- Progress updates that are really completion
+- Execution
+
 Modify an existing Todoist task.
 
 ## Todoist connection

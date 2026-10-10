@@ -33,13 +33,18 @@ meaning, not trigger phrases, and do not require a fixed command format.
 
 ## Todoist connection
 
-Use the route the user names in the request. Otherwise use `backend` from
-settings: `mcp` (Todoist MCP) or `td` (the td CLI). Neither route is
-preferred. If `backend` is unset or holds any other value, use the route this
-session has; when both are available, ask once which to use. If the chosen
-route is unavailable, say so and give its setup, then stop; do not switch
-routes silently. To connect Todoist MCP, connect Todoist in your agent. To set
-up `td`, run `npm install -g @doist/todoist-cli` (Node 24+) and `td auth
+Use the route the user names in the request, for that request only. Otherwise
+use `backend` from settings: `mcp` (Todoist MCP) or `td` (the td CLI). Neither
+route is preferred. When `backend` is set, use that route without a question;
+if it is unavailable, say so and give its setup, then stop; do not switch
+routes silently. When `backend` is unset or holds any other value and only one
+route is available, use it without a question. When both are available, ask
+once, in the user's language: "Todoist 작업을 어떤 경로로 처리할까요? 1) Todoist MCP 커넥터 2)
+td CLI". Apply the answer to this request only and write nothing to any file.
+Then add one line: to stop this question, put `backend = "mcp"` or `backend =
+"td"` in your settings file. If neither route is available, say how to connect
+each one and stop. To connect Todoist MCP, connect Todoist in your agent. To
+set up `td`, run `npm install -g @doist/todoist-cli` (Node 24+) and `td auth
 login`. Jev is optional; without it, choose the project and labels yourself.
 
 | Step | Todoist MCP | `td` |

@@ -23,7 +23,8 @@ Every skill needs **one** way to reach Todoist. Nothing else is required.
 
 Neither option is preferred. Name the one you want in a request, or set
 `backend = "mcp"` or `backend = "td"` in the settings. With neither, the skills
-use the one your session has, and ask once when both are there.
+use the one your session has. When both are there, the skills ask once per
+request; the answer applies to that request only and is never saved.
 
 First-time setup: copy `config.example.toml` to your settings path, uncomment
 the `backend` line for the option you chose, and keep it. If you skip this,

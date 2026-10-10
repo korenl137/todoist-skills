@@ -5,7 +5,7 @@
 
 # Which Todoist route the skills use: "mcp" (Todoist MCP server) or "td" (the td CLI). Neither is preferred.
 # First-time setup: uncomment one of the two lines below and keep the route you have set up.
-# Unset: the route your session has, and the skills ask once when both are there. A request can name one too.
+# Unset: the route your session has. When both are there, the skills ask once per request and never save the answer. A request can name one too.
 # backend = "mcp"
 # backend = "td"
 

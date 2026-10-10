@@ -15,6 +15,12 @@ metadata:
 Read-only health check for Todoist task hygiene. It only reports; fixing a
 finding is a separate request that needs confirmation.
 
+## Tools
+
+| Need | Required | Recommended | Fallback |
+|---|---|---|---|
+| Read active tasks, labels, projects and completed tasks (read-only) | Todoist MCP or `td` CLI (read-only login is enough) | Jev audit (`jev_audit.py --todoist`) when `[jev] enabled = true` | Without Jev, audit the tasks yourself. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. Report only; never fix. |
+
 ## Todoist connection
 
 Use the `backend` setting when present; otherwise use Todoist MCP if

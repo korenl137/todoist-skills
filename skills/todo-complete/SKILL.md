@@ -13,6 +13,12 @@ metadata:
 
 Complete, reopen, or delete Todoist tasks.
 
+## Tools
+
+| Need | Required | Recommended | Fallback |
+|---|---|---|---|
+| Complete, reopen or delete tasks | Todoist MCP or authenticated `td` CLI (either one) | None; the Todoist route alone is enough | Delete only after the user confirms. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
+
 ## Todoist connection
 
 Use `backend` from `$TODOIST_SKILLS_CONFIG` or

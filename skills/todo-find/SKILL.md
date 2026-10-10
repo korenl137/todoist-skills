@@ -15,6 +15,12 @@ metadata:
 Look up Todoist tasks. Read-only: never changes anything, so no
 confirmation is needed.
 
+## Tools
+
+| Need | Required | Recommended | Fallback |
+|---|---|---|---|
+| Read tasks and completion history (read-only) | Todoist MCP or `td` CLI (read-only login is enough) | Jev topic search (`jev_find.py`) when `[jev] enabled = true` | Without Jev, search by text, project and label. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
+
 ## Todoist connection
 
 Use the `backend` setting when present; otherwise use Todoist MCP if

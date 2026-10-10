@@ -14,6 +14,7 @@ metadata:
 
 ## Contents
 
+- Tools
 - Todoist connection
 - Settings (optional)
 - Creating a task
@@ -23,6 +24,12 @@ metadata:
 
 Capture a Todoist task from natural conversation. Detect the intent from
 meaning, not trigger phrases, and do not require a fixed command format.
+
+## Tools
+
+| Need | Required | Recommended | Fallback |
+|---|---|---|---|
+| Create tasks; read project, section and label names | Todoist MCP or authenticated `td` CLI (either one) | `backend` setting to pick one; Jev suggestions when `[jev] enabled = true` | Without Jev, choose project and labels yourself. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
 
 ## Todoist connection
 

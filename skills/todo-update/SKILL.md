@@ -15,6 +15,7 @@ metadata:
 
 ## Contents
 
+- Tools
 - Todoist connection
 - Settings (optional)
 - Resolving the target task
@@ -24,6 +25,12 @@ metadata:
 - Execution
 
 Modify an existing Todoist task.
+
+## Tools
+
+| Need | Required | Recommended | Fallback |
+|---|---|---|---|
+| Read a task; change only the fields the user named | Todoist MCP or authenticated `td` CLI (either one) | `backend` setting to pick one; Jev placement suggestions when `[jev] enabled = true` | Without Jev, decide project and labels yourself. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
 
 ## Todoist connection
 

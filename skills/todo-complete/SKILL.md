@@ -6,7 +6,7 @@ description: >
   "reopen it", "delete this task", "이거 완료 처리해줘", "완료 취소해줘",
   "이 작업 삭제해줘".
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # todo-complete
@@ -54,5 +54,11 @@ Reversible, so do it once the target is clear, without confirmation.
 Destructive and not reliably reversible. Always confirm the specific task
 before deleting, even when the target is unambiguous. Never delete as a
 side effect of another request ("mark it done" completes, never deletes).
+
+Before asking, count what the delete takes with the task: child tasks (open
+and completed) and comments. With MCP, use `fetch-object` with
+`includeChildren` and `find-comments`; with `td`, find them with the CLI's help
+(`td task --help`, `td comment --help`). State the counts in the confirmation.
+Child tasks and comments may go with the task, so do not assume they are kept.
 
 Afterwards, briefly report what was done to which task.

@@ -41,5 +41,16 @@
       "Completes the task normally, which advances it to the next date",
       "Does not stop the recurrence (e.g. td task complete --forever) since the user did not ask for that"
     ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "Delete the 'Renew insurance' task. It has 3 child tasks and 2 comments.",
+    "files": [],
+    "expected_behavior": [
+      "States the 3 child tasks and 2 comments in the confirmation before asking to delete",
+      "Does not delete until the user confirms"
+    ]
   }
 ]

@@ -43,5 +43,31 @@
       "Does not run the Jev script, since the fixture has Jev disabled",
       "Falls back to text search and says topic matching was not available"
     ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "How many writing tasks are due this week? Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Groups the tasks by their kind/* action label and gives a count for each, including kind/write",
+      "Puts tasks without a kind/* label in their own group with a count, instead of leaving them out"
+    ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "Find tasks about cooking. Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml; the fixture has Jev disabled.",
+    "files": [
+      "evals/fixtures/config.toml"
+    ],
+    "expected_behavior": [
+      "Filters by topic/food, whose meaning is recipes, cooking, groceries, without running any Jev script",
+      "Says that cooking tasks without topic/food are not included"
+    ]
   }
 ]

@@ -25,6 +25,10 @@ Neither option is preferred. Name the one you want in a request, or set
 `backend = "mcp"` or `backend = "td"` in the settings. With neither, the skills
 use the one your session has, and ask once when both are there.
 
+First-time setup: copy `config.example.toml` to your settings path, uncomment
+the `backend` line for the option you chose, and keep it. If you skip this,
+the rule above applies.
+
 Optional, per skill:
 
 | Skill | Optional extra | Needs |

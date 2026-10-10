@@ -4,8 +4,10 @@
 # What you say in a request always wins over this file.
 
 # Which Todoist route the skills use: "mcp" (Todoist MCP server) or "td" (the td CLI). Neither is preferred.
+# First-time setup: uncomment one of the two lines below and keep the route you have set up.
 # Unset: the route your session has, and the skills ask once when both are there. A request can name one too.
 # backend = "mcp"
+# backend = "td"
 
 # Your own written conventions (any text or Markdown file). The skills read it before labeling or
 # auditing; where it disagrees with this file, the guide's prose wins and this file's lists are used

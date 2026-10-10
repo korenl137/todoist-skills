@@ -188,5 +188,14 @@ class Copies(unittest.TestCase):
             self.assertNotIn("sys.path", script.read_text(encoding="utf-8"), script)
 
 
+class Routes(unittest.TestCase):
+    def test_no_todoist_route_is_preferred(self):
+        # Neither MCP nor td may be the default: the user names one, or settings do, or the skill asks.
+        for skill_md in SKILLS.glob("*/SKILL.md"):
+            text = skill_md.read_text(encoding="utf-8")
+            self.assertNotIn("if available", text, skill_md)
+            self.assertNotIn("then the authenticated", text, skill_md)
+
+
 if __name__ == "__main__":
     unittest.main()

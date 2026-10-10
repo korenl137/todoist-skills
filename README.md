@@ -21,8 +21,9 @@ Every skill needs **one** way to reach Todoist. Nothing else is required.
 | Todoist MCP server | Connect Todoist in your agent (e.g. the Todoist connector in Claude) |
 | `td`, the official [Todoist CLI](https://github.com/Doist/todoist-cli) | `npm install -g @doist/todoist-cli` (Node 24+), then `td auth login` |
 
-The skills use the MCP when its tools are available, otherwise `td`. Set
-`backend` in the settings to force one.
+Neither option is preferred. Name the one you want in a request, or set
+`backend = "mcp"` or `backend = "td"` in the settings. With neither, the skills
+use the one your session has, and ask once when both are there.
 
 Optional, per skill:
 
@@ -67,6 +68,7 @@ edit it:
 | `[areas]` | Top-level projects that split your tasks (e.g. Personal, Work) |
 | `grouping.header_prefix` | Group related tasks under a header task |
 | `guide` | A file with your own written conventions, read before labeling and auditing |
+| `backend` | The Todoist route, `mcp` or `td`; unset means the route your session has, asking when both exist |
 | `[jev]` | Turn on the optional Jev features and choose whether descriptions are sent |
 
 What you say in a request always overrides the settings. All skills read
@@ -84,10 +86,16 @@ To use it:
    Settings → Integrations → Developer) in the environment or
    `~/.config/todoist/.env`. Logging in to `td` does not provide this token.
 
+To turn Jev off, set `enabled = false` in the settings file, or point
+`TODOIST_SKILLS_CONFIG` at a copy with it off for one session. The scripts
+then exit with code 3, and the skills work without Jev.
+
+The Jev fast paths in `todo-find` and `todo-doctor` read tasks through the
+Todoist API with `TODOIST_API_TOKEN`, whichever route (MCP or `td`) you chose.
+
 What leaves your machine: task titles, parent task titles, project and label
 names, and your label meanings. Descriptions are sent only with
-`send_descriptions = true`. The scripts exit with code 3 while Jev is off,
-and the skills then work without it.
+`send_descriptions = true`.
 
 ## Development
 

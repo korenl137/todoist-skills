@@ -3,8 +3,9 @@
 # Every key is optional. Without this file the skills follow your existing Todoist projects and labels.
 # What you say in a request always wins over this file.
 
-# Which Todoist connection to use: "auto" (Todoist MCP if connected, else the td CLI), "mcp", or "td".
-backend = "auto"
+# Which Todoist route the skills use: "mcp" (Todoist MCP server) or "td" (the td CLI). Neither is preferred.
+# Unset: the route your session has, and the skills ask once when both are there. A request can name one too.
+# backend = "mcp"
 
 # Your own written conventions (any text or Markdown file). The skills read it before labeling or
 # auditing; where it disagrees with this file, the guide's prose wins and this file's lists are used

@@ -7,7 +7,7 @@ description: >
   Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
   추가해줘", "할 일로 남겨줘".
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # todo-add
@@ -29,15 +29,18 @@ meaning, not trigger phrases, and do not require a fixed command format.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Create tasks; read project, section and label names | Todoist MCP or authenticated `td` CLI (either one) | `backend` setting to pick one; Jev suggestions when `[jev] enabled = true` | Without Jev, choose project and labels yourself. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
+| Create tasks; read project, section and label names | One Todoist route: Todoist MCP or the `td` CLI, whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev suggestions when `[jev] enabled = true` | Without Jev, choose project and labels yourself. If the chosen route is unavailable, say so, give its setup, then stop. |
 
 ## Todoist connection
 
-Use the `backend` setting when present; otherwise use Todoist MCP if
-available, then the authenticated `td` CLI. If neither is available, tell
-the user to connect Todoist MCP or install `td` (`npm install -g
-@doist/todoist-cli`, Node 24+) and run `td auth login`. Jev is optional;
-without it, choose the project and labels yourself.
+Use the route the user names in the request. Otherwise use `backend` from
+settings: `mcp` (Todoist MCP) or `td` (the td CLI). Neither route is
+preferred. If `backend` is unset or holds any other value, use the route this
+session has; when both are available, ask once which to use. If the chosen
+route is unavailable, say so and give its setup, then stop; do not switch
+routes silently. To connect Todoist MCP, connect Todoist in your agent. To set
+up `td`, run `npm install -g @doist/todoist-cli` (Node 24+) and `td auth
+login`. Jev is optional; without it, choose the project and labels yourself.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|

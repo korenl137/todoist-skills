@@ -7,7 +7,7 @@ description: >
   "check my labels", "find tasks to group", "todoist 라벨 점검", "작업 스타일
   감사", "묶을 작업 찾아줘" (audit sense, not completing or deleting).
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # todo-doctor
@@ -19,15 +19,20 @@ finding is a separate request that needs confirmation.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Read active tasks, labels, projects and completed tasks (read-only) | Todoist MCP or `td` CLI (read-only login is enough) | Jev audit (`jev_audit.py --todoist`) when `[jev] enabled = true` | Without Jev, audit the tasks yourself. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. Report only; never fix. |
+| Read active tasks, labels, projects and completed tasks (read-only) | One Todoist route: Todoist MCP or the `td` CLI (read-only login is enough), whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev audit (`jev_audit.py --todoist`) when `[jev] enabled = true`, which also needs `TODOIST_API_TOKEN` whichever route is chosen | Without Jev, audit the tasks yourself. If the chosen route is unavailable, say so, give its setup, then stop. Report only; never fix. |
 
 ## Todoist connection
 
-Use the `backend` setting when present; otherwise use Todoist MCP if
-available, then the authenticated `td` CLI (read-only login is enough).
-If neither is available, tell the user to connect Todoist MCP or install
-`td` (`npm install -g @doist/todoist-cli`, Node 24+) and run `td auth login`.
-Jev is optional; without it, audit the tasks yourself.
+Use the route the user names in the request. Otherwise use `backend` from
+settings: `mcp` (Todoist MCP) or `td` (the td CLI, read-only login is
+enough). Neither route is preferred. If `backend` is unset or holds any other
+value, use the route this session has; when both are available, ask once which
+to use. If the chosen route is unavailable, say so and give its setup, then
+stop; do not switch routes silently. To connect Todoist MCP, connect Todoist
+in your agent. To set up `td`, run `npm install -g @doist/todoist-cli` (Node
+24+) and `td auth login`. Jev is optional; without it, audit the tasks
+yourself. The Jev fast path reads tasks through the Todoist API with
+`TODOIST_API_TOKEN`, not through either route.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|

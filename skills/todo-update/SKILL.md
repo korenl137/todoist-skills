@@ -8,7 +8,7 @@ description: >
   "add a label", "move this task", "우선순위 P1로 바꿔줘", "마감일 다음 주로
   옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # todo-update
@@ -30,15 +30,18 @@ Modify an existing Todoist task.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Read a task; change only the fields the user named | Todoist MCP or authenticated `td` CLI (either one) | `backend` setting to pick one; Jev placement suggestions when `[jev] enabled = true` | Without Jev, decide project and labels yourself. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
+| Read a task; change only the fields the user named | One Todoist route: Todoist MCP or the `td` CLI, whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev placement suggestions when `[jev] enabled = true` | Without Jev, decide project and labels yourself. If the chosen route is unavailable, say so, give its setup, then stop. |
 
 ## Todoist connection
 
-Use the `backend` setting when present; otherwise use Todoist MCP if
-available, then the authenticated `td` CLI. If neither is available, tell
-the user to connect Todoist MCP or install `td` (`npm install -g
-@doist/todoist-cli`, Node 24+) and run `td auth login`. Jev is optional;
-without it, choose the project and labels yourself.
+Use the route the user names in the request. Otherwise use `backend` from
+settings: `mcp` (Todoist MCP) or `td` (the td CLI). Neither route is
+preferred. If `backend` is unset or holds any other value, use the route this
+session has; when both are available, ask once which to use. If the chosen
+route is unavailable, say so and give its setup, then stop; do not switch
+routes silently. To connect Todoist MCP, connect Todoist in your agent. To set
+up `td`, run `npm install -g @doist/todoist-cli` (Node 24+) and `td auth
+login`. Jev is optional; without it, choose the project and labels yourself.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|

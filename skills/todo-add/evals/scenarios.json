@@ -77,5 +77,27 @@
       "Stops without pretending the task was created",
       "Tells the user the two ways to connect: a Todoist MCP server, or installing td (npm install -g @doist/todoist-cli, then td auth login)"
     ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add 'send the invoice' to my list. Both the Todoist MCP server and the td CLI are connected. No settings file exists, and the user does not name a route.",
+    "files": [],
+    "expected_behavior": [
+      "Asks once which route to use (Todoist MCP or td) before creating anything",
+      "Does not pick a route silently, and does not create the task before the user answers"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add 'book the dentist' to my list, and use td for this one. The Todoist MCP server is also connected.",
+    "files": [],
+    "expected_behavior": [
+      "Uses td commands (for example td task add) for this request, not the Todoist MCP tools",
+      "Does not ask which route to use, since the user named one"
+    ]
   }
 ]

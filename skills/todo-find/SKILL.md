@@ -7,7 +7,7 @@ description: >
   about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
   보여줘", "완료한 작업 보여줘".
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # todo-find
@@ -19,15 +19,19 @@ confirmation is needed.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Read tasks and completion history (read-only) | Todoist MCP or `td` CLI (read-only login is enough) | Jev topic search (`jev_find.py`) when `[jev] enabled = true` | Without Jev, search by text, project and label. If neither Todoist route works, tell the user to connect Todoist MCP or install `td`, then stop. |
+| Read tasks and completion history (read-only) | One Todoist route: Todoist MCP or the `td` CLI (read-only login is enough), whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev topic search (`jev_find.py`) when `[jev] enabled = true`, which also needs `TODOIST_API_TOKEN` whichever route is chosen | Without Jev, search by text, project and label. If the chosen route is unavailable, say so, give its setup, then stop. |
 
 ## Todoist connection
 
-Use the `backend` setting when present; otherwise use Todoist MCP if
-available, then the authenticated `td` CLI (read-only login is enough).
-If neither is available, tell the user to connect Todoist MCP or install
-`td` (`npm install -g @doist/todoist-cli`, Node 24+) and run `td auth login`.
-Jev topic search is optional.
+Use the route the user names in the request. Otherwise use `backend` from
+settings: `mcp` (Todoist MCP) or `td` (the td CLI, read-only login is
+enough). Neither route is preferred. If `backend` is unset or holds any other
+value, use the route this session has; when both are available, ask once which
+to use. If the chosen route is unavailable, say so and give its setup, then
+stop; do not switch routes silently. To connect Todoist MCP, connect Todoist
+in your agent. To set up `td`, run `npm install -g @doist/todoist-cli` (Node
+24+) and `td auth login`. Jev topic search is optional; it reads tasks through
+the Todoist API with `TODOIST_API_TOKEN`, not through either route.
 
 | Question | Todoist MCP | `td` |
 |---|---|---|

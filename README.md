@@ -37,7 +37,6 @@ Optional, per skill:
 |---|---|---|
 | `todo-add`, `todo-update` | Jev project and label suggestions | Python 3.11+, `TYPESAFE_API_KEY` |
 | `todo-find` | Jev topic search (finds tasks that never name the topic) | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN` |
-| `todo-tidy` | Shows a scoped organization plan, applies clear edits, and asks about ambiguous intent | yes |
 | `todo-doctor` | Jev fast audit (the task list stays out of the conversation) | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN` |
 | `todo-complete` | — | — |
 

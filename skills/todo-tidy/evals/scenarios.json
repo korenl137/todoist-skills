@@ -1,0 +1,92 @@
+[
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "Inbox 정리해줘",
+    "tasks": [
+      {
+        "id": "one",
+        "title": "영수증",
+        "description": "연구비 정산용 영수증을 행정실에 제출하기",
+        "labels": [
+          "project/sup3r"
+        ],
+        "due": "2026-10-16"
+      },
+      {
+        "id": "two",
+        "title": "https://example.org/tool",
+        "description": ""
+      }
+    ],
+    "expected_behavior": [
+      "Shows plan before updates; applies clear title/project/action classification without blanket approval",
+      "Preserves date/project label and asks only about the link task purpose",
+      "Never adds obsidian label"
+    ],
+    "files": []
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "기존 프로젝트의 작업 정리해줘",
+    "tasks": [
+      {
+        "id": "parent",
+        "title": "출력 검증",
+        "children": [
+          "child"
+        ]
+      },
+      {
+        "id": "child",
+        "title": "레진 안 오면 문의",
+        "due": "2026-10-14",
+        "recurring": "every week",
+        "labels": [
+          "obsidian",
+          "act/contact"
+        ]
+      }
+    ],
+    "expected_behavior": [
+      "Reads parent/children and conditions",
+      "Preserves parent, recurrence, date, and existing obsidian label",
+      "No completion, deletion, or new deadlines"
+    ],
+    "files": []
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "정리안만 보여줘",
+    "tasks": [
+      {
+        "id": "one",
+        "title": "캐리마텍 레진 배송 안 오면 문의 전화 드리기",
+        "due": "2026-10-14"
+      }
+    ],
+    "expected_behavior": [
+      "Dry run reads task/context and displays changed fields and reasons",
+      "Performs no mutations"
+    ],
+    "files": []
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "이미 정리한 Inbox를 다시 정리해줘",
+    "tasks": [],
+    "expected_behavior": [
+      "No changes when already tidy",
+      "Does not duplicate header groups or overwrite task descriptions",
+      "Reports partial failures without retrying successes"
+    ],
+    "files": []
+  }
+]

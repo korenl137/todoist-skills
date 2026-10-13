@@ -1,7 +1,7 @@
 # todoist-skills
 
 Agent skills for managing Todoist from a conversation: add, edit, find,
-complete, and audit tasks. Each skill is a self-contained folder under
+complete, audit, and tidy tasks. Each skill is a self-contained folder under
 `skills/`; install all of them or only the ones you want.
 
 | Skill | Does | Changes tasks |
@@ -10,6 +10,7 @@ complete, and audit tasks. Each skill is a self-contained folder under
 | `todo-update` | Edits an existing task, including confirmed session changes to its plan; keeps recurrence when only the date changes | yes |
 | `todo-find` | Lists tasks by date, project, label, text, or topic; answers what was completed | no |
 | `todo-complete` | Completes or reopens tasks; deletes only after confirmation | yes |
+| `todo-tidy` | Shows a scoped organization plan, applies clear edits, and asks about ambiguous intent | yes |
 | `todo-doctor` | Audits tasks against your label and naming rules | no |
 
 ## Requirements
@@ -36,6 +37,7 @@ Optional, per skill:
 |---|---|---|
 | `todo-add`, `todo-update` | Jev project and label suggestions | Python 3.11+, `TYPESAFE_API_KEY` |
 | `todo-find` | Jev topic search (finds tasks that never name the topic) | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN` |
+| `todo-tidy` | Shows a scoped organization plan, applies clear edits, and asks about ambiguous intent | yes |
 | `todo-doctor` | Jev fast audit (the task list stays out of the conversation) | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN` |
 | `todo-complete` | — | — |
 

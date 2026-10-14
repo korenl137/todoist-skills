@@ -98,6 +98,17 @@ writes and state/action labels need context review; the model is optional.
 What you say in a request always overrides the settings. All skills read
 the same file, so each rule is written once.
 
+### Task template guide (optional)
+
+[`docs/task-template-guide.md`](docs/task-template-guide.md) is a ready-made
+written convention (in Korean) you can point `guide` at: one core task
+template (title, description blocks, status values, dates, priority) plus
+per-type variants, with rules for adding, updating, and completing tasks so
+the wording stays consistent across skills. Copy it, edit it to taste, and set
+`guide = "task-template-guide.md"`. It adds no settings and no labels of its
+own; labels still come from your `[labels.*]` definitions, and where the guide
+and your settings disagree, the skills report it.
+
 ## Jev (optional)
 
 [TypeSafe Jev](https://typesafe.ai) gives the scripts calibrated judgments

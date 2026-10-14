@@ -7,10 +7,20 @@ description: >
   "check my labels", "find tasks to group", "todoist 라벨 점검", "작업 스타일
   감사", "묶을 작업 찾아줘" (audit sense, not completing or deleting).
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # todo-doctor
+## Contents
+
+- Tools
+- Todoist connection
+- Rules come from the user
+- What to check
+- Scope
+- Reporting
+- Fixing findings
+
 
 Read-only health check for Todoist task hygiene. It only reports; fixing a
 finding is a separate request that needs confirmation.
@@ -56,7 +66,7 @@ that exist on tasks but nowhere in the label list.
 
 ## What to check
 
-1. **Missing action label**: `required_prefix` set, and the task has no
+1. **Missing action label (legacy only)**: legacy selection and `required_prefix` set, and the task has no
    label with it. A task whose only role is to group subtasks is exempt.
 2. **Label outside the rules**: a label in `[labels.retired]`, or not in
    `[labels.allowed]` / `[labels.projects]` / `labels.ignore` when those
@@ -76,6 +86,14 @@ that exist on tasks but nowhere in the label list.
    version beside it, "after X" where X is already completed). Check only
    what can be read locally; report the newer fact next to the old one.
 
+In multiple selection mode, no labels or several actions/topics/goals are
+valid. Check semantic contradictions, redundant classification and stale state
+only when context supports the finding; never enforce one label per role.
+Read relevant descriptions/parents/comments before judging state release.
+A passed date or a missing optional label is not evidence of readiness.
+Disagreements between guide and settings are findings, not a reason to apply
+one scheme to selection and a different one to auditing.
+
 ### Jev fast path (only when `[jev] enabled = true`)
 
 For a full audit, first run `python3 scripts/jev_audit.py --todoist`
@@ -88,7 +106,8 @@ parent titles; descriptions are not sent). For a narrower scope, pipe
 
 Present Jev findings as "review" and drop one only when the user's rules
 clearly say otherwise. Run checks 6–7 yourself; they need descriptions.
-On exit 2 (key missing), 3 (not enabled), or any failure, audit manually
+Exit 4 (invalid settings): report the diagnostic and stop rule-based classification.
+On exit 2 (key missing), 3 (not enabled), or a model failure, audit manually
 and say the fast path was skipped and why.
 
 ## Scope

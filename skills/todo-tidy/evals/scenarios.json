@@ -88,5 +88,29 @@
       "Reports partial failures without retrying successes"
     ],
     "files": []
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "Tidy a task to design and document an agent knowledge workflow; design and writing views are both used. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Allows multiple useful labels and preserves unrelated metadata; no exactly-one action rule."
+    ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "Tidy a captured article link with no described goal. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Does not label by product names in the link alone; leaves unclear intent pending."
+    ]
   }
 ]

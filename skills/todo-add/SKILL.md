@@ -7,7 +7,7 @@ description: >
   Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
   추가해줘", "할 일로 남겨줘".
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # todo-add
@@ -60,7 +60,8 @@ Priorities are `p1` (highest) to `p4` on both.
 ## Settings (optional)
 
 If `$TODOIST_SKILLS_CONFIG` or `~/.config/todoist-skills/config.toml`
-exists, read it; if it names a `guide` file, read that too. The user's
+exists, read it; if it names a `guide` file, read that too. Resolve relative
+guide paths from the settings file's directory; expand ~ in absolute paths. The user's
 words in the conversation always win. Without settings, follow the labels,
 projects, and naming the user's Todoist already has.
 
@@ -82,15 +83,19 @@ new projects, sections, or labels to get an exact match.
 
 - **Project/section**: the best-fitting existing one. With `[areas]` set,
   first pick the area (top-level project) whose description fits.
-- **Labels**: with `[labels.allowed]` / `[labels.projects]` set, use only
-  those, by their meanings:
-  1. `required_prefix` set → exactly one label with that prefix, naming
-     the task's main action (not needed on a header that only groups
-     subtasks).
-  2. A `[labels.projects]` label only when that project is explicitly named.
-  3. Other allowed labels only when they will help find the task later.
-  Never use a label listed in `[labels.retired]`. Without an allowlist,
-  choose among existing labels the same way.
+- **Labels**: use configured allowed/project meanings, or existing labels when
+  no allowlist exists. Never add retired labels or invent a taxonomy.
+  With `labels.selection = "multiple"`, zero or several labels are valid,
+  including multiple actions and goals. Add each only for a useful retrieval
+  supported by the task's purpose/context, not a product name in a source link.
+  `[labels.roles]` describes roles without requiring a label from every role.
+  Without selection, or with `legacy`, retain `required_prefix`: one main action
+  when configured, except a header that only groups subtasks.
+- Named goal labels need supporting task/parent context. Do not copy every
+  parent's label to its children; a child's action/state needs its own evidence.
+- State labels need a confirmed condition, with reason and release criteria in
+  the description. No waiting label is not proof a task is executable. If
+  prerequisites/access cannot be checked, report the uncertainty.
 
 ### Jev suggestions (only when `[jev] enabled = true`)
 
@@ -98,16 +103,20 @@ Before choosing project and labels yourself, pipe `{"title",
 "description", "parent_title"?, "projects": [{"id", "name", "parent"?,
 "description"?, "inbox"?}]}` into `python3 scripts/jev_place.py`
 (Windows: `py -3`), run from this skill's own directory. It returns a
-project, an action label, a project label, and other labels from the
-settings, with probabilities.
+project and label hints with probabilities. Multiple mode returns a `labels`
+list (label, p, role); legacy mode retains act/project_label/extra_labels.
 
-- Adopt `project_label` and `extra_labels` with `p >= 0.5`, and `project`
+- In legacy mode, consider `project_label` and `extra_labels` with `p >= 0.5`, and `project`
   with `confidence >= 0.7`; below that, choose yourself.
-- Treat `act` as a hint only and choose the action label yourself.
+- In multiple mode, review each independent `labels` hint against its meaning
+  and actual evidence; do not pick exactly one or require any. Action and state
+  hints always need judgment; model probability alone does not establish a state.
+- Treat legacy `act` as a hint only and choose the action label yourself.
 - Values the user stated always win.
 
 These thresholds were measured on the author's tasks; they are defaults.
-Exit 2 (key missing), 3 (not enabled), or any failure: place the task
+Invalid settings (exit 4): report and stop classification until resolved; do not invent defaults.
+Exit 2 (key missing), 3 (not enabled), or a model failure: place the task
 yourself without mentioning Jev unless asked.
 
 ### Grouping (only when `[grouping] header_prefix` is set)
@@ -116,7 +125,7 @@ yourself without mentioning Jev unless asked.
   prefix) or open tasks sharing the new task's goal, source, or repository.
 - A matching header exists → add the task under it.
 - Two or more tasks from one request, or one related task already loose →
-  first add the header (non-completable, no action label), then add the
+  first add the header (non-completable, no required action label), then add the
   tasks under it and move the loose one there.
 - Otherwise add it at the project level.
 

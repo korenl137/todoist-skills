@@ -7,7 +7,7 @@ description: >
   "작업 분류해줘". Read-only hygiene audits belong to todo-doctor; a specified
   single-field edit belongs to todo-update.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Todo Tidy
@@ -33,7 +33,7 @@ Use the route explicitly requested; otherwise read backend from $TODOIST_SKILLS_
 ~/.config/todoist-skills/config.toml. Honor mcp or td; a configured unavailable route is a stopping condition.
 Without a configured route, use the sole available route; if both exist, ask once for this request.
 Read current labels, project hierarchy/descriptions and applicable user settings.
-If settings name a guide, read its relevant conventions, but current user decisions override historical policy.
+If settings name a guide, resolve a relative path from the settings directory and read its relevant conventions, but current user decisions override historical policy.
 Todoist owns task tracking. Obsidian is optional context; never synchronize tasks or add obsidian labels.
 Preserve an existing obsidian label unless its removal is explicitly requested.
 Use allowed label meanings and retired mappings when configured; otherwise use existing labels/projects.
@@ -50,8 +50,13 @@ Do not create new taxonomy merely to obtain an exact fit.
    Similar titles alone do not prove duplication; compare purpose, source, dates and children.
 1. Choose an actionable title while retaining conditional wording, names and original language.
    Preserve source links, useful description detail and references; correct wording without inventing facts.
-   Place in an existing project/section and select one main action label when required (group headers exempt).
-   Add project/target/context labels only when established and useful for retrieval.
+   Place in an existing project/section. Multiple selection allows zero or several
+   useful labels, including multiple actions/goals. Only legacy required_prefix
+   requests one main action (group headers exempt).
+   Add established labels only when their meanings and retrieval value fit the task.
+   Labels need not use a prefix; use configured role/meaning metadata. Parent
+   context helps resolve a goal but does not justify copying every parent label.
+   Current user decisions override older required-action conventions.
 1. Show a compact per-task plan: current -> proposed changed fields, short evidence, and any unresolved question.
    A clear edit is supported by context and conventions with no materially different plausible intent.
    Unsupported intent, ownership or substantive restructuring stays pending; ask only after safe discovery.
@@ -73,6 +78,9 @@ Explicit user changes can settle a question; no reply does not resolve ambiguity
 - When the user's grouping convention applies, use a matching existing header.
   A new uncompletable header is allowed only for clearly related tasks and an established grouping convention.
   Do not split a task into newly invented work; materially ambiguous grouping stays pending.
+- Reconcile relevant state labels only with confirmed release/restart conditions.
+  Preserve unresolved states, document missing evidence, and do not clear a state
+  merely because a date passed. Missing state labels do not establish readiness.
 - Never complete, delete, merge-away tasks, or send messages as a side effect of tidying.
   Propose duplicates for review. Deletion/completion requires the user's separate intent.
 - Re-read current fields before applying a delayed plan; if they changed, reconcile rather than overwrite.

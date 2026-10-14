@@ -69,13 +69,31 @@ edit it:
 | Setting | Effect |
 |---|---|
 | `[labels.allowed]`, `[labels.projects]` | The only labels tasks may carry, with their meanings |
-| `labels.required_prefix` | One label with this prefix on every task (e.g. an action label `kind/…`) |
+| `labels.selection` | `multiple`: optional independent labels, including multiple actions/goals. Omitted or `legacy`: previous prefix-based contract |
+| `[labels.roles]` | Optional role metadata for defined names: action, project, topic, state; no required counts |
+| `labels.required_prefix` | Legacy mode only: one action with this prefix on an executable task. Ignored in multiple mode |
 | `labels.ignore`, `[labels.retired]` | Labels never flagged; old labels and their replacements |
 | `[areas]` | Top-level projects that split your tasks (e.g. Personal, Work) |
 | `grouping.header_prefix` | Group related tasks under a header task |
-| `guide` | A file with your own written conventions, read before labeling and auditing |
+| `guide` | Written task conventions; relative paths resolve from the config directory, ~ expands to the local home |
 | `backend` | The Todoist route, `mcp` or `td`; unset means the route your session has, asking when both exist |
 | `[jev]` | Turn on the optional Jev features and choose whether descriptions are sent |
+
+In multiple mode, add a label only when it supports a useful retrieval and the
+context supports its meaning. A task may have no labels, or several topics,
+goals and actions; do not fill one slot of every role. State labels need a
+confirmed condition and its release criteria, not a date-based guess.
+Keep stored classification separate from inferred retrieval. Union counts deduplicate
+task IDs; overlapping label counts do not add up to a total. Completion events
+need their occurrence identity/time, particularly for recurrence. Vault note tags
+remain independent of task labels and historical snapshots are not rewritten.
+
+Role definitions must refer to allowed/project labels. Invalid settings stop
+optional scripts with exit 4 and a diagnostic; do not silently use another taxonomy.
+Legacy configs and legacy placement output keep their previous behavior.
+Multiple-mode placement returns independent `labels` hints with name, probability
+and role instead of the single `act`/`project_label` fields. Hints do not authorize
+writes and state/action labels need context review; the model is optional.
 
 What you say in a request always overrides the settings. All skills read
 the same file, so each rule is written once.

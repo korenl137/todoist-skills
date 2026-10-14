@@ -67,5 +67,30 @@
       "Runs only the checks that need no rules (vague titles, stale references, labels on tasks that are missing from the label list)",
       "Does not invent a label taxonomy or flag tasks for missing kind/* labels"
     ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Audit a task with no labels and another with agent, pkm, design, write. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Neither missing action nor multiple topics/actions is a violation.",
+      "Reports actual semantic mismatch only with evidence; performs no writes."
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Audit waiting/on-hold task state without access to prerequisite comments. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Reports missing evidence; does not claim a state is resolved just because its date passed."
+    ]
   }
 ]

@@ -5,12 +5,12 @@ so every skill folder works on its own. Edit dev/jevlib.py and run `python3 dev/
 
 Config: $TODOIST_SKILLS_CONFIG or ~/.config/todoist-skills/config.toml (see config.example.toml).
 Keys: the environment, or ~/.config/typesafe/.env and ~/.config/todoist/.env; none live in the repo.
-Exit codes: 2 = a key is missing, 3 = Jev is not enabled in the config.
+Exit codes: 2 = a key is missing, 3 = Jev is not enabled, 4 = invalid settings.
 """
 import json, os, pathlib, sys, tomllib, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
-MISSING_KEY, DISABLED = 2, 3
+MISSING_KEY, DISABLED, INVALID_CONFIG = 2, 3, 4
 
 
 def config_path():
@@ -22,25 +22,72 @@ def load_config(p=None):
     p = pathlib.Path(p) if p else config_path()
     raw = tomllib.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     labels, jev = raw.get("labels", {}), raw.get("jev", {})
-    return {
+    if not isinstance(labels, dict) or not isinstance(jev, dict):
+        raise ValueError("labels and jev must be tables")
+    guide = raw.get("guide", "")
+    if not isinstance(guide, str):
+        raise ValueError("guide must be a path string")
+    guide_path = pathlib.Path(guide).expanduser() if guide else None
+    cfg = {
+        "guide": str((guide_path if guide_path.is_absolute() else p.parent / guide_path).resolve()) if guide_path else "",
+        "selection": labels.get("selection", "legacy"),
+        "roles": labels.get("roles", {}),
         "required_prefix": labels.get("required_prefix", ""),
-        "allowed": dict(labels.get("allowed", {})),
-        "projects": dict(labels.get("projects", {})),
-        "ignore": list(labels.get("ignore", [])),
+        "allowed": labels.get("allowed", {}),
+        "projects": labels.get("projects", {}),
+        "ignore": labels.get("ignore", []),
         "areas": dict(raw.get("areas", {})),
         "jev": {"enabled": bool(jev.get("enabled", False)),
                 "send_descriptions": bool(jev.get("send_descriptions", False))},
     }
 
+    if cfg["selection"] not in ("legacy", "multiple"):
+        raise ValueError("labels.selection must be legacy or multiple")
+    for group in ("allowed", "projects", "roles"):
+        value = cfg[group]
+        if not isinstance(value, dict) or not all(isinstance(k, str) and isinstance(v, str) for k, v in value.items()):
+            raise ValueError(f"labels.{group} must map label names to strings")
+    if not isinstance(labels.get("ignore", []), list) or not all(isinstance(v, str) for v in cfg["ignore"]):
+        raise ValueError("labels.ignore must be a list of strings")
+    if not isinstance(cfg["required_prefix"], str):
+        raise ValueError("labels.required_prefix must be a string")
+    definitions = {**cfg["allowed"], **cfg["projects"]}
+    for name, role in cfg["roles"].items():
+        if name not in definitions or role not in ("action", "project", "topic", "state"):
+            raise ValueError(f"labels.roles.{name} needs a definition and action/project/topic/state role")
+        if name in cfg["projects"] and role != "project":
+            raise ValueError(f"labels.projects.{name} must use the project role")
+    for name in cfg["allowed"].keys() & cfg["projects"].keys():
+        if cfg["allowed"][name] != cfg["projects"][name]:
+            raise ValueError(f"conflicting label meanings: {name}")
+    return cfg
+
+
+def required_prefix(cfg):
+    """Multiple selection is optional even if an old prefix is still present."""
+    return cfg["required_prefix"] if cfg["selection"] == "legacy" else ""
+
 
 def acts(cfg):
-    """Allowed labels with the required prefix: one of them names the task's main action."""
-    pre = cfg["required_prefix"]
+    """Explicit optional actions in multiple mode, or the legacy prefix group."""
+    if cfg["selection"] == "multiple":
+        return {k: v for k, v in {**cfg["allowed"], **cfg["projects"]}.items() if cfg["roles"].get(k) == "action"}
+    pre = required_prefix(cfg)
     return {k: v for k, v in cfg["allowed"].items() if pre and k.startswith(pre)}
 
 
+def goal_labels(cfg):
+    """Named goals, including explicitly typed flat labels."""
+    result = dict(cfg["projects"])
+    if cfg["selection"] == "multiple":
+        result.update({k: v for k, v in cfg["allowed"].items() if cfg["roles"].get(k) == "project"})
+    return result
+
+
 def extras(cfg):
-    """Allowed labels that are neither actions nor project labels."""
+    """Legacy labels outside the action/goal groups; all labels in multiple mode."""
+    if cfg["selection"] == "multiple":
+        return {**cfg["allowed"], **cfg["projects"]}
     a = acts(cfg)
     return {k: v for k, v in cfg["allowed"].items() if k not in a and k not in cfg["projects"]}
 
@@ -54,7 +101,11 @@ def allowlist(cfg):
 
 def enabled_config():
     """Return the config, or exit 3 unless [jev] enabled = true."""
-    cfg = load_config()
+    try:
+        cfg = load_config()
+    except (ValueError, TypeError) as error:
+        print(f"Invalid Todoist settings: {error}", file=sys.stderr)
+        sys.exit(INVALID_CONFIG)
     if not cfg["jev"]["enabled"]:
         print(f"Jev is not enabled: set [jev] enabled = true in {config_path()}", file=sys.stderr)
         sys.exit(DISABLED)

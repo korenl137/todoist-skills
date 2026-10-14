@@ -1,0 +1,20 @@
+[labels]
+selection = "multiple"
+ignore = ["imported"]
+[labels.allowed]
+agent = "agent environment setup and operation"
+pkm = "knowledge and task management"
+design = "design structures, interfaces, workflows or experiments"
+write = "write or revise documents"
+waiting = "a confirmed outstanding dependency"
+[labels.projects]
+community = "the community site project"
+[labels.roles]
+agent = "topic"
+pkm = "topic"
+design = "action"
+write = "action"
+waiting = "state"
+community = "project"
+[jev]
+enabled = false

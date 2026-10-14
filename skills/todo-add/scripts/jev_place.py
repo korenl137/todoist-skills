@@ -2,7 +2,7 @@
 
 stdin:  {"title": str, "description"?: str, "parent_title"?: str,
          "projects": [{"id", "name", "parent"?, "description"?, "inbox"?: bool}]}
-stdout: {"project": {...}, "act"?: {...}, "project_label"?: {...}, "extra_labels": [...]}
+stdout: legacy {"project", "act"?, "project_label"?, "extra_labels"}; multiple {"project", "labels": [{"label", "p", "role"}]}
 Labels and areas come from the user's config. Sends the task title, parent task title, project names
 and descriptions, and label meanings; the first 1500 characters of the description only when
 [jev] send_descriptions = true. Exit 2 = no TYPESAFE_API_KEY, 3 = Jev not enabled.
@@ -26,23 +26,48 @@ def build(task, cfg):
 
     q = {"project": {"type": "choice", "instructions": "Which Todoist project should this task be filed in?",
                      "criteria": {k: meaning(p) for k, p in by_key.items()}}}
-    if acts := jevlib.acts(cfg):
+    if cfg["selection"] == "legacy" and (acts := jevlib.acts(cfg)):
         q["act"] = {"type": "choice", "instructions": "Which verb best describes the main action this task asks for?",
                     "criteria": acts}
-    if cfg["projects"]:
+    if cfg["selection"] == "legacy" and cfg["projects"]:
         q["project_label"] = {"type": "choice",
                               "instructions": "Does the task explicitly belong to one of these named projects?",
                               "criteria": {**cfg["projects"], NONE: "no named project applies"}}
     extras = jevlib.extras(cfg)
     names = list(extras)
     for i, l in enumerate(names):
-        q[f"x{i}"] = {"type": "noul", "instructions": f"Is this task specifically about {extras[l]}?"}
+        role = cfg["roles"].get(l, "project" if l in cfg["projects"] else "topic")
+        condition = ("Is this current condition confirmed, not merely a possible future condition? "
+                     if role == "state" else "") if cfg["selection"] == "multiple" else ""
+        instructions = (f"{condition}Does this label help retrieve this task for {extras[l]}, rather than merely naming a tool or source?"
+                        if cfg["selection"] == "multiple" else f"Is this task specifically about {extras[l]}?")
+        q[f"x{i}"] = {"type": "noul", "instructions": instructions}
     state = {"task": {"title": task["title"]}}
     if cfg["jev"]["send_descriptions"] and task.get("description"):
         state["task"]["description"] = task["description"][:1500]
     if task.get("parent_title"):
         state["task"]["parent_task"] = task["parent_title"]
     return state, q, by_key, names
+
+
+def placement(answers, by_key, names, cfg):
+    """Serialize independent label hints without making a selection decision."""
+    def pick(ans):
+        return {"value": ans["choice"], "p": round(ans["probabilities"][ans["choice"]], 3),
+                "confidence": round(ans["confidence"], 3)}
+    proj = pick(answers["project"])
+    out = {"project": {**proj, "id": by_key[proj["value"]]["id"]}}
+    hints = sorted(({"label": name, "p": round(answers[f"x{i}"]["noul"], 3)}
+                    for i, name in enumerate(names)), key=lambda hint: -hint["p"])
+    if cfg["selection"] == "multiple":
+        out["labels"] = [{**hint, "role": cfg["roles"].get(hint["label"],
+                         "project" if hint["label"] in cfg["projects"] else "topic")} for hint in hints]
+    else:
+        for k in ("act", "project_label"):
+            if k in answers:
+                out[k] = pick(answers[k])
+        out["extra_labels"] = hints
+    return out
 
 
 def main():
@@ -54,16 +79,7 @@ def main():
     task = json.load(sys.stdin)
     state, q, by_key, names = build(task, cfg)
     a = jevlib.ask(key, state, q)
-    pick = lambda ans: {"value": ans["choice"], "p": round(ans["probabilities"][ans["choice"]], 3),
-                        "confidence": round(ans["confidence"], 3)}
-    proj = pick(a["project"])
-    out = {"project": {**proj, "id": by_key[proj["value"]]["id"]}}
-    for k in ("act", "project_label"):
-        if k in a:
-            out[k] = pick(a[k])
-    out["extra_labels"] = sorted(({"label": l, "p": round(a[f"x{i}"]["noul"], 3)} for i, l in enumerate(names)),
-                                 key=lambda x: -x["p"])
-    json.dump(out, sys.stdout, ensure_ascii=False, indent=1)
+    json.dump(placement(a, by_key, names, cfg), sys.stdout, ensure_ascii=False, indent=1)
     print()
     return 0
 

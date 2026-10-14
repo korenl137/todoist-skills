@@ -69,5 +69,30 @@
       "Filters by topic/food, whose meaning is recipes, cooking, groceries, without running any Jev script",
       "Says that cooking tasks without topic/food are not included"
     ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "Count agent or pkm tasks this week; one task has both labels. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Counts each task once in the union; explains overlapping label counts.",
+      "Keeps stored and inferred classification distinct."
+    ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "Find design AND write tasks. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Uses intersection, not either-label union; does not silently write inferred labels."
+    ]
   }
 ]

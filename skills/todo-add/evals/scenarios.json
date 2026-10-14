@@ -134,5 +134,30 @@
       "Uses the Todoist MCP tools without asking which route to use",
       "Does not mention a route choice in its reply"
     ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Register a task to design and document the agent knowledge workflow, where both design and writing views are used. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Allows agent, pkm, design and write together when supported; no single-action or single-topic cap.",
+      "Does not invent a required label or new taxonomy."
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add renew passport; none of the configured labels applies. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Creates the task with no labels rather than forcing an action."
+    ]
   }
 ]

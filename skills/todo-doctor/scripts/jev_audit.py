@@ -20,12 +20,12 @@ KEYS = ("missing_required", "unlisted_labels", "vague_title", "project_label_rev
 
 
 def project_labels(t, cfg):
-    return [l for l in t["labels"] if l in cfg["projects"]]
+    return [l for l in t["labels"] if l in jevlib.goal_labels(cfg)]
 
 
 def audit(tasks, answers, cfg):
     out = {k: [] for k in KEYS}
-    pre, allowed = cfg["required_prefix"], jevlib.allowlist(cfg)
+    pre, allowed = jevlib.required_prefix(cfg), jevlib.allowlist(cfg)
     for t, a in zip(tasks, answers):
         row = {"id": t["id"], "title": t["title"], "project": t["project"], "labels": t["labels"]}
         if pre and not t.get("has_children") and not any(l.startswith(pre) for l in t["labels"]):
@@ -51,7 +51,7 @@ def questions(t, cfg):
         q["area"] = {"type": "choice", "instructions": "Which area does this task belong to?", "criteria": cfg["areas"]}
     for j, l in enumerate(project_labels(t, cfg)):
         q[f"plabel{j}"] = {"type": "noul",
-                           "instructions": f"Is this task (or its parent task) part of {cfg['projects'][l]}?"}
+                           "instructions": f"Is this task (or its parent task) part of {jevlib.goal_labels(cfg)[l]}?"}
     return q
 
 

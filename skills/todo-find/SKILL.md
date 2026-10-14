@@ -7,10 +7,18 @@ description: >
   about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
   보여줘", "완료한 작업 보여줘".
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # todo-find
+## Contents
+
+- Tools
+- Todoist connection
+- Topic search
+- Grouped answers
+- Reporting results
+
 
 Look up Todoist tasks. Read-only: never changes anything, so no
 confirmation is needed.
@@ -76,13 +84,32 @@ Completed tasks are outside the topic path; use the completed-task lookup.
 
 ## Grouped answers
 
-For a count or a period ("this week", "how many"), group the tasks by their
-action label first: the labels with the `required_prefix` set in settings
-(for example `act/*` or `kind/*`), shown with their meanings. Then, when
-`[areas]` is set, split each group by area (the top-level project). Show a
-count per group. Put tasks without an action label in their own group and
-give that count too, since it is a finding. Without settings, group by the
-labels as they are in Todoist.
+Read the configured settings for meaning/role rules. When a relevant guide is
+named, resolve relative paths from the config directory and apply its task
+conventions; keep current user decisions above historical guide rules.
+
+Match the requested intersection (both labels) or union (either label).
+In multiple selection mode, use meanings/roles from settings rather than a
+name prefix. Group by the requested purpose; do not always force action first.
+Legacy mode keeps required_prefix action grouping, with area grouping when set.
+
+Deduplicate task IDs in unions. One task can contribute to multiple label groups;
+show the overlap and unique total instead of adding group counts as total work.
+For completed work, count dated completion occurrences/events and distinguish
+recurrences of the same task; task IDs alone do not identify those occurrences.
+Task counts are not time spent, progress percentages or research outcomes.
+
+Separate stored labels, classification inferred from task/parent context, and
+unclassified items. Missing optional action labels are normal; do not silently
+write an inferred label. A label-only search does not cover unlabeled related
+work: disclose the scope or inspect relevant parent/description context when
+the user asked for broader coverage. Parent labels are not stored child labels.
+
+For executable-work queries, inspect relevant dependencies and conditions.
+The absence of waiting/on-hold is not proof of readiness; report unverified
+conditions separately. Do not change any task while interpreting its state.
+Invalid settings (exit 4 from a helper) are a reported gap, not permission to
+substitute an assumed taxonomy.
 
 ## Reporting results
 

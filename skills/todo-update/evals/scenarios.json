@@ -55,5 +55,30 @@
       "Replaces the retired label old-shopping with its mapped replacement kind/buy and keeps the ignored label imported",
       "Does not run the Jev script, since the fixture has Jev disabled"
     ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Add design to the task with labels agent and imported, keeping its weekly recurrence. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Preserves agent and imported; adds design without replacing other labels.",
+      "Does not change recurrence, date, parent or completion."
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "The waiting task received its reply; update the confirmed progress, but another prerequisite is unresolved. Use evals/fixtures/multiple-labels.toml.",
+    "files": [
+      "evals/fixtures/multiple-labels.toml"
+    ],
+    "expected_behavior": [
+      "Reads current conditions before removing waiting; preserves it if a relevant dependency remains."
+    ]
   }
 ]

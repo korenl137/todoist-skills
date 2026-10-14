@@ -57,6 +57,111 @@ def answers(vague=0.1, area="Personal", conf=0.9, plabel=None):
     return a
 
 
+
+MULTIPLE_CONFIG = """
+[labels]
+selection = "multiple"
+required_prefix = "kind/"  # explicit multiple mode overrides a legacy requirement
+ignore = ["imported"]
+[labels.allowed]
+agent = "agent environment"
+pkm = "knowledge management"
+design = "design structure or workflows"
+write = "write documents"
+waiting = "confirmed outstanding dependency"
+[labels.projects]
+community = "community site"
+[labels.roles]
+agent = "topic"
+pkm = "topic"
+design = "action"
+write = "action"
+waiting = "state"
+community = "project"
+[jev]
+enabled = true
+"""
+
+class MultipleLabels(unittest.TestCase):
+    def test_explicit_roles_do_not_require_name_prefixes(self):
+        cfg = config(MULTIPLE_CONFIG)
+        self.assertEqual(set(jevlib.acts(cfg)), {"design", "write"})
+        self.assertEqual(set(jevlib.goal_labels(cfg)), {"community"})
+        self.assertEqual(jevlib.required_prefix(cfg), "")
+
+    def test_all_labels_get_independent_placement_questions(self):
+        cfg = config(MULTIPLE_CONFIG)
+        _, q, _, names = jev_place.build({"title": "Design and document an agent wiki", "projects": [{"id": "p", "name": "Work"}]}, cfg)
+        self.assertNotIn("act", q)
+        self.assertNotIn("project_label", q)
+        self.assertEqual(set(names), {"agent", "pkm", "design", "write", "waiting", "community"})
+        self.assertTrue(all(q[f"x{i}"]["type"] == "noul" for i in range(len(names))))
+        self.assertIn("current condition confirmed", q[f"x{names.index('waiting')}"]["instructions"])
+        self.assertNotIn("current condition confirmed", q[f"x{names.index('design')}"]["instructions"])
+
+    def test_multiple_placement_result_preserves_zero_or_many_labels(self):
+        cfg = config(MULTIPLE_CONFIG)
+        names = ["agent", "pkm", "design", "write"]
+        a = {"project": {"choice": "Work", "probabilities": {"Work": 1.0}, "confidence": 1.0},
+             **{f"x{i}": {"noul": p} for i, p in enumerate([0.9, 0.8, 0.95, 0.75])}}
+        result = jev_place.placement(a, {"Work": {"id": "p"}}, names, cfg)
+        self.assertEqual({l["label"] for l in result["labels"]}, set(names))
+        self.assertEqual({l["role"] for l in result["labels"]}, {"topic", "action"})
+        self.assertNotIn("act", result)
+        self.assertEqual(jev_place.placement({"project": a["project"]}, {"Work": {"id": "p"}}, [], cfg)["labels"], [])
+
+    def test_audit_accepts_unlabelled_and_multiple_action_tasks(self):
+        cfg = config(MULTIPLE_CONFIG)
+        tasks = [{"id": "0", "title": "Renew passport", "project": "Personal", "labels": []},
+                 {"id": "1", "title": "Design and document workflow", "project": "Work", "labels": ["agent", "pkm", "design", "write"]}]
+        out = jev_audit.audit(tasks, [{"vague": {"noul": 0.1}}] * 2, cfg)
+        self.assertEqual(out["missing_required"], [])
+        self.assertEqual(out["unlisted_labels"], [])
+
+    def test_project_roles_in_allowed_are_checked_independently(self):
+        cfg = config(MULTIPLE_CONFIG.replace('[labels.projects]\ncommunity = "community site"', 'community = "community site"'))
+        qs = jev_audit.questions({"labels": ["community", "agent"]}, cfg)
+        self.assertIn("community site", qs["plabel0"]["instructions"])
+
+    def test_legacy_placement_output_is_unchanged(self):
+        cfg = config()
+        a = {"project": {"choice": "Work", "probabilities": {"Work": 1.0}, "confidence": 1.0},
+             "act": {"choice": "kind/write", "probabilities": {"kind/write": 0.9}, "confidence": 0.9},
+             "project_label": {"choice": "none", "probabilities": {"none": 0.8}, "confidence": 0.8},
+             "x0": {"noul": 0.2}}
+        result = jev_place.placement(a, {"Work": {"id": "p"}}, ["topic/food"], cfg)
+        self.assertEqual(set(result), {"project", "act", "project_label", "extra_labels"})
+        self.assertEqual(result["act"]["value"], "kind/write")
+        self.assertEqual(result["project_label"]["value"], "none")
+        self.assertEqual(result["extra_labels"], [{"label": "topic/food", "p": 0.2}])
+
+    def test_relative_guide_and_invalid_settings_fail_before_model_call(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "config.toml"
+            p.write_text('guide = "guide.md"\n' + MULTIPLE_CONFIG, encoding="utf-8")
+            self.assertEqual(jevlib.load_config(p)["guide"], str(Path(tmp) / "guide.md"))
+            p.write_text(MULTIPLE_CONFIG.replace('selection = "multiple"', 'selection = "invalid"'), encoding="utf-8")
+            env = {**os.environ, "TODOIST_SKILLS_CONFIG": str(p)}
+            for skill, script in [("todo-add", "jev_place"), ("todo-doctor", "jev_audit"), ("todo-find", "jev_find")]:
+                result = subprocess.run([sys.executable, str(SKILLS / skill / "scripts" / f"{script}.py"),
+                                         *(["example"] if script == "jev_find" else [])],
+                                        input="{}", capture_output=True, text=True, env=env)
+                self.assertEqual(result.returncode, 4)
+                self.assertIn("Invalid Todoist settings", result.stderr)
+                self.assertNotIn("Traceback", result.stderr)
+
+    def test_invalid_selection_roles_and_missing_definitions_rejected(self):
+        for bad in [MULTIPLE_CONFIG.replace('selection = "multiple"', 'selection = "random"'),
+                    MULTIPLE_CONFIG.replace('design = "action"', 'design = "invalid"'),
+                    MULTIPLE_CONFIG.replace('design = "design structure or workflows"', ''),
+                    MULTIPLE_CONFIG.replace('design = "action"', 'design = 7'),
+                    MULTIPLE_CONFIG.replace('ignore = ["imported"]', 'ignore = "imported"'),
+                    MULTIPLE_CONFIG.replace('community = "project"', 'community = "action"')]:
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    config(bad)
+
+
 class Config(unittest.TestCase):
     def test_missing_file_means_defaults(self):
         cfg = jevlib.load_config(ROOT / "no-such-config.toml")
@@ -73,7 +178,8 @@ class Config(unittest.TestCase):
     def test_example_config_parses(self):
         cfg = jevlib.load_config(ROOT / "config.example.toml")
         self.assertFalse(cfg["jev"]["enabled"])
-        self.assertIn("kind/write", jevlib.acts(cfg))
+        self.assertEqual(cfg["selection"], "multiple")
+        self.assertIn("write", jevlib.acts(cfg))
 
     def test_scripts_exit_3_when_jev_not_enabled(self):
         env = {**os.environ, "TODOIST_SKILLS_CONFIG": str(ROOT / "no-such-config.toml")}

@@ -8,7 +8,7 @@ description: >
   "add a label", "move this task", "우선순위 P1로 바꿔줘", "마감일 다음 주로
   옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # todo-update
@@ -70,7 +70,8 @@ Both backends have the same pitfalls:
 ## Settings (optional)
 
 If `$TODOIST_SKILLS_CONFIG` or `~/.config/todoist-skills/config.toml`
-exists, read it; if it names a `guide` file, read that too. The user's
+exists, read it; if it names a `guide` file, read that too. Resolve relative
+guide paths from the settings file's directory; expand ~ in absolute paths. The user's
 words always win. Without settings, follow the labels and projects the
 user's Todoist already has.
 
@@ -94,12 +95,22 @@ The user rarely gives an ID.
   when set and never using `[labels.retired]`. Replace a retired label
   with its mapped replacements; when the mapping is empty, propose one. Keep
   labels the request does not concern, including those in `labels.ignore`.
+- In multiple selection mode, zero or multiple labels are valid. Review useful
+  purposes independently; do not replace one action just because another applies.
+  Only legacy required_prefix imposes a main-action requirement.
+- For requested progress/organization updates, reconcile relevant state labels
+  against confirmed conditions and remaining dependencies. Preserve a state if
+  evidence is missing or a blocking condition remains. Dates alone do not release
+  waiting/on-hold, and no state label does not prove readiness.
 - With `[jev] enabled = true`, you may get suggestions first: pipe
   `{"title", "description", "parent_title"?, "projects": [...]}` into
   `python3 scripts/jev_place.py` (Windows: `py -3`) from this skill's own
   directory. Adopt project labels and other labels with `p >= 0.5` and a
-  project with `confidence >= 0.7`; treat the action label as a hint. On
-  exit 2, 3, or any failure, decide yourself without mentioning Jev.
+  project with `confidence >= 0.7`; treat the action label as a hint.
+  In multiple mode, review each returned labels hint independently; never infer
+  a confirmed action/state from probability alone. Exit 4 means invalid settings:
+  report and stop relabeling rather than applying another scheme. On
+  exit 2, 3, or a model failure, decide yourself without mentioning Jev.
 
 ## Reflecting session changes in an existing plan
 

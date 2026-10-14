@@ -10,36 +10,44 @@
 # backend = "td"
 
 # Your own written conventions (any text or Markdown file). The skills read it before labeling or
-# auditing; where it disagrees with this file, the guide's prose wins and this file's lists are used
-# for checks.
-# guide = "~/notes/todoist-conventions.md"
+# auditing. Report disagreements between its conventions and this file's definitions;
+# current user decisions win. Do not invent different rules for selection and audit.
+# guide = "guide.md"  # relative to this config file; absolute/~ paths also work
 
 [labels]
-# If set, every task (except a header that only groups subtasks) carries exactly one label with this prefix.
-required_prefix = "kind/"
-# Labels that are never flagged, e.g. markers written by a sync tool.
+# Optional independent labels; zero or multiple labels are valid.
+selection = "multiple"
+# Legacy configs can omit selection (or use "legacy") and keep required_prefix.
+# required_prefix = "kind/"
 ignore = []
 
-# The labels tasks may carry, with what each means. If both tables below are empty or missing,
-# any existing label is allowed and the skills pick from your current Todoist labels.
+# Meanings determine selection, not prefixes in visible names.
 [labels.allowed]
-"kind/write" = "write or revise a document, note, or report"
-"kind/code" = "write or change code"
-"kind/read" = "read papers, books, or documentation"
-"kind/buy" = "buy or order something"
-"kind/contact" = "email, call, or message someone"
-"kind/plan" = "plan work or put it on a calendar"
-"kind/review" = "check or evaluate existing work"
-"topic/food" = "recipes, cooking, groceries"
+agent = "agent environment setup and operation"
+pkm = "knowledge and task management"
+design = "design structures, interfaces, workflows or experiments; not mere reading"
+write = "write or revise documents"
+waiting = "a confirmed outstanding dependency; record its reason and release condition"
 
-# Labels naming a specific project; added only when the task explicitly belongs to that project.
+# Named goals; multiple goal labels may apply when supported by the task context.
 [labels.projects]
-"project/community-site" = "the community site project"
+community = "the community site project"
+
+# Optional role metadata. Names must be defined in allowed/projects.
+# Supported roles: action, project, topic, state. Roles never require a label.
+# Unspecified labels default to topic (or project in labels.projects).
+[labels.roles]
+agent = "topic"
+pkm = "topic"
+design = "action"
+write = "action"
+waiting = "state"
+community = "project"
 
 # Labels you no longer use. Map each to its replacement (several comma-separated), or to "" to decide per task.
 # todo-doctor reports them and never changes them without your confirmation.
 [labels.retired]
-# "old-shopping" = "kind/buy"
+# "old-community" = "community"
 # "kind/do" = ""
 
 # Top-level Todoist projects that split your tasks into areas, and what belongs in each.

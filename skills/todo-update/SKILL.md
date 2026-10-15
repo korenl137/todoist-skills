@@ -7,8 +7,9 @@ description: >
   include "change this task's priority", "push the due date to next week",
   "add a label", "move this task", "우선순위 P1로 바꿔줘", "마감일 다음 주로
   옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
+  Independent project freshness checks belong to todo-reconcile; organization belongs to todo-tidy.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # todo-update
@@ -22,6 +23,7 @@ metadata:
 - Applying the change
 - Reflecting session changes in an existing plan
 - Progress updates that are really completion
+- Read coverage and dates
 - Execution
 
 Modify an existing Todoist task.
@@ -88,7 +90,10 @@ The user rarely gives an ID.
 
 ## Applying the change
 
+- Re-read current fields before writing, especially after a delayed proposal; reconcile intervening edits rather than overwriting them.
 - Send only the fields that change, following the pitfalls above.
+- For explicitly requested reminder, duration or assignee changes, inspect the live schema or CLI help.
+  Report unsupported fields; never silently substitute a scheduled date for a notification.
 - When the user asks to relocate or relabel without naming the target
   ("move it where it belongs", "fix its labels"): choose from existing
   projects and labels, keeping to `[labels.allowed]` / `[labels.projects]`
@@ -114,6 +119,10 @@ The user rarely gives an ID.
 
 ## Reflecting session changes in an existing plan
 
+Apply known, confirmed changes here; independent investigation of project freshness belongs to todo-reconcile.
+When a template change is explicitly requested for a particular task, read its configured guide and preserve useful content while applying that format.
+Organization or template normalization across a scope belongs to todo-tidy; a field-only edit does not authorize reformatting.
+
 When asked to reflect session progress or an agreed plan change, read the
 current task description and relevant child tasks. Apply only confirmed
 progress and decisions from the conversation, not proposals or intended work.
@@ -129,7 +138,19 @@ add the note as a comment (or in the description if that is where the
 user keeps notes), then complete the task. Completion is reversible, so no
 confirmation is needed. If the progress is partial, only edit.
 
+## Read coverage and dates
+
+Read every page needed for the requested scope, including child tasks, comments or completion events when relevant.
+If a page or source is inaccessible, report partial coverage; do not present a partial count as an exact total or absence as proof.
+Resolve relative dates and reporting periods using the user's stated timezone, otherwise the accessible account/session timezone.
+For consequential ambiguity, ask; report the absolute date or period and timezone when it affects the result.
+Distinguish a task's scheduled date from its deadline and an actual notification.
+
 ## Execution
+
+Check each operation's result and read back changed fields and preserved metadata/hierarchy.
+After a timeout, inspect current task state before retrying; for completion inspect occurrence history too.
+Retry only unresolved safe operations; report partial success or an unknown outcome without repeating confirmed writes.
 
 An edit is reversible, so apply it once the target and the change are
 both clear. Ask only when several tasks could be the target, or the change

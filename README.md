@@ -1,7 +1,7 @@
 # todoist-skills
 
 Agent skills for managing Todoist from a conversation: add, edit, find,
-complete, audit, and tidy tasks. Each skill is a self-contained folder under
+complete, audit, tidy, and reconcile tasks. Each skill is a self-contained folder under
 `skills/`; install all of them or only the ones you want.
 
 | Skill | Does | Changes tasks |
@@ -12,6 +12,17 @@ complete, audit, and tidy tasks. Each skill is a self-contained folder under
 | `todo-complete` | Completes or reopens tasks; deletes only after confirmation | yes |
 | `todo-tidy` | Shows a scoped organization plan, applies clear edits, and asks about ambiguous intent | yes |
 | `todo-doctor` | Audits tasks against your label and naming rules | no |
+| `todo-reconcile` | Compares task plans with current project evidence; proposes relevant updates | only when requested |
+
+## Choose the skill
+
+Use `todo-find` to retrieve tasks, `todo-doctor` to diagnose hygiene, and `todo-tidy` to organize or apply a configured template while preserving intent.
+Use `todo-update` for specified edits or confirmed session changes, and `todo-reconcile` to investigate whether a task matches current project decisions and implementation.
+Reconciliation is read-only unless updates are requested; it preserves formatting unless template application is also requested.
+A request to fix audit findings is an edit/organization request, not an audit write or another blanket approval gate.
+Use `todo-add` for new tasks and `todo-complete` for completion, reopening or confirmed deletion.
+Each skill works alone; references to another skill identify a responsibility, not a required sibling installation.
+Reconciliation also needs access to relevant project sources; missing sources limit the result rather than imply no changes.
 
 ## Requirements
 
@@ -159,6 +170,9 @@ accessing Todoist:
 ```bash
 python3 dev/check_td_commands.py
 ```
+
+For role boundaries and failure handling, review the per-skill `evals/scenarios.json` and
+[`dev/role-boundary-scenarios.md`](dev/role-boundary-scenarios.md). These are decision scenarios, not executed model evals.
 
 For session-based plan edits, review the manual decision cases in
 [`dev/todo-update-scenarios.md`](dev/todo-update-scenarios.md).

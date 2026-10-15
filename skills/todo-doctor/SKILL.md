@@ -6,8 +6,9 @@ description: >
   Read-only, no automatic fixes. Triggers include "audit my Todoist",
   "check my labels", "find tasks to group", "todoist 라벨 점검", "작업 스타일
   감사", "묶을 작업 찾아줘" (audit sense, not completing or deleting).
+  Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # todo-doctor
@@ -17,13 +18,14 @@ metadata:
 - Todoist connection
 - Rules come from the user
 - What to check
+- Read coverage and dates
 - Scope
 - Reporting
-- Fixing findings
+- Follow-up changes
 
 
 Read-only health check for Todoist task hygiene. It only reports; fixing a
-finding is a separate request that needs confirmation.
+finding requires a separate user request; diagnosis does not authorize writes.
 
 ## Tools
 
@@ -110,6 +112,14 @@ Exit 4 (invalid settings): report the diagnostic and stop rule-based classificat
 On exit 2 (key missing), 3 (not enabled), or a model failure, audit manually
 and say the fast path was skipped and why.
 
+## Read coverage and dates
+
+Read every page needed for the requested scope, including child tasks, comments or completion events when relevant.
+If a page or source is inaccessible, report partial coverage; do not present a partial count as an exact total or absence as proof.
+Resolve relative dates and reporting periods using the user's stated timezone, otherwise the accessible account/session timezone.
+For consequential ambiguity, ask; report the absolute date or period and timezone when it affects the result.
+Distinguish a task's scheduled date from its deadline and an actual notification.
+
 ## Scope
 
 Default to all active tasks except the Inbox, where unsorted tasks are not
@@ -123,11 +133,12 @@ task title, its current labels or project, and the problem. For a large
 category, give the count and a few examples. If nothing is wrong, say so;
 do not invent nitpicks.
 
-## Fixing findings
+## Follow-up changes
 
-Only on a separate request. Treat each fix as a normal edit (label lists
-are replaced, so send the full new list; never change a due date through
-the due string). Show the per-task change and get confirmation before a
-bulk change. Replace a retired label only with its mapped replacements from
-`[labels.retired]` (comma-separated); when the mapping is empty or missing, propose one per
-task and let the user decide. Never drop a label silently.
+Keep this audit read-only, including when a finding has an obvious fix.
+A subsequent request to fix findings is a new authorized edit/organization intent: use todo-update for specified changes or todo-tidy for scoped cleanup when available.
+Do not require another blanket approval merely because the request follows an audit; ask about materially ambiguous intent or consequential changes.
+If those skills are unavailable, the follow-up can still be handled with the same Todoist route: show concrete changed fields, read current tasks, preserve unrelated content/labels/dates/recurrence/hierarchy, apply only clear authorized edits, and read back results.
+Use known retired-label mappings; unexplained removals or missing mappings remain pending rather than silently dropping labels.
+After a timeout, inspect current state before retrying and report partial failures.
+Independent comparison with current project decisions or implementation belongs to todo-reconcile, beyond this audit's local stale-reference checks.

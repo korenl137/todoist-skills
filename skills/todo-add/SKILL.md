@@ -5,9 +5,9 @@ description: >
   priority, due date, project/section, and labels inferred from context and
   the user's existing Todoist structure. Triggers include "add this to
   Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
-  추가해줘", "할 일로 남겨줘".
+  추가해줘", "할 일로 남겨줘". Existing-task edits belong to todo-update.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # todo-add
@@ -20,6 +20,7 @@ metadata:
 - Creating a task
 - Explicit values vs inference
 - Task quality
+- Read coverage and dates
 - Execution
 
 Capture a Todoist task from natural conversation. Detect the intent from
@@ -119,6 +120,14 @@ Invalid settings (exit 4): report and stop classification until resolved; do not
 Exit 2 (key missing), 3 (not enabled), or a model failure: place the task
 yourself without mentioning Jev unless asked.
 
+### Existing work and explicit extra fields
+
+Before creating, narrowly check the intended destination and relevant parent for an existing task with the same purpose/source.
+A similar title alone is not a duplicate; distinguish recurring occurrences and intentionally separate work.
+If an equivalent task exists, show it rather than silently creating another or changing it; ask only if a separate new task is intended.
+For an explicitly requested reminder, duration, deadline or assignee, inspect the live schema or CLI help before writing.
+Report unsupported fields; never substitute a scheduled date for an actual reminder or claim a notification was set.
+
 ### Grouping (only when `[grouping] header_prefix` is set)
 
 - In the chosen project, look for a header task (title starting with the
@@ -150,7 +159,19 @@ Point to the source document instead of copying state that changes; if
 state must be written, date it. When the task waits on another, name that
 task.
 
+## Read coverage and dates
+
+Read every page needed for the requested scope, including child tasks, comments or completion events when relevant.
+If a page or source is inaccessible, report partial coverage; do not present a partial count as an exact total or absence as proof.
+Resolve relative dates and reporting periods using the user's stated timezone, otherwise the accessible account/session timezone.
+For consequential ambiguity, ask; report the absolute date or period and timezone when it affects the result.
+Distinguish a task's scheduled date from its deadline and an actual notification.
+
 ## Execution
 
 Creating a task is low-risk and reversible: once the intent is clear, add
-it without asking, then briefly report what was created and where.
+it without asking.
+Inspect per-item results and read back created tasks, labels and intended hierarchy before reporting success.
+After a timeout, inspect the scoped destination for the intended task before retrying; if the outcome is unresolved, report it and stop rather than create a duplicate.
+When grouping partly succeeds, retain created IDs and retry only unresolved operations after inspection.
+Then briefly report what was created and where.

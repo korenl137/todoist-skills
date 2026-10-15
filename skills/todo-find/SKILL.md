@@ -5,9 +5,9 @@ description: >
   text, or topic; also answers what was completed. Read-only. Triggers
   include "what's on my list today", "show this week's tasks", "find tasks
   about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
-  보여줘", "완료한 작업 보여줘".
+  보여줘", "완료한 작업 보여줘". Hygiene audits belong to todo-doctor.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # todo-find
@@ -17,6 +17,7 @@ metadata:
 - Todoist connection
 - Topic search
 - Grouped answers
+- Read coverage and dates
 - Reporting results
 
 
@@ -110,6 +111,14 @@ The absence of waiting/on-hold is not proof of readiness; report unverified
 conditions separately. Do not change any task while interpreting its state.
 Invalid settings (exit 4 from a helper) are a reported gap, not permission to
 substitute an assumed taxonomy.
+
+## Read coverage and dates
+
+Read every page needed for the requested scope, including child tasks, comments or completion events when relevant.
+If a page or source is inaccessible, report partial coverage; do not present a partial count as an exact total or absence as proof.
+Resolve relative dates and reporting periods using the user's stated timezone, otherwise the accessible account/session timezone.
+For consequential ambiguity, ask; report the absolute date or period and timezone when it affects the result.
+Distinguish a task's scheduled date from its deadline and an actual notification.
 
 ## Reporting results
 

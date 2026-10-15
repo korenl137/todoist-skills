@@ -94,5 +94,16 @@
     "expected_behavior": [
       "Uses intersection, not either-label union; does not silently write inferred labels."
     ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "How many tasks did I complete this week? Timezone Asia/Seoul; results span three pages and include recurring occurrences.",
+    "files": [],
+    "expected_behavior": [
+      "Resolves the local week to explicit date/time boundaries, fetches all pages, and counts completion occurrences",
+      "Reports partial coverage if a page cannot be read instead of claiming an exact total"
+    ]
   }
 ]

@@ -4,9 +4,9 @@ description: >
   Marks Todoist tasks done or reopens them, and deletes tasks after
   confirmation. Triggers include "mark this done", "I finished this",
   "reopen it", "delete this task", "이거 완료 처리해줘", "완료 취소해줘",
-  "이 작업 삭제해줘".
+  "이 작업 삭제해줘". Other field edits belong to todo-update.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # todo-complete
@@ -45,6 +45,14 @@ connect Todoist in your agent. To set up `td`, run `npm install -g
 Completing a recurring task advances it to the next date; stopping the
 recurrence (`td task complete --forever`) needs the user to ask for it.
 
+## Read coverage and dates
+
+Read every page needed for the requested scope, including child tasks, comments or completion events when relevant.
+If a page or source is inaccessible, report partial coverage; do not present a partial count as an exact total or absence as proof.
+Resolve relative dates and reporting periods using the user's stated timezone, otherwise the accessible account/session timezone.
+For consequential ambiguity, ask; report the absolute date or period and timezone when it affects the result.
+Distinguish a task's scheduled date from its deadline and an actual notification.
+
 ## Resolving the target task
 
 Reuse a task already surfaced in the conversation, or search for it. One
@@ -67,4 +75,11 @@ and completed) and comments. With MCP, use `fetch-object` with
 (`td task --help`, `td comment --help`). State the counts in the confirmation.
 Child tasks and comments may go with the task, so do not assume they are kept.
 
+## Verify the outcome
+
+Read back task state and relevant completion events; for recurring tasks check the intended occurrence and next date.
+An active recurring task may already have been completed and advanced: after a timeout, inspect occurrence history before any retry.
+If the outcome cannot be established, report it and stop rather than advance recurrence twice.
+For deletion, verify absence with a reliable lookup; an access error alone does not establish deletion.
+Check per-item results and report partial failures without repeating successful operations.
 Afterwards, briefly report what was done to which task.

@@ -37,9 +37,9 @@
       "evals/fixtures/config.toml"
     ],
     "expected_behavior": [
-      "Shows the per-task changes and asks for confirmation before the bulk edit",
-      "Replaces old-shopping only with its mapped replacement kind/buy, and proposes kind/* labels per task instead of guessing silently",
-      "Sends full label lists and does not change due dates through the due string"
+      "Treats the follow-up as an authorized organization request, using todo-tidy when available or a self-contained scoped edit procedure otherwise; doctor diagnosis itself remains read-only",
+      "Shows concrete changed fields and applies clear edits without an extra blanket confirmation; leaves materially ambiguous labels pending",
+      "Uses mapped replacements, preserves unrelated labels and dates, and reads back changed tasks"
     ]
   },
   {
@@ -91,6 +91,17 @@
     ],
     "expected_behavior": [
       "Reports missing evidence; does not claim a state is resolved just because its date passed."
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Check whether this task reflects the latest project decisions and merged changes.",
+    "files": [],
+    "expected_behavior": [
+      "Recognizes project reconciliation as todo-reconcile rather than a hygiene audit",
+      "If that skill is unavailable, explains the boundary and performs only the explicitly scoped evidence comparison without task writes"
     ]
   }
 ]

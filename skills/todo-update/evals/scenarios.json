@@ -80,5 +80,37 @@
     "expected_behavior": [
       "Reads current conditions before removing waiting; preserves it if a relevant dependency remains."
     ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Reflect the confirmed plan in this task; do not inspect the repository. Two description items are done, one was only proposed.",
+    "files": [],
+    "expected_behavior": [
+      "Updates only confirmed items in the existing format; leaves proposals and unrelated fields untouched",
+      "Does not trigger a project reconciliation; reads back the changed task"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Add a label. The task changed after it was shown earlier in the conversation.",
+    "files": [],
+    "expected_behavior": [
+      "Reads current fields before mutation, unions labels with the current list, and verifies the result"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
+    "query": "Set an actual notification tomorrow at 9 and a 30-minute duration; the connected route cannot set reminders.",
+    "files": [],
+    "expected_behavior": [
+      "Inspects live schema/help for explicitly requested fields; reports unsupported reminder without claiming it was set",
+      "Does not silently substitute a due date for a notification; applies independent supported edits only within authorized scope"
+    ]
   }
 ]

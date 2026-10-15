@@ -112,5 +112,27 @@
     "expected_behavior": [
       "Does not label by product names in the link alone; leaves unclear intent pending."
     ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "Fix the clear label findings from the audit; one other item has unclear intent.",
+    "files": [],
+    "expected_behavior": [
+      "Shows changes and applies clear items without a second blanket confirmation; asks only about the ambiguous item",
+      "Keeps completion/deletion out of tidying and verifies preserved metadata"
+    ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "서식이 안 맞는 태스크에 설정된 템플릿을 적용해줘. 설명에 중요한 링크와 대기 조건이 있고 템플릿의 일부 항목은 근거가 없다.",
+    "files": [],
+    "expected_behavior": [
+      "Reads configured guide and applies the requested template while retaining links, conditions and useful text",
+      "Leaves unknown facts unresolved and preserves date, priority, recurrence and hierarchy; does not infer completion"
+    ]
   }
 ]

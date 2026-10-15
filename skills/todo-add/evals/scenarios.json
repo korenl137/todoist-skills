@@ -159,5 +159,26 @@
     "expected_behavior": [
       "Creates the task with no labels rather than forcing an action."
     ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Add renew passport. A matching active task already exists with the same purpose and source.",
+    "files": [],
+    "expected_behavior": [
+      "Shows the existing task and does not silently create a duplicate or modify it; asks only if a distinct new task is still intended"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Task creation timed out after submission; the server may have created it.",
+    "files": [],
+    "expected_behavior": [
+      "Reads the scoped destination and matches the intended task before retrying; never blindly repeats creation",
+      "If success cannot be resolved, reports the uncertainty and does not create another task"
+    ]
   }
 ]

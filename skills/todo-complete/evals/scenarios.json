@@ -52,5 +52,16 @@
       "States the 3 child tasks and 2 comments in the confirmation before asking to delete",
       "Does not delete until the user confirms"
     ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "Complete the recurring task. The completion call timed out.",
+    "files": [],
+    "expected_behavior": [
+      "Checks completion activity and the next due date before retrying; a still-active recurring task is not evidence of failure",
+      "Does not advance the recurrence twice; reports unresolved outcome without blind retry"
+    ]
   }
 ]

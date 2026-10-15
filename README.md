@@ -103,11 +103,19 @@ the same file, so each rule is written once.
 [`docs/task-template-guide.md`](docs/task-template-guide.md) is a ready-made
 written convention (in Korean) you can point `guide` at: one core task
 template (title, description blocks, status values, dates, priority) plus
-per-type variants, with rules for adding, updating, and completing tasks so
-the wording stays consistent across skills. Copy it, edit it to taste, and set
+per-type variants, with rules for adding and updating tasks. Completion rules
+are a manual convention: `todo-complete` does not currently read the guide.
+Copy it, edit it to taste, and set
 `guide = "task-template-guide.md"`. It adds no settings and no labels of its
 own; labels still come from your `[labels.*]` definitions, and where the guide
-and your settings disagree, the skills report it.
+and your settings disagree, the skills report it. Missing optional example
+labels are not disagreements.
+
+Preserve an existing personal guide instead of silently replacing it. If AEM
+or another manager owns your links or config directory, keep those paths intact;
+test with a separate config selected by `TODOIST_SKILLS_CONFIG`. Existing
+skills need no relinking for this documentation-only change. See the
+[local validation scenarios](dev/task-template-guide-scenarios.md).
 
 ## Jev (optional)
 

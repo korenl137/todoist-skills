@@ -134,5 +134,17 @@
       "Reads configured guide and applies the requested template while retaining links, conditions and useful text",
       "Leaves unknown facts unresolved and preserves date, priority, recurrence and hierarchy; does not infer completion"
     ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "'테스트 프로젝트'에 단계별 섹션을 만들어서 태스크를 나눠줘. 상태를 섹션 이름으로 쓰지는 마.",
+    "files": [],
+    "expected_behavior": [
+      "Creates sections only in the named project, named as stages (e.g. 자료 수집, 초안, 검토), not statuses",
+      "Reuses any existing section for a stage instead of duplicating it; does not rename or delete sections",
+      "Checks children before each sectionId move and reads back section and parent"
+    ]
   }
 ]

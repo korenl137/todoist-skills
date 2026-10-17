@@ -7,7 +7,7 @@ description: >
   "작업 분류해줘", "템플릿 적용", "서식 정리". Read-only hygiene audits belong to todo-doctor; a specified
   single-field edit belongs to todo-update. Project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Todo Tidy
@@ -99,6 +99,16 @@ Explicit user changes can settle a question; no reply does not resolve ambiguity
 - Re-read current fields before applying a delayed plan; if they changed, reconcile rather than overwrite.
   Check per-item tool results. After partial failure, retry only unresolved safe operations after inspection.
   After a timeout, read back before retrying: a write may already have succeeded.
+
+## Sections
+
+Create sections only when the user asks for a section structure in a named project. That request confirms the new sections. Derive names from the tasks' titles and types: stages a task passes through (for example, 자료 수집, 초안, 검토), never statuses such as 진행 or 대기. Keep status in the description header and labels.
+
+- Use existing sections first; do not add a second name for a stage that already has one.
+- Create sections in the named project only. Create them with the route's section command (MCP `add-sections`; for `td`, check `td section --help`).
+- Then set the stage order with `reorder-objects` (type: section). New sections otherwise share the same order.
+- Never rename or delete a section as a side effect: deleting a section deletes the tasks inside it.
+- Place only top-level tasks in sections. Moving a subtask with `sectionId` lifts it out from under its parent (the tool schema says so), so leave subtasks where they are. For an umbrella task, read back its children after the move.
 
 ## Read coverage and dates
 

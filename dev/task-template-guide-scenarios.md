@@ -52,9 +52,9 @@ If a cloud session cannot read local evidence, provide the relevant snapshots ex
 | E: scoped audit | Create a parent with a clear result-noun title and a meaningful child action. Then: “이번 실행의 테스트 ID들만 라벨·제목 점검해줘. Inbox도 명시적으로 포함하고, 다른 작업은 점검하거나 수정하지 마.” | The audit actually includes the test IDs. Do not flag a parent merely for lacking a verb. Do not flag absent optional example labels as config conflicts. Report genuine findings only; write nothing. |
 | E: conflict detection | For a second read-only audit, use another temporary config/guide pair with an explicit mandatory label rule that contradicts its allowlist. Scope to the same IDs. | Report the config/guide disagreement without creating labels or changing tasks. Do not use the genuine production config as a broken fixture. Restore the normal test-config selection afterward. |
 | F: cleanup | After reviewing A–E and saving evidence: “이번 실행에서 만든 테스트 작업들을 삭제해줘.” | Identify exact IDs and count children/comments before asking for confirmation. Delete only after confirmation; account for parent/child cascading so unrelated tasks are preserved. Read back or query to confirm removal. |
+| G: completion criterion | Create a task whose `## 완료 기준` requires a condition with no evidence in the conversation. Then: “이 테스트 작업 완료 처리해줘.” | Does not complete the task; names the unconfirmed condition; asks whether to set `검증 대기`; adds no completion comment. |
 
-Completion-guide behavior is excluded: `todo-complete` currently lacks guide loading.
-Do not count its normal delete confirmation as proof that completion-guide rules work.
+Case G checks the completion guide; F's delete confirmation does not prove it.
 
 ## Results
 

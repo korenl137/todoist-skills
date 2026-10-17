@@ -114,8 +114,8 @@ the same file, so each rule is written once.
 [`docs/task-template-guide.md`](docs/task-template-guide.md) is a ready-made
 written convention (in Korean) you can point `guide` at: one core task
 template (title, description blocks, status values, dates, priority) plus
-per-type variants, with rules for adding and updating tasks. Completion rules
-are a manual convention: `todo-complete` does not currently read the guide.
+per-type variants, with rules for adding and updating tasks. `todo-complete` reads the
+guide's `## 완료 기준` before completing; it adds evidence comments only when you ask.
 Copy it, edit it to taste, and set
 `guide = "task-template-guide.md"`. It adds no settings and no labels of its
 own; labels still come from your `[labels.*]` definitions, and where the guide

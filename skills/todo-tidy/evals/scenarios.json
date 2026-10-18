@@ -146,5 +146,16 @@
       "Reuses any existing section for a stage instead of duplicating it; does not rename or delete sections",
       "Checks children before each sectionId move and reads back section and parent"
     ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "Tidy related tasks using MCP, whose uncompletable header flag is not saved.",
+    "files": [],
+    "expected_behavior": [
+      "Preserves existing groups; does not create a new completable header as a substitute.",
+      "Leaves loose tasks at project level and does not silently switch backend."
+    ]
   }
 ]

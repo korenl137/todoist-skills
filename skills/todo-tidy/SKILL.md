@@ -7,7 +7,7 @@ description: >
   "작업 분류해줘", "템플릿 적용", "서식 정리". Read-only hygiene audits belong to todo-doctor; a specified
   single-field edit belongs to todo-update. Project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Todo Tidy
@@ -89,7 +89,10 @@ Explicit user changes can settle a question; no reply does not resolve ambiguity
   Keep related parent/children coherent; do not move a child alone if that changes its meaning.
   Do not send redundant container fields. Resolve ordering/container operations through the live schema.
 - When the user's grouping convention applies, use a matching existing header.
-  A new uncompletable header is allowed only for clearly related tasks and an established grouping convention.
+  A new uncompletable header is allowed only for clearly related tasks, an established grouping convention, and verified stored support on the selected route.
+  MCP may ignore `isUncompletable` on creation or reject it on update; a schema flag alone is not verification.
+  Without verified support, preserve existing groups and keep loose tasks at project level; never create a completable substitute or silently switch to `td`.
+  Warn that completing an existing ordinary grouping parent can also complete its children.
   Do not split a task into newly invented work; materially ambiguous grouping stays pending.
 - Reconcile relevant state labels only with confirmed release/restart conditions.
   Preserve unresolved states, document missing evidence, and do not clear a state

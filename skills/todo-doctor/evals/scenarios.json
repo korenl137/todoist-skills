@@ -103,5 +103,16 @@
       "Recognizes project reconciliation as todo-reconcile rather than a hygiene audit",
       "If that skill is unavailable, explains the boundary and performs only the explicitly scoped evidence comparison without task writes"
     ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Audit active non-Inbox tasks, including a configured prefix header and a bare noun task.",
+    "files": [],
+    "expected_behavior": [
+      "Supplies filter: all or a concrete projectId to find-tasks and follows pagination.",
+      "Excludes configured headers and organizational parents from vague-title findings while still checking ordinary bare nouns."
+    ]
   }
 ]

@@ -187,7 +187,10 @@ python3 dev/check_td_commands.py --live
 ```
 
 The script uses `td` with Node 24+; otherwise it runs
-`npx -y @doist/todoist-cli`. Keep this network/account check separate from
+`npx -y @doist/todoist-cli@5.5.2`. The checker prints the selected executable and
+version; an installed `td` remains usable and its version is reported.
+Update the fallback pin explicitly after rerunning the command checks; do not
+resolve a new package version during each test. Keep this network/account check separate from
 the default unit tests.
 
 ## License

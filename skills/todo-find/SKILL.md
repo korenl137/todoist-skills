@@ -7,7 +7,7 @@ description: >
   about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
   보여줘", "완료한 작업 보여줘". Hygiene audits belong to todo-doctor.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # todo-find
@@ -55,6 +55,10 @@ through either route.
 | Resolve names to IDs | `find-projects` / `find-sections` / `find-labels` | `td project list` / `td section list` / `td label list` (`--json`) |
 | Completed tasks | `find-completed-tasks` | `td completed list --since … --until …` |
 | Completion history | `find-activity` | `td activity --type task --event completed` |
+
+For MCP completion history, query the relevant object/event type and date window and follow all pages.
+Do not rely on `objectId` filtering: retain only events whose task ID exactly matches the intended task.
+Missing or delayed activity limits the completion claim; unrelated events are not evidence.
 
 ## Topic search
 

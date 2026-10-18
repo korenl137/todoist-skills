@@ -21,9 +21,9 @@ def config_path():
 def load_config(p=None):
     p = pathlib.Path(p) if p else config_path()
     raw = tomllib.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
-    labels, jev = raw.get("labels", {}), raw.get("jev", {})
-    if not isinstance(labels, dict) or not isinstance(jev, dict):
-        raise ValueError("labels and jev must be tables")
+    labels, jev, grouping = raw.get("labels", {}), raw.get("jev", {}), raw.get("grouping", {})
+    if not all(isinstance(value, dict) for value in (labels, jev, grouping)):
+        raise ValueError("labels, jev and grouping must be tables")
     guide = raw.get("guide", "")
     if not isinstance(guide, str):
         raise ValueError("guide must be a path string")
@@ -37,10 +37,13 @@ def load_config(p=None):
         "projects": labels.get("projects", {}),
         "ignore": labels.get("ignore", []),
         "areas": dict(raw.get("areas", {})),
+        "header_prefix": grouping.get("header_prefix", ""),
         "jev": {"enabled": bool(jev.get("enabled", False)),
                 "send_descriptions": bool(jev.get("send_descriptions", False))},
     }
 
+    if not isinstance(cfg["header_prefix"], str):
+        raise ValueError("grouping.header_prefix must be a string")
     if cfg["selection"] not in ("legacy", "multiple"):
         raise ValueError("labels.selection must be legacy or multiple")
     for group in ("allowed", "projects", "roles"):

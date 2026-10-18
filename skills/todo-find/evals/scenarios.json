@@ -105,5 +105,16 @@
       "Resolves the local week to explicit date/time boundaries, fetches all pages, and counts completion occurrences",
       "Reports partial coverage if a page cannot be read instead of claiming an exact total"
     ]
+  },
+  {
+    "skills": [
+      "todo-find"
+    ],
+    "query": "Find the completion event for task T; MCP objectId filtering returns unrelated IDs.",
+    "files": [],
+    "expected_behavior": [
+      "Retrieves the relevant event/date window and filters exact task IDs locally across pages.",
+      "Does not use an unrelated event as evidence of completion."
+    ]
   }
 ]

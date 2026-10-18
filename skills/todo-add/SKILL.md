@@ -7,7 +7,7 @@ description: >
   Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
   추가해줘", "할 일로 남겨줘". Existing-task edits belong to todo-update.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # todo-add
@@ -53,7 +53,7 @@ login`. Jev is optional; without it, choose the project and labels yourself.
 | List projects / sections / labels | `find-projects` / `find-sections` / `find-labels` | `td project list --json` / `td section list "<project>" --json` / `td label list --json` |
 | Tasks in a project | `find-tasks` with `projectId` | `td task list --project "<project>" --json` |
 | Add a task | `add-tasks` | `td task add "<title>" --project … --section … --parent id:… --labels a,b --priority p2 --due "…" --json` (description via `--stdin`) |
-| Add a header task | `add-tasks` with `isUncompletable: true` | `td task add "<title>" --uncompletable …` |
+| Add a header task | `add-tasks` with `isUncompletable: true` only after stored support is verified (see Grouping) | `td task add "<title>" --uncompletable …` |
 | Put an existing task under a header | `update-tasks` with `parentId` | `td task move id:<id> --parent id:<header>` |
 
 Priorities are `p1` (highest) to `p4` on both.
@@ -132,10 +132,14 @@ Report unsupported fields; never substitute a scheduled date for an actual remin
 
 - In the chosen project, look for a header task (title starting with the
   prefix) or open tasks sharing the new task's goal, source, or repository.
-- A matching header exists → add the task under it.
+- A matching header exists → preserve the group and add the task under it.
+  If it is an ordinary completable parent, warn that completing it can also complete its children.
 - Two or more tasks from one request, or one related task already loose →
-  first add the header (non-completable, no required action label), then add the
-  tasks under it and move the loose one there.
+  first verify that the selected route stores uncompletable headers, then add the
+  header (non-completable, no required action label), add the tasks and move the loose one there.
+  MCP may ignore `isUncompletable` on creation or reject it on update; the advertised schema alone is not verification.
+  Without verified support, leave loose tasks at project level; do not create a completable substitute or silently switch to `td`.
+  If a verification attempt creates an ordinary task, do not attach children; report it and obtain scoped cleanup authorization.
 - Otherwise add it at the project level.
 
 ## Explicit values vs inference

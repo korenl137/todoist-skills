@@ -15,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
+TD_NPX_PACKAGE = "@doist/todoist-cli@5.5.2"
 GROUPS = {"task", "project", "section", "label", "completed", "comment", "auth"}
 
 
@@ -24,7 +25,7 @@ def td_command():
         version = subprocess.check_output([node, "--version"], text=True).strip()
         if int(version.removeprefix("v").split(".")[0]) >= 24:
             return ["td"]
-    return ["npx", "-y", "@doist/todoist-cli"]
+    return ["npx", "-y", TD_NPX_PACKAGE]
 
 
 def run(base, args, *, token=None, input_text=None):
@@ -132,6 +133,8 @@ def main():
                         help="also use a Todoist account and a temporary Inbox task")
     args = parser.parse_args()
     base = td_command()
+    cli_version = run(base, ["--version"]).strip()
+    print(f"CLI: {shlex.join(base)}; version: {cli_version}")
     static_check(base)
     if args.live:
         live_check(base, api_token())

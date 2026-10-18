@@ -6,10 +6,21 @@ description: >
   "reopen it", "delete this task", "이거 완료 처리해줘", "완료 취소해줘",
   "이 작업 삭제해줘". Other field edits belong to todo-update.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # todo-complete
+
+## Contents
+
+- Tools
+- Todoist connection
+- Read coverage and dates
+- Resolving the target task
+- Completing / reopening
+- Completion criteria (when a guide is set)
+- Deleting
+- Verify the outcome
 
 Complete, reopen, or delete Todoist tasks.
 
@@ -61,7 +72,14 @@ delete.
 
 ## Completing / reopening
 
-Reversible, so do it once the target is clear and any completion criterion is confirmed (below), without confirmation.
+Before completing any parent, inspect its children and count the open descendants that will be affected.
+With MCP, expand `fetch-object` with `includeChildren`, follow children with children, and page `find-tasks` by `parentId` when truncated; report any coverage gap.
+Completing a normal parent, including a prefix-only grouping header, can complete its children too.
+State that warning and the affected count before the call, and check applicable completion criteria for those descendants.
+If the request does not clearly include completing the remaining children, ask about that scope before acting.
+Do not assume a prefix makes a task uncompletable; inspect the stored flag and leave an actual uncompletable header intact.
+
+Otherwise completion/reopening is reversible: proceed once the target and any completion criteria (below) are confirmed, without another confirmation.
 
 ## Completion criteria (when a guide is set)
 
@@ -88,6 +106,16 @@ Child tasks and comments may go with the task, so do not assume they are kept.
 Read back task state and relevant completion events; for recurring tasks check the intended occurrence and next date.
 An active recurring task may already have been completed and advanced: after a timeout, inspect occurrence history before any retry.
 If the outcome cannot be established, report it and stop rather than advance recurrence twice.
-For deletion, verify absence with a reliable lookup; an access error alone does not establish deletion.
+For MCP activity reads, do not rely on `objectId` filtering: retrieve the relevant object/event type and date window, page through it, and retain only events whose task ID exactly matches the target.
+For MCP deletion, combine the operation result with these checks:
+
+1. Query active tasks in the known project and page through the results; match the exact ID.
+1. Query completed tasks covering the operation window, including all pages, to distinguish completion from deletion.
+1. Query deletion activity for that window and filter the target ID locally.
+
+An empty comments result or a `fetch-object` 404 is not proof of deletion.
+Activity can be delayed or missing; recheck delayed reads once without repeating the deletion.
+If the result or read coverage is incomplete, or no matching deletion evidence is available, report the outcome as unverified with the checks that succeeded.
+For other routes, verify absence with a reliable lookup; an access error alone does not establish deletion.
 Check per-item results and report partial failures without repeating successful operations.
 Afterwards, briefly report what was done to which task.

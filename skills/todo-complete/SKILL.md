@@ -1,4 +1,5 @@
 ---
+model: haiku
 name: todo-complete
 description: >
   Marks Todoist tasks done or reopens them, and deletes tasks after

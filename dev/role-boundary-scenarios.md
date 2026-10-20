@@ -6,6 +6,8 @@ Use per-skill evals for standalone cases; a missing neighboring skill must not r
 | Request | Owner and expected result |
 |---|---|
 | “오늘 작업 보여줘” | todo-find; paginated lookup, no writes. |
+| “전체 작업의 섹션 위치가 적합한지 확인만 해줘” | todo-tidy; compare outcome, hierarchy and existing section use; findings only, no formatting or label changes. |
+| “확인된 섹션 위치 수정해줘” | todo-tidy; apply clear scoped moves, preserve children and unrelated fields, verify stored placement. |
 | “라벨 규칙 점검해줘” | todo-doctor; findings only. |
 | “방금 점검한 명확한 라벨 오류 고쳐줘” | todo-tidy for scoped organization or todo-update for specified edits; no repeated blanket approval. |
 | “이 작업 날짜만 다음 금요일로” | todo-update; resolve timezone/date and reschedule while preserving recurrence and format. |

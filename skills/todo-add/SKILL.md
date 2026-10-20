@@ -1,4 +1,5 @@
 ---
+model: haiku
 name: todo-add
 description: >
   Captures a new Todoist task from natural conversation: title, description,

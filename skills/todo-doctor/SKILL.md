@@ -2,13 +2,14 @@
 name: todo-doctor
 description: >
   Audits active Todoist tasks against the user's own label and naming rules
-  and flags vague titles, loose related tasks, and stale descriptions.
+  and flags vague titles, loose related tasks, stale descriptions and
+  dormant tasks.
   Read-only, no automatic fixes. Triggers include "audit my Todoist",
   "check my labels", "find tasks to group", "todoist 라벨 점검", "작업 스타일
-  감사", "묶을 작업 찾아줘" (audit sense, not completing or deleting).
+  감사", "묶을 작업 찾아줘", "오래 멈춘 작업 찾아줘" (audit sense, not completing or deleting).
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # todo-doctor
@@ -56,6 +57,9 @@ the Todoist API with `TODOIST_API_TOKEN`, not through either route.
 | Active tasks | `find-tasks` | `td task list --all --json` (`--project` to narrow) |
 | Labels / projects | `find-labels` / `find-projects` | `td label list --json` / `td project list --json` |
 | Completed tasks (for stale references) | `find-completed-tasks` | `td completed list --search "…" --json` (`--search` cannot be combined with `--since`/`--until`) |
+| Progress evidence (for dormant tasks) | `find-activity` (comment added, task completed) / `find-comments` | `td activity --type comment --event added --since <date> --json` / `td comment list <ref> --json` |
+
+Activity pages are large; page through them for the window and keep only task IDs and dates rather than reading full events in the conversation.
 
 ## Rules come from the user
 
@@ -87,6 +91,22 @@ that exist on tasks but nowhere in the label list.
    (a local path that no longer exists, a document with a newer dated
    version beside it, "after X" where X is already completed). Check only
    what can be read locally; report the newer fact next to the old one.
+8. **Dormant task**: a non-recurring task, not a header, added before the
+   window and showing no progress evidence for 14 days (or the period the
+   user names), judged by the task's added date. Progress evidence within
+   the window is a comment added or a subtask completed anywhere in the
+   task's subtree, or a dated note in the description that records a change
+   in the work itself. Label, section, priority and other organizational
+   edits, and notes that only restate a reclassification, are not progress;
+   bulk updates often touch many tasks at once. Report each candidate with
+   its added date and latest evidence date as "review". Tasks with `waiting`
+   or `on-hold` and a stated reason and resume condition are parked, not
+   dormant; list them only when the condition is missing, a resume date has
+   passed, or the awaited work is already completed.
+   Never infer completion, abandonment or readiness from inactivity; the
+   user decides whether to keep, park or close. For a task tied to a
+   repository or document, suggest todo-reconcile to check whether the work
+   moved on elsewhere.
 
 In multiple selection mode, no labels or several actions/topics/goals are
 valid. Check semantic contradictions, redundant classification and stale state
@@ -107,7 +127,7 @@ parent titles; descriptions are not sent). For a narrower scope, pipe
 "parent_title"?, "has_children"?}]}` into it without `--todoist`.
 
 Present Jev findings as "review" and drop one only when the user's rules
-clearly say otherwise. Run checks 6–7 yourself; they need descriptions.
+clearly say otherwise. Run checks 6–8 yourself; they need descriptions or activity.
 Exit 4 (invalid settings): report the diagnostic and stop rule-based classification.
 On exit 2 (key missing), 3 (not enabled), or a model failure, audit manually
 and say the fast path was skipped and why.

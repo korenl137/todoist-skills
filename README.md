@@ -11,7 +11,7 @@ complete, audit, tidy, and reconcile tasks. Each skill is a self-contained folde
 | `todo-find` | Lists tasks by date, project, label, text, or topic; answers what was completed | no |
 | `todo-complete` | Completes or reopens tasks; deletes only after confirmation | yes |
 | `todo-tidy` | Shows a scoped organization plan, applies clear edits, and asks about ambiguous intent | yes |
-| `todo-doctor` | Audits tasks against your label and naming rules | no |
+| `todo-doctor` | Audits tasks against your label and naming rules and finds dormant tasks | no |
 | `todo-reconcile` | Compares task plans with current project evidence; proposes relevant updates | only when requested |
 
 ## Choose the skill

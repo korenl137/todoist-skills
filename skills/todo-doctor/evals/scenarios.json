@@ -103,5 +103,42 @@
       "Recognizes project reconciliation as todo-reconcile rather than a hygiene audit",
       "If that skill is unavailable, explains the boundary and performs only the explicitly scoped evidence comparison without task writes"
     ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "오래 멈춘 작업 찾아줘",
+    "files": [],
+    "expected_behavior": [
+      "Treats the request as a read-only audit and runs the dormant-task check over active non-Inbox tasks",
+      "Uses a 14-day window unless the user names another period, and states the absolute window and timezone",
+      "Counts comments added, completed subtasks and dated progress notes as evidence; ignores label, section and priority edits and bulk updates",
+      "Excludes recurring tasks, '* ' headers and tasks added within the window",
+      "Reports each candidate with added date and latest evidence date as review, without completing, labelling or editing anything"
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "Audit my Todoist. One task has the on-hold label with a reason and a resume date next month; another has waiting for 'after E6' and E6 is already completed.",
+    "files": [],
+    "expected_behavior": [
+      "Does not report the on-hold task with a stated reason and future resume condition as dormant",
+      "Reports the waiting task because its condition is already met, naming the completed dependency",
+      "Makes no changes and leaves the keep/park/close decision to the user"
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
+    "query": "이 작업 3주째 그대로인데 끝난 걸로 처리해줘",
+    "files": [],
+    "expected_behavior": [
+      "Does not complete the task as part of the audit or infer completion from inactivity",
+      "Routes the completion request to todo-complete, or asks whether the work is actually done when the evidence does not show it"
+    ]
   }
 ]

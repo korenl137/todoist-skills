@@ -108,6 +108,17 @@
     "skills": [
       "todo-doctor"
     ],
+    "query": "Audit active non-Inbox tasks, including a configured prefix header and a bare noun task.",
+    "files": [],
+    "expected_behavior": [
+      "Supplies filter: all or a concrete projectId to find-tasks and follows pagination.",
+      "Excludes configured headers and organizational parents from vague-title findings while still checking ordinary bare nouns."
+    ]
+  },
+  {
+    "skills": [
+      "todo-doctor"
+    ],
     "query": "오래 멈춘 작업 찾아줘",
     "files": [],
     "expected_behavior": [

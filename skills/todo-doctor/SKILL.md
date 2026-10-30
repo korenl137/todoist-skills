@@ -9,7 +9,7 @@ description: >
   감사", "묶을 작업 찾아줘", "오래 멈춘 작업 찾아줘" (audit sense, not completing or deleting).
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # todo-doctor
@@ -54,7 +54,7 @@ the Todoist API with `TODOIST_API_TOKEN`, not through either route.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|
-| Active tasks | `find-tasks` | `td task list --all --json` (`--project` to narrow) |
+| Active tasks | `find-tasks` with `filter: "all"` (or `projectId` to narrow), then exclude Inbox | `td task list --all --json` (`--project` to narrow) |
 | Labels / projects | `find-labels` / `find-projects` | `td label list --json` / `td project list --json` |
 | Completed tasks (for stale references) | `find-completed-tasks` | `td completed list --search "…" --json` (`--search` cannot be combined with `--since`/`--until`) |
 | Progress evidence (for dormant tasks) | `find-activity` (comment added, task completed) / `find-comments` | `td activity --type comment --event added --since <date> --json` / `td comment list <ref> --json` |
@@ -81,7 +81,8 @@ that exist on tasks but nowhere in the label list.
    task that is clearly not part of that project. Low confidence; report
    as "review".
 4. **Vague title**: a bare noun or topic instead of an action one could
-   start on. A judgment call.
+   start on. A judgment call. Exempt organizational parents and titles starting with
+   the configured non-empty `grouping.header_prefix`; keep their other checks.
 5. **Wrong area**: with `[areas]` set, a task clearly belonging to a
    different area than its top-level project. Only clear-cut cases.
 6. **Grouping candidate**: with `[grouping] header_prefix` set, two or

@@ -146,5 +146,138 @@
       "Reuses any existing section for a stage instead of duplicating it; does not rename or delete sections",
       "Checks children before each sectionId move and reads back section and parent"
     ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "Tidy related tasks using MCP, whose uncompletable header flag is not saved.",
+    "files": [],
+    "expected_behavior": [
+      "Preserves existing groups; does not create a new completable header as a substitute.",
+      "Leaves loose tasks at project level and does not silently switch backend."
+    ]
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "전체 작업의 섹션 위치가 적합한지 확인만 해줘",
+    "projects": [
+      {
+        "id": "research",
+        "sections": [
+          {
+            "id": "process",
+            "name": "Process experiments"
+          },
+          {
+            "id": "core",
+            "name": "Core software"
+          }
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "loose",
+        "title": "UV driver trace tests",
+        "projectId": "research",
+        "description": "Validate UV command transport.",
+        "sectionId": null
+      }
+    ],
+    "expected_behavior": [
+      "Reads existing sections and their actual use; proposes Core software with purpose-based evidence",
+      "Reports unassigned placement without treating every sectionless task as an error; performs no writes or unrelated formatting/label changes"
+    ],
+    "files": []
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "연구 프로젝트 태스크의 섹션 위치 정리해줘",
+    "projects": [
+      {
+        "id": "research",
+        "sections": [
+          {
+            "id": "process",
+            "name": "Process experiments"
+          },
+          {
+            "id": "core",
+            "name": "Core software"
+          }
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "parent",
+        "title": "CLIP process window",
+        "projectId": "research",
+        "sectionId": "process",
+        "children": [
+          "child"
+        ]
+      },
+      {
+        "id": "child",
+        "title": "DLP calibration",
+        "parentId": "parent",
+        "sectionId": "process",
+        "description": "DLP calibration is input to the parent CLIP experiment."
+      }
+    ],
+    "expected_behavior": [
+      "Keeps the child with its parent despite DLP in the title; current placement fits the intended outcome",
+      "Does not send sectionId for the child, duplicate a section or rewrite unrelated fields"
+    ],
+    "files": []
+  },
+  {
+    "skills": [
+      "todo-tidy"
+    ],
+    "query": "섹션 위치를 정리해줘. 배송 작업은 목적이 불분명하고 UV 테스트는 드라이버 검증이야.",
+    "projects": [
+      {
+        "id": "research",
+        "sections": [
+          {
+            "id": "core",
+            "name": "Core software"
+          },
+          {
+            "id": "admin",
+            "name": "Purchases"
+          }
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "clear",
+        "title": "UV tests",
+        "projectId": "research",
+        "description": "Driver command trace validation",
+        "due": "2026-10-22",
+        "priority": "p2"
+      },
+      {
+        "id": "unclear",
+        "title": "배송",
+        "projectId": "research",
+        "description": ""
+      }
+    ],
+    "expected_behavior": [
+      "Shows and applies the clear top-level move to Core software without another blanket approval",
+      "Leaves the ambiguous item pending after safe discovery; no new sections",
+      "Changes only sectionId for the placement-only request, preserves dates/priority and verifies stored placement"
+    ],
+    "files": []
   }
 ]

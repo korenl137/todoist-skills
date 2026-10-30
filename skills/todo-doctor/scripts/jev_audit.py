@@ -28,11 +28,13 @@ def audit(tasks, answers, cfg):
     pre, allowed = jevlib.required_prefix(cfg), jevlib.allowlist(cfg)
     for t, a in zip(tasks, answers):
         row = {"id": t["id"], "title": t["title"], "project": t["project"], "labels": t["labels"]}
-        if pre and not t.get("has_children") and not any(l.startswith(pre) for l in t["labels"]):
+        prefix = cfg.get("header_prefix", "")
+        header = bool(t.get("has_children") or (prefix and t["title"].startswith(prefix)))
+        if pre and not header and not any(l.startswith(pre) for l in t["labels"]):
             out["missing_required"].append(row)
         if allowed is not None and (unlisted := [l for l in t["labels"] if l.lower() not in allowed]):
             out["unlisted_labels"].append({**row, "unlisted": unlisted})
-        if (v := a["vague"]["noul"]) >= VAGUE_MIN:
+        if not header and (v := a["vague"]["noul"]) >= VAGUE_MIN:
             out["vague_title"].append({**row, "p": round(v, 2)})
         for j, l in enumerate(project_labels(t, cfg)):
             if (p := a[f"plabel{j}"]["noul"]) < 0.5:

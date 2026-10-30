@@ -2,12 +2,12 @@
 name: todo-tidy
 description: >
   Organizes Todoist Inbox or a specified set of existing tasks: inspects context,
-  shows concrete title, description, project and label changes, applies clear edits,
+  checks section fit, shows concrete title, description, placement and label changes, applies clear edits,
   and asks only about unresolved intent. Use for "Inbox 정리", "투두이스트 정리",
-  "작업 분류해줘", "템플릿 적용", "서식 정리". Read-only hygiene audits belong to todo-doctor; a specified
+  "작업 분류해줘", "섹션 위치 점검", "템플릿 적용", "서식 정리". Read-only hygiene audits belong to todo-doctor; a specified
   single-field edit belongs to todo-update. Project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.3"
+  version: "1.5"
 ---
 
 # Todo Tidy
@@ -18,12 +18,14 @@ metadata:
 - Connection and conventions
 - Inspect and propose
 - Apply clear changes
+- Sections
 - Read coverage and dates
 - Verify and finish
 
 Turn captured tasks into actionable, correctly placed tasks without changing their intent.
 Default scope is active Inbox tasks, including their children.
 Existing tasks outside Inbox enter the scope only when requested or needed to check related grouping/duplicates.
+Section-fit checks and placement-only requests preserve unrelated titles, descriptions and labels.
 
 ## Tools
 
@@ -76,7 +78,7 @@ Do not create new taxonomy merely to obtain an exact fit.
 
 ## Apply clear changes
 
-After showing the plan, apply clear title/description/project/label edits without asking for blanket approval.
+After showing the plan, apply clear title/description/placement/label edits within the requested scope without asking for blanket approval.
 For preview-only requests, perform no mutations. Questions on ambiguous items do not block independent clear items.
 Explicit user changes can settle a question; no reply does not resolve ambiguity.
 
@@ -89,7 +91,10 @@ Explicit user changes can settle a question; no reply does not resolve ambiguity
   Keep related parent/children coherent; do not move a child alone if that changes its meaning.
   Do not send redundant container fields. Resolve ordering/container operations through the live schema.
 - When the user's grouping convention applies, use a matching existing header.
-  A new uncompletable header is allowed only for clearly related tasks and an established grouping convention.
+  A new uncompletable header is allowed only for clearly related tasks, an established grouping convention, and verified stored support on the selected route.
+  MCP may ignore `isUncompletable` on creation or reject it on update; a schema flag alone is not verification.
+  Without verified support, preserve existing groups and keep loose tasks at project level; never create a completable substitute or silently switch to `td`.
+  Warn that completing an existing ordinary grouping parent can also complete its children.
   Do not split a task into newly invented work; materially ambiguous grouping stays pending.
 - Reconcile relevant state labels only with confirmed release/restart conditions.
   Preserve unresolved states, document missing evidence, and do not clear a state
@@ -101,6 +106,17 @@ Explicit user changes can settle a question; no reply does not resolve ambiguity
   After a timeout, read back before retrying: a write may already have succeeded.
 
 ## Sections
+
+For section-fit checks or placement changes, read the existing sections in the relevant project,
+their descriptions and representative tasks before judging placement.
+Compare the task's intended outcome and parent/children context with the section's documented or actual use;
+keywords, labels and task type alone do not establish the destination.
+Respect existing topic- or stage-based organization rather than converting it to another scheme.
+Keep suitable placements, including no section when the project does not need one.
+Report the current and proposed section with a short reason; leave materially ambiguous destinations pending.
+A check-only request ends with findings, without writes.
+An organization request permits clear moves after showing the plan; change only the requested fields
+and preserve hierarchy using the rules below.
 
 Create sections only when the user asks for a section structure in a named project. That request confirms the new sections. Derive names from the tasks' titles and types: stages a task passes through (for example, 자료 수집, 초안, 검토), never statuses such as 진행 or 대기. Keep status in the description header and labels.
 

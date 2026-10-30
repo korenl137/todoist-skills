@@ -46,8 +46,8 @@
     ],
     "expected_behavior": [
       "Searches the destination project for a header task starting with 'Group: ' or related loose tasks before adding",
-      "Creates one 'Group: <group>' header that is non-completable and has no kind/* label",
-      "Adds the three tasks under the header and moves the existing related task under it",
+      "Creates one non-completable header without a kind/* label only when the selected route has verified stored support; otherwise leaves loose tasks at project level",
+      "Adds and moves tasks under a verified header, or preserves project-level placement when support is unverified",
       "Dates any changing state it writes into descriptions"
     ]
   },
@@ -179,6 +179,17 @@
     "expected_behavior": [
       "Reads the scoped destination and matches the intended task before retrying; never blindly repeats creation",
       "If success cannot be resolved, reports the uncertainty and does not create another task"
+    ]
+  },
+  {
+    "skills": [
+      "todo-add"
+    ],
+    "query": "Group two tasks using MCP; isUncompletable is ignored by creation and rejected by update.",
+    "files": [],
+    "expected_behavior": [
+      "Does not create a new header without verified non-completable support; leaves tasks at project level.",
+      "Does not silently switch to td; preserves existing groups and warns that completing an ordinary parent also completes children."
     ]
   }
 ]

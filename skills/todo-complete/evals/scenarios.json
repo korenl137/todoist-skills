@@ -75,5 +75,27 @@
       "Does not complete while the condition is unconfirmed; names it and asks whether to set 검증 대기",
       "Adds no completion comment unless the user asks"
     ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "Complete the grouping parent; two open subtasks remain.",
+    "files": [],
+    "expected_behavior": [
+      "Reads and counts children before completion, warns that completion cascades to them.",
+      "Checks descendant criteria; asks whether the request includes the unfinished children before completing."
+    ]
+  },
+  {
+    "skills": [
+      "todo-complete"
+    ],
+    "query": "MCP deletion returned success, fetch-object gives 404, comments are empty, and no delete event is visible.",
+    "files": [],
+    "expected_behavior": [
+      "Checks paginated active tasks, completed tasks in the operation window, and activity filtered locally by exact task ID.",
+      "Reports deletion unverified when evidence is missing; does not delete again or treat empty comments/404 as proof."
+    ]
   }
 ]

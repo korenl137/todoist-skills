@@ -190,6 +190,28 @@ class Config(unittest.TestCase):
 
 
 class Audit(unittest.TestCase):
+    def test_group_headers_are_not_vague_but_keep_other_findings(self):
+        cfg = config(CONFIG + '\n[grouping]\nheader_prefix = "* "\n')
+        tasks = [
+            {"id": "h", "title": "* hermes-agent-playbook", "project": "Personal", "labels": ["unknown"]},
+            {"id": "p", "title": "Research", "project": "Personal", "labels": [], "has_children": True},
+            {"id": "t", "title": "Stuff", "project": "Personal", "labels": ["kind/write"]},
+        ]
+        out = jev_audit.audit(tasks, [answers(vague=0.9)] * 3, cfg)
+        self.assertEqual([r["id"] for r in out["vague_title"]], ["t"])
+        self.assertEqual(out["missing_required"], [])
+        self.assertEqual([r["id"] for r in out["unlisted_labels"]], ["h"])
+
+    def test_invalid_grouping_is_rejected(self):
+        for text in ('grouping = "bad"\n', '[grouping]\nheader_prefix = 3\n'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                config(text)
+
+    def test_unconfigured_prefix_does_not_exempt_ordinary_task(self):
+        task = {"id": "t", "title": "* Stuff", "project": "Personal", "labels": ["kind/write"]}
+        out = jev_audit.audit([task], [answers(vague=0.9)], config())
+        self.assertEqual([r["id"] for r in out["vague_title"]], ["t"])
+
     def test_rule_checks_and_thresholds(self):
         cfg = config()
         tasks = [

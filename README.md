@@ -10,13 +10,14 @@ complete, audit, tidy, and reconcile tasks. Each skill is a self-contained folde
 | `todo-update` | Edits an existing task, including confirmed session changes to its plan; keeps recurrence when only the date changes | yes |
 | `todo-find` | Lists tasks by date, project, label, text, or topic; answers what was completed | no |
 | `todo-complete` | Completes or reopens tasks; deletes only after confirmation | yes |
-| `todo-tidy` | Shows a scoped organization plan, applies clear edits, and asks about ambiguous intent | yes |
+| `todo-tidy` | Checks section fit, shows a scoped organization plan, and applies clear edits | yes |
 | `todo-doctor` | Audits tasks against your label and naming rules and finds dormant tasks | no |
 | `todo-reconcile` | Compares task plans with current project evidence; proposes relevant updates | only when requested |
 
 ## Choose the skill
 
 Use `todo-find` to retrieve tasks, `todo-doctor` to diagnose hygiene, and `todo-tidy` to organize or apply a configured template while preserving intent.
+Section-fit checks also use `todo-tidy`; check-only requests report suitable placements and proposed moves without writes.
 Use `todo-update` for specified edits or confirmed session changes, and `todo-reconcile` to investigate whether a task matches current project decisions and implementation.
 Reconciliation is read-only unless updates are requested; it preserves formatting unless template application is also requested.
 A request to fix audit findings is an edit/organization request, not an audit write or another blanket approval gate.
@@ -187,7 +188,10 @@ python3 dev/check_td_commands.py --live
 ```
 
 The script uses `td` with Node 24+; otherwise it runs
-`npx -y @doist/todoist-cli`. Keep this network/account check separate from
+`npx -y @doist/todoist-cli@5.5.2`. The checker prints the selected executable and
+version; an installed `td` remains usable and its version is reported.
+Update the fallback pin explicitly after rerunning the command checks; do not
+resolve a new package version during each test. Keep this network/account check separate from
 the default unit tests.
 
 ## License

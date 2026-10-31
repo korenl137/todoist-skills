@@ -128,7 +128,12 @@ parent titles; descriptions are not sent). For a narrower scope, pipe
 "parent_title"?, "has_children"?}]}` into it without `--todoist`.
 
 Present Jev findings as "review" and drop one only when the user's rules
-clearly say otherwise. Run checks 6–8 yourself; they need descriptions or activity.
+clearly say otherwise. Jev judges area from titles alone, so before reporting
+an `area_mismatch`, read that task's description and parent with the chosen
+route (MCP `fetch-object` or `td`). Drop it when they show the configured area
+fits; keep it as "review" when they do not settle the question. Fetch only the
+flagged tasks, never the whole list. Run checks 6–8 yourself; they need
+descriptions or activity.
 Exit 4 (invalid settings): report the diagnostic and stop rule-based classification.
 On exit 2 (key missing), 3 (not enabled), or a model failure, audit manually
 and say the fast path was skipped and why.

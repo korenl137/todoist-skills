@@ -82,7 +82,8 @@ Follow the same route for every call below.
    listed options. A fact you or the user need confirmed (a deadline, a
    source, whether something already happened) is looked up with tools first;
    ask only when tools cannot settle it.
-5. **Apply.** Only what the answers settle:
+5. **Apply.** Only what the answers settle (plus the assumption note in
+   Rules):
    - Title, description and section moves for inbox organization: show the
      plan first (current to proposed), then apply clear items. This follows
      todo-tidy and the configured guide for title and description format.
@@ -103,11 +104,14 @@ Follow the same route for every call below.
 
 - Never complete, delete, reschedule or change priority without an answer to
   that exact question. Never create labels or sections.
-- A date assumed from a source is written in the description as an assumption
-  until confirmed; do not put it in the title.
+- A date assumed from a source never goes in the title or the due field.
+  Note it in the description as an assumption (source, unconfirmed) and ask
+  the user to confirm it in the next round; this note is the one write
+  allowed before an answer.
 - The user's own conventions override this flow. If a task or section
   description says how it is handled, follow it.
 - In a scheduled or unattended run there is nobody to answer: read, research
-  and report only, with no task changes.
-- Read back changed tasks and compare changed fields, preserved metadata and
-  hierarchy. After a timeout, read the task before retrying.
+  and report only. Make no task changes, comments and the assumption note
+  included; put research findings in the report instead.
+- Read back changed tasks and compare changed fields, preserved metadata
+  (recurrence, labels, section) and hierarchy. After a timeout, read the task before retrying.

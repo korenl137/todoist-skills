@@ -62,8 +62,8 @@ Follow the same route for every call below.
    partial coverage instead of exact totals.
 2. **Research first** (comments are posted in attended runs only; an unattended
    run reports the findings instead). For any open task whose purpose rests on a link,
-   video or shared document (a link-only Inbox capture counts only when its
-   purpose is a review; any task titled `[검토]` among those read in step 1), read its comments first. Research comments start with the heading
+   video or shared document (a link-only Inbox capture: read its link and
+   comments to judge its purpose, and research only when the purpose is a review; any task titled `[검토]` among those read in step 1), read its comments first. Research comments start with the heading
    `## 조사 정리 (YYYY-MM-DD)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
@@ -89,13 +89,15 @@ Follow the same route for every call below.
    listed options. A fact you or the user need confirmed (a deadline, a
    source, whether something already happened) is looked up with tools first;
    ask only when tools cannot settle it.
-5. **Apply.** Only what the answers settle (plus the assumption note in
-   Rules):
+5. **Apply.** Only what the answers settle, the inbox organization plan below
+   and the assumption note in Rules (in an all-at-once run, apply at the end):
    - Title, description and section moves for inbox organization: show the
      plan first (current to proposed), then apply clear items without a
-     separate answer. This follows
+     separate answer, including replacing a retired label with its mapped
+     replacement. This follows
      todo-tidy and the configured guide for title and description format.
-   - Dates, priority, labels: only as answered. A date-only move of a dated task uses the
+   - Dates, priority, other labels: only as answered; resolve relative dates
+     in the account timezone and report the absolute date. A date-only move of a dated task uses the
      reschedule operation so recurrence survives; a task with no date cannot
      be rescheduled, so set its first date with the date field (it has no
      recurrence to lose).
@@ -115,7 +117,9 @@ Follow the same route for every call below.
 ## Rules
 
 - Never complete, delete, reschedule or change priority without an answer to
-  that exact question. Never create labels or sections.
+  that exact question; a delete or parent-completion question states the
+  child-task and comment counts (todo-complete). Never create labels; create
+  sections only when the user names a project and asks for them (todo-tidy).
 - A date assumed from a source never goes in the title or the due field.
   Note it in a comment as an assumption (source, unconfirmed) and ask the
   user to confirm it in this round if a slot remains, otherwise the next, and

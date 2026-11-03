@@ -65,7 +65,8 @@ Follow the same route for every call below.
 2. **Research first** (comments are posted in attended runs only; an unattended
    run reports the findings instead). For any open task whose purpose rests on a link,
    video or shared document (a link-only Inbox capture: read its link and
-   comments to judge its purpose, and research only when the purpose is a review; a `[검토]` task among those read in step 1 whose basis is a link, video or
+   comments to judge its purpose, and research only when the purpose is a review, and ask for the purpose when
+   the link and comments do not reveal it; a `[검토]` task among those read in step 1 whose basis is a link, video or
    document; a `[검토]` task based on repository or PR records is not a candidate), read its comments first. Research comments start with the heading
    `## 조사 정리 (YYYY-MM-DD)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
@@ -95,7 +96,8 @@ Follow the same route for every call below.
 5. **Apply.** Only what the answers settle, the inbox organization plan below
    and the assumption note in Rules (in an all-at-once run, apply at the end):
    - Title, description and section moves for inbox organization: show the
-     plan first (current to proposed), then apply clear items without a
+     plan first (current to proposed; in an all-at-once run, with the final
+     round), then apply clear items without a
      separate answer, including replacing a retired label with its mapped
      replacement. This follows
      todo-tidy and the configured guide for title and description format.

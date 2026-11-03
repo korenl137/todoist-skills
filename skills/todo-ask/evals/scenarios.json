@@ -31,7 +31,7 @@
     "files": [],
     "expected_behavior": [
       "Does not put the assumed date in the title",
-      "Records the date as an assumption in the description and asks the user to confirm it"
+      "Records the date as an assumption in a comment, never in the title or due field and asks the user to confirm it"
     ]
   },
   {

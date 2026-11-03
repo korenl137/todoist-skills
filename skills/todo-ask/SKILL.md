@@ -60,8 +60,10 @@ Follow the same route for every call below.
    timezone, not only the completed list); tasks created in the
    last 2 days; p1, overdue, and undated p2. Read every page, and report
    partial coverage instead of exact totals.
-2. **Research first** (attended runs only; see the unattended rule). For any open task whose purpose rests on a link,
-   video or shared document (an Inbox capture or any review task among those read in step 1), read its comments first. Research comments start with the heading
+2. **Research first** (comments are posted in attended runs only; an unattended
+   run reports the findings instead). For any open task whose purpose rests on a link,
+   video or shared document (a link-only Inbox capture counts only when its
+   purpose is a review; any review task among those read in step 1), read its comments first. Research comments start with the heading
    `## 조사 정리 (date)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
@@ -89,7 +91,8 @@ Follow the same route for every call below.
 5. **Apply.** Only what the answers settle (plus the assumption note in
    Rules):
    - Title, description and section moves for inbox organization: show the
-     plan first (current to proposed), then apply clear items. This follows
+     plan first (current to proposed), then apply clear items without a
+     separate answer. This follows
      todo-tidy and the configured guide for title and description format.
    - Dates, priority, labels: only as answered. A date-only move of a dated task uses the
      reschedule operation so recurrence survives; a task with no date cannot
@@ -102,8 +105,9 @@ Follow the same route for every call below.
      Send Korean text as plain characters, never escaped, and read it back
      for typos.
    - Update the description's status header when the status changes. Record
-     the date and the decision in a comment (history lives in comments, per
-     the guide), not in a new description block.
+     the date and the decision of a status change in a comment (history
+     lives in comments, per the guide), not in a new description block;
+     completions get no comment unless the user asks.
 6. **Report.** What was done (numbered), what still needs the user, the next
    step. No internal IDs.
 

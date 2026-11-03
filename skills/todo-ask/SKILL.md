@@ -1,0 +1,113 @@
+---
+name: todo-ask
+description: >
+  Reviews the whole Todoist account, researches linked material for review
+  tasks, and walks the user through updates and completions with short
+  multiple-choice questions. Use when the user wants a full task review with
+  questions, e.g. "태스크 전체 점검해줘", "투두이스트 문답으로 정리", "인박스 정리하고
+  물어봐줘", "review all my tasks and ask me". Organizing a scope without
+  questions belongs to todo-tidy, a single edit to todo-update, a plain
+  lookup to todo-find, and a read-only rule audit to todo-doctor.
+metadata:
+  version: "1.0"
+---
+
+# todo-ask
+
+## Contents
+
+- When to use
+- Tools
+- Todoist connection
+- Flow
+- Rules
+
+Review everything, research what needs reading, ask, then apply only what the
+user answered. This skill owns the flow; field rules stay with the sibling
+skills.
+
+## When to use
+
+Use for a full or inbox-plus-schedule review where the user expects questions.
+Do not use for one named edit (todo-update), a quiet reorganization of a
+scope (todo-tidy), a lookup (todo-find) or a rules audit (todo-doctor).
+Each skill works alone: when a sibling is installed, follow it for its
+responsibility; when not, apply the same rule from this file.
+
+## Tools
+
+| Need | Required | Recommended | Fallback |
+|---|---|---|---|
+| Read and change tasks, comments, projects, sections | One Todoist route: MCP or `td` | Live schemas; paginated reads | If the selected route is unavailable, say so and stop; never switch silently |
+| Multiple-choice questions | None | AskUserQuestion | Numbered text questions, same content |
+| Linked material | Accessible link or document | Page, video transcript or document read | Say it was not read; never guess its content |
+
+## Todoist connection
+
+Use the route the user names; otherwise `backend` from
+`$TODOIST_SKILLS_CONFIG` or `~/.config/todoist-skills/config.toml` (`mcp` or
+`td`). With neither, use the single available route; if both exist, ask once
+for this request. Read the settings and, if it names a `guide`, the guide
+(relative paths resolve beside the settings file); the user's words win.
+Follow the same route for every call below.
+
+## Flow
+
+1. **Read, no writes.** Inbox; project and section descriptions (they decide
+   placement; read the project itself as well as its sections); overdue plus
+   the next 7 days; tasks completed today, including recurring occurrences
+   (use the activity log, not only the completed list); tasks created in the
+   last 2 days; p1, overdue, and undated p2. Read every page, and report
+   partial coverage instead of exact totals.
+2. **Research first.** For any open task whose purpose rests on a link,
+   video or shared document (a review task or an Inbox capture), read its
+   comments first. If a research comment already exists, skip it unless the
+   user asks for an update. Otherwise read the material and post the result
+   as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
+   findings in the middle, and the decisions the user must make last. Do not
+   guess the content of anything unread; say why it was unreadable.
+3. **Report findings.** Overdue; due today; overloaded days (state the threshold you used); undated tasks
+   with a deadline; start/finish dates in the wrong order; stale descriptions
+   (references to finished or dropped work); tasks completed by mistake
+   (description says unfinished); recurring times that no longer match the schedule the description states; label or
+   section mismatches against the guide (report them; replace a retired
+   label only with its mapped replacement, and ask when the mapping is empty).
+4. **Ask.** At most 4 questions per round. Each question names the task and
+   its current value so it stands alone, puts the recommended answer first,
+   and uses free text when the answer is not a choice. Order the questions
+   yes/no, missing information, dates, decisions; the recommended answer is
+   the first option inside each question. Without AskUserQuestion, say once
+   that you are asking in text. If the user asks for everything at once,
+   run rounds back to back and apply at the end. A free-text answer beats the
+   listed options. A fact you or the user need confirmed (a deadline, a
+   source, whether something already happened) is looked up with tools first;
+   ask only when tools cannot settle it.
+5. **Apply.** Only what the answers settle:
+   - Title, description and section moves for inbox organization: show the
+     plan first (current to proposed), then apply clear items. This follows
+     todo-tidy and the configured guide for title and description format.
+   - Dates, priority, labels: only as answered. A date-only move uses the
+     reschedule operation so recurrence survives.
+   - Completion: only as answered, following todo-complete and each task's
+     `## 완료 기준` block when the guide defines one.
+   - Description edits are block-level: read the current text, change the
+     named blocks, and send the whole text with unchanged blocks verbatim.
+     Send Korean text as plain characters, never escaped, and read it back
+     for typos.
+   - Record the date and the decision in the task description's status
+     section or in a comment, per the guide.
+6. **Report.** What was done (numbered), what still needs the user, the next
+   step. No internal IDs.
+
+## Rules
+
+- Never complete, delete, reschedule or change priority without an answer to
+  that exact question. Never create labels or sections.
+- A date assumed from a source is written in the description as an assumption
+  until confirmed; do not put it in the title.
+- The user's own conventions override this flow. If a task or section
+  description says how it is handled, follow it.
+- In a scheduled or unattended run there is nobody to answer: read, research
+  and report only, with no task changes.
+- Read back changed tasks and compare changed fields, preserved metadata and
+  hierarchy. After a timeout, read the task before retrying.

@@ -57,13 +57,16 @@ Follow the same route for every call below.
    placement; read the project itself as well as its sections); overdue plus
    the next 7 days; tasks completed today, including recurring occurrences
    (use the activity log with the user's ID from user-info and the account
-   timezone, not only the completed list); tasks created in the
+   timezone, not only the completed list; its end date must be later than its
+   start date, and an event can outlive a deleted task, so confirm the task
+   exists before asking about it); tasks created in the
    last 2 days; p1, overdue, and undated p2. Read every page, and report
    partial coverage instead of exact totals.
 2. **Research first** (comments are posted in attended runs only; an unattended
    run reports the findings instead). For any open task whose purpose rests on a link,
    video or shared document (a link-only Inbox capture: read its link and
-   comments to judge its purpose, and research only when the purpose is a review; any task titled `[검토]` among those read in step 1), read its comments first. Research comments start with the heading
+   comments to judge its purpose, and research only when the purpose is a review; a `[검토]` task among those read in step 1 whose basis is a link, video or
+   document; a `[검토]` task based on repository or PR records is not a candidate), read its comments first. Research comments start with the heading
    `## 조사 정리 (YYYY-MM-DD)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
@@ -73,7 +76,7 @@ Follow the same route for every call below.
    threshold; count every task due that day, children included, and say so); undated tasks
    with a deadline; start/finish dates in the wrong order; stale descriptions
    (references to finished or dropped work); tasks completed by mistake
-   (the status header is anything but done or 검증 대기, or a `## 완료 기준`
+   (the status header says 미착수, 진행, 대기 or 보류, or a `## 완료 기준`
    condition is unmet); recurring times that no longer match the schedule the description states; label or
    section mismatches against the guide (report them; replace a retired
    label only with its mapped replacement; with no mapping, or a label the

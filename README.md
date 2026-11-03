@@ -12,6 +12,7 @@ complete, audit, tidy, and reconcile tasks. Each skill is a self-contained folde
 | `todo-complete` | Completes or reopens tasks; deletes only after confirmation | yes |
 | `todo-tidy` | Checks section fit, shows a scoped organization plan, and applies clear edits | yes |
 | `todo-doctor` | Audits tasks against your label and naming rules and finds dormant tasks | no |
+| `todo-ask` | Reviews all tasks, researches linked material into comments, asks short multiple-choice questions, applies only answered changes | yes, as answered |
 | `todo-reconcile` | Compares task plans with current project evidence; proposes relevant updates | only when requested |
 
 ## Choose the skill
@@ -21,6 +22,7 @@ Section-fit checks also use `todo-tidy`; check-only requests report suitable pla
 Use `todo-update` for specified edits or confirmed session changes, and `todo-reconcile` to investigate whether a task matches current project decisions and implementation.
 Reconciliation is read-only unless updates are requested; it preserves formatting unless template application is also requested.
 A request to fix audit findings is an edit/organization request, not an audit write or another blanket approval gate.
+Use `todo-ask` for a full review with questions, researching linked material first; it follows the sibling skills for edits and completion.
 Use `todo-add` for new tasks and `todo-complete` for completion, reopening or confirmed deletion.
 Each skill works alone; references to another skill identify a responsibility, not a required sibling installation.
 Reconciliation also needs access to relevant project sources; missing sources limit the result rather than imply no changes.

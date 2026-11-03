@@ -1,0 +1,89 @@
+[
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "태스크 전체 점검해줘, 물어보면서 정리하자",
+    "files": [],
+    "expected_behavior": [
+      "Reads Inbox, project/section descriptions, overdue plus next 7 days, tasks completed today, recent tasks and p1/overdue/undated p2 before asking anything",
+      "Makes no task changes during the read phase",
+      "Asks at most 4 questions per round, each naming the task and its current value, with the recommended answer first"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "인박스 정리하고 물어봐줘 (inbox has a task whose title is a bare YouTube link)",
+    "files": [],
+    "expected_behavior": [
+      "Reads the linked material or says it could not read it; never guesses its content",
+      "Posts research as a comment with the scope (read / not read / substituted) at the top and the decisions needed last",
+      "Leaves the description untouched when posting research"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "Review my tasks and ask me (a task due date is assumed from an email, not confirmed)",
+    "files": [],
+    "expected_behavior": [
+      "Does not put the assumed date in the title",
+      "Records the date as an assumption in a comment, never in the title or due field and asks the user to confirm it"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "전부 한 번에 끝까지 물어보고 마지막에 반영해줘",
+    "files": [],
+    "expected_behavior": [
+      "Runs question rounds back to back and applies the answers at the end",
+      "Applies only changes the answers settle; completes, reschedules or reprioritizes nothing that was not asked"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "Update the description of one task (user names the task and the new text)",
+    "files": [],
+    "expected_behavior": [
+      "Does not use todo-ask; a single named edit belongs to todo-update"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "[scheduled, unattended run] review my tasks",
+    "files": [],
+    "expected_behavior": [
+      "Reads, researches and reports only, with no task changes, because nobody can answer questions"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "질문 도구 없이 점검해줘 (AskUserQuestion unavailable)",
+    "files": [],
+    "expected_behavior": [
+      "Asks the same content as numbered text questions instead of failing"
+    ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "Reschedule 'weekly report' (a recurring task) to next Friday after the user answered yes",
+    "files": [],
+    "expected_behavior": [
+      "Uses the reschedule operation so the recurrence survives, not a due string",
+      "Reads the task back to confirm the date and recurrence"
+    ]
+  }
+]

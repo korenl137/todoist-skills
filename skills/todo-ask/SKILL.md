@@ -92,16 +92,19 @@ Follow the same route for every call below.
    - Title, description and section moves for inbox organization: show the
      plan first (current to proposed), then apply clear items. This follows
      todo-tidy and the configured guide for title and description format.
-   - Dates, priority, labels: only as answered. A date-only move uses the
-     reschedule operation so recurrence survives.
+   - Dates, priority, labels: only as answered. A date-only move of a dated task uses the
+     reschedule operation so recurrence survives; a task with no date cannot
+     be rescheduled, so set its first date with the date field (it has no
+     recurrence to lose).
    - Completion: only as answered, following todo-complete and each task's
      `## 완료 기준` block when the guide defines one.
    - Description edits are block-level: read the current text, change the
      named blocks, and send the whole text with unchanged blocks verbatim.
      Send Korean text as plain characters, never escaped, and read it back
      for typos.
-   - Record the date and the decision in the description's status section.
-     Add a comment only for a completion reason or when the user asks.
+   - Update the description's status header when the status changes. Record
+     the date and the decision in a comment (history lives in comments, per
+     the guide), not in a new description block.
 6. **Report.** What was done (numbered), what still needs the user, the next
    step. No internal IDs.
 
@@ -110,9 +113,9 @@ Follow the same route for every call below.
 - Never complete, delete, reschedule or change priority without an answer to
   that exact question. Never create labels or sections.
 - A date assumed from a source never goes in the title or the due field.
-  Note it in the description as an assumption (source, unconfirmed) and ask
-  the user to confirm it in the next round; this note is the one write
-  allowed before an answer.
+  Note it in a comment as an assumption (source, unconfirmed) and ask the
+  user to confirm it in the next round; this note is the one write allowed
+  before an answer.
 - The user's own conventions override this flow. If a task or section
   description says how it is handled, follow it.
 - In a scheduled or unattended run there is nobody to answer: read, research

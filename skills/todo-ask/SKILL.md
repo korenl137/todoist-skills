@@ -68,7 +68,8 @@ Follow the same route for every call below.
    comments to judge its purpose, and research only when the purpose is a review, and ask for the purpose when
    the link and comments do not reveal it; a `[검토]` task among those read in step 1 whose basis is a link, video or
    document; a `[검토]` task whose basis is only this user's own commits or PR records
-   is not a candidate; an external repository link is), read its comments first. Research comments start with the heading
+   is not a candidate, while a `[검토]` task based on an external repository
+   link is), read its comments first. Research comments start with the heading
    `## 조사 정리 (YYYY-MM-DD)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
@@ -131,7 +132,8 @@ Follow the same route for every call below.
   Note it in a comment as an assumption (source, unconfirmed) and ask the
   user to confirm it in this round if a slot remains, otherwise the next, and
   skip the question if tools settle it. This note and the step 2 research
-  comments are the only writes allowed before an answer.
+  comments are the only writes allowed before an answer, apart from the
+  inbox organization plan after it has been shown.
 - The user's own conventions override this flow. If a task or section
   description says how it is handled, follow it.
 - In a scheduled or unattended run there is nobody to answer: read, research

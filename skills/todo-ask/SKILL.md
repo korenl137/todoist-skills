@@ -63,20 +63,21 @@ Follow the same route for every call below.
 2. **Research first** (comments are posted in attended runs only; an unattended
    run reports the findings instead). For any open task whose purpose rests on a link,
    video or shared document (a link-only Inbox capture counts only when its
-   purpose is a review; any review task among those read in step 1), read its comments first. Research comments start with the heading
-   `## 조사 정리 (date)`; if one exists, skip the task unless the user asks for
+   purpose is a review; any task titled `[검토]` among those read in step 1), read its comments first. Research comments start with the heading
+   `## 조사 정리 (YYYY-MM-DD)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
    findings in the middle, and the decisions the user must make last. Do not
    guess the content of anything unread; say why it was unreadable.
 3. **Report findings.** Overdue; due today; overloaded days (the account's daily goal from user-info, else state your
-   threshold); undated tasks
+   threshold; count every task due that day, children included, and say so); undated tasks
    with a deadline; start/finish dates in the wrong order; stale descriptions
    (references to finished or dropped work); tasks completed by mistake
-   (the status header says unfinished or a `## 완료 기준` condition is unmet); recurring times that no longer match the schedule the description states; label or
+   (the status header is anything but done or 검증 대기, or a `## 완료 기준`
+   condition is unmet); recurring times that no longer match the schedule the description states; label or
    section mismatches against the guide (report them; replace a retired
    label only with its mapped replacement; with no mapping, or a label the
-   settings do not list, keep it and ask).
+   settings do not list, keep it and ask; several such labels may share one question).
 4. **Ask.** At most 4 questions per round; pick the highest-consequence items for the
    round and list the rest as findings with an offer of another round. Each question names the task and
    its current value so it stands alone, puts the recommended answer first,

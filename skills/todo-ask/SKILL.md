@@ -57,8 +57,8 @@ Follow the same route for every call below.
    placement; read the project itself as well as its sections); overdue plus
    the next 7 days; tasks completed today, including recurring occurrences
    (use the activity log with the user's ID from user-info and the account
-   timezone, not only the completed list; its end date must be later than its
-   start date, and an event can outlive a deleted task, so confirm the task
+   timezone, not only the completed list; pass dates in the account timezone and make the end
+   date later than the start date, and an event can outlive a deleted task, so confirm the task
    exists before asking about it); tasks created in the
    last 2 days; p1, overdue, and undated p2. Read every page, and report
    partial coverage instead of exact totals.
@@ -67,21 +67,23 @@ Follow the same route for every call below.
    video or shared document (a link-only Inbox capture: read its link and
    comments to judge its purpose, and research only when the purpose is a review, and ask for the purpose when
    the link and comments do not reveal it; a `[검토]` task among those read in step 1 whose basis is a link, video or
-   document; a `[검토]` task based on repository or PR records is not a candidate), read its comments first. Research comments start with the heading
+   document; a `[검토]` task whose basis is only this user's own commits or PR records
+   is not a candidate; an external repository link is), read its comments first. Research comments start with the heading
    `## 조사 정리 (YYYY-MM-DD)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
    findings in the middle, and the decisions the user must make last. Do not
    guess the content of anything unread; say why it was unreadable.
-3. **Report findings.** Overdue; due today; overloaded days (the account's daily goal from user-info, else state your
+3. **Report findings.** Overdue (a title time on a date-only task is not a due time; report it
+   as a progress check); due today; overloaded days (the account's daily goal from user-info, else state your
    threshold; count every task due that day, children included, and say so); undated tasks
    with a deadline; start/finish dates in the wrong order; stale descriptions
    (references to finished or dropped work); tasks completed by mistake
    (the status header says 미착수, 진행, 대기 or 보류, or a `## 완료 기준`
    condition is unmet); recurring times that no longer match the schedule the description states; label or
    section mismatches against the guide (report them; replace a retired
-   label only with its mapped replacement; with no mapping, or a label the
-   settings do not list, keep it and ask; several such labels may share one question).
+   label only with its mapped replacement; with no mapping (an empty mapping counts), or a
+   label the settings do not list, keep it and ask; several such labels may share one question).
 4. **Ask.** At most 4 questions per round; pick the highest-consequence items for the
    round and list the rest as findings with an offer of another round. Each question names the task and
    its current value so it stands alone, puts the recommended answer first,

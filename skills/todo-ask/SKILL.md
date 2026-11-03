@@ -56,23 +56,28 @@ Follow the same route for every call below.
 1. **Read, no writes.** Inbox; project and section descriptions (they decide
    placement; read the project itself as well as its sections); overdue plus
    the next 7 days; tasks completed today, including recurring occurrences
-   (use the activity log, not only the completed list); tasks created in the
+   (use the activity log with the user's ID from user-info and the account
+   timezone, not only the completed list); tasks created in the
    last 2 days; p1, overdue, and undated p2. Read every page, and report
    partial coverage instead of exact totals.
 2. **Research first.** For any open task whose purpose rests on a link,
-   video or shared document (a review task or an Inbox capture), read its
-   comments first. If a research comment already exists, skip it unless the
-   user asks for an update. Otherwise read the material and post the result
+   video or shared document (an Inbox capture or any review task, wherever it
+   lives), read its comments first. Research comments start with the heading
+   `## 조사 정리 (date)`; if one exists, skip the task unless the user asks for
+   an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
    findings in the middle, and the decisions the user must make last. Do not
    guess the content of anything unread; say why it was unreadable.
-3. **Report findings.** Overdue; due today; overloaded days (state the threshold you used); undated tasks
+3. **Report findings.** Overdue; due today; overloaded days (the account's daily goal from user-info, else state your
+   threshold); undated tasks
    with a deadline; start/finish dates in the wrong order; stale descriptions
    (references to finished or dropped work); tasks completed by mistake
-   (description says unfinished); recurring times that no longer match the schedule the description states; label or
+   (the status header says unfinished or a `## 완료 기준` condition is unmet); recurring times that no longer match the schedule the description states; label or
    section mismatches against the guide (report them; replace a retired
-   label only with its mapped replacement, and ask when the mapping is empty).
-4. **Ask.** At most 4 questions per round. Each question names the task and
+   label only with its mapped replacement; with no mapping, or a label the
+   settings do not list, keep it and ask).
+4. **Ask.** At most 4 questions per round; ask the highest-consequence items first, list
+   the rest as findings and offer another round. Each question names the task and
    its current value so it stands alone, puts the recommended answer first,
    and uses free text when the answer is not a choice. Order the questions
    yes/no, missing information, dates, decisions; the recommended answer is
@@ -95,8 +100,8 @@ Follow the same route for every call below.
      named blocks, and send the whole text with unchanged blocks verbatim.
      Send Korean text as plain characters, never escaped, and read it back
      for typos.
-   - Record the date and the decision in the task description's status
-     section or in a comment, per the guide.
+   - Record the date and the decision in the description's status section.
+     Add a comment only for a completion reason or when the user asks.
 6. **Report.** What was done (numbered), what still needs the user, the next
    step. No internal IDs.
 

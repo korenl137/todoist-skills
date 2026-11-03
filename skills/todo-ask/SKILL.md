@@ -32,14 +32,14 @@ Use for a full or inbox-plus-schedule review where the user expects questions.
 Do not use for one named edit (todo-update), a quiet reorganization of a
 scope (todo-tidy), a lookup (todo-find) or a rules audit (todo-doctor).
 Each skill works alone: when a sibling is installed, follow it for its
-responsibility; when not, apply the same rule from this file.
+responsibility; when not, apply the same field rule from this file without running the review flow.
 
 ## Tools
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
 | Read and change tasks, comments, projects, sections | One Todoist route: MCP or `td` | Live schemas; paginated reads | If the selected route is unavailable, say so and stop; never switch silently |
-| Multiple-choice questions | None | AskUserQuestion | Numbered text questions, same content |
+| Multiple-choice questions | None | AskUserQuestion | Numbered text questions, same content; a missing question tool is not an unattended run |
 | Linked material | Accessible link or document | Page, video transcript or document read | Say it was not read; never guess its content |
 
 ## Todoist connection
@@ -60,9 +60,8 @@ Follow the same route for every call below.
    timezone, not only the completed list); tasks created in the
    last 2 days; p1, overdue, and undated p2. Read every page, and report
    partial coverage instead of exact totals.
-2. **Research first.** For any open task whose purpose rests on a link,
-   video or shared document (an Inbox capture or any review task, wherever it
-   lives), read its comments first. Research comments start with the heading
+2. **Research first** (attended runs only; see the unattended rule). For any open task whose purpose rests on a link,
+   video or shared document (an Inbox capture or any review task among those read in step 1), read its comments first. Research comments start with the heading
    `## 조사 정리 (date)`; if one exists, skip the task unless the user asks for
    an update. Otherwise read the material and post the result
    as a **comment**, never in the description. Put the scope at the top (read, not read, substituted),
@@ -76,11 +75,11 @@ Follow the same route for every call below.
    section mismatches against the guide (report them; replace a retired
    label only with its mapped replacement; with no mapping, or a label the
    settings do not list, keep it and ask).
-4. **Ask.** At most 4 questions per round; ask the highest-consequence items first, list
-   the rest as findings and offer another round. Each question names the task and
+4. **Ask.** At most 4 questions per round; pick the highest-consequence items for the
+   round and list the rest as findings with an offer of another round. Each question names the task and
    its current value so it stands alone, puts the recommended answer first,
-   and uses free text when the answer is not a choice. Order the questions
-   yes/no, missing information, dates, decisions; the recommended answer is
+   and uses free text when the answer is not a choice. Within the round, order the
+   questions yes/no, missing information, dates, decisions; the recommended answer is
    the first option inside each question. Without AskUserQuestion, say once
    that you are asking in text. If the user asks for everything at once,
    run rounds back to back and apply at the end. A free-text answer beats the
@@ -114,8 +113,9 @@ Follow the same route for every call below.
   that exact question. Never create labels or sections.
 - A date assumed from a source never goes in the title or the due field.
   Note it in a comment as an assumption (source, unconfirmed) and ask the
-  user to confirm it in the next round; this note is the one write allowed
-  before an answer.
+  user to confirm it in this round if a slot remains, otherwise the next, and
+  skip the question if tools settle it. This note and the step 2 research
+  comments are the only writes allowed before an answer.
 - The user's own conventions override this flow. If a task or section
   description says how it is handled, follow it.
 - In a scheduled or unattended run there is nobody to answer: read, research

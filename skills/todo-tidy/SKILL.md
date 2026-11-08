@@ -4,10 +4,11 @@ description: >
   Organizes Todoist Inbox or a specified set of existing tasks: inspects context,
   checks section fit, shows concrete title, description, placement and label changes, applies clear edits,
   and asks only about unresolved intent. Use for "Inbox 정리", "투두이스트 정리",
-  "작업 분류해줘", "섹션 위치 점검", "템플릿 적용", "서식 정리". Read-only hygiene audits belong to todo-doctor; a specified
-  single-field edit belongs to todo-update. Project freshness comparison belongs to todo-reconcile.
+  "작업 분류해줘", "섹션 위치 점검", "템플릿 적용", "서식 정리", "tidy my inbox", "organize these tasks".
+  Read-only hygiene audits belong to todo-doctor; a specified single-field edit belongs to todo-update.
+  Project freshness comparison belongs to todo-reconcile; a full review with questions belongs to todo-ask.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # Todo Tidy

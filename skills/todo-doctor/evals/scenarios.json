@@ -64,7 +64,7 @@
     "query": "Audit my tasks. No settings file exists.",
     "files": [],
     "expected_behavior": [
-      "Runs only the checks that need no rules (vague titles, stale references, labels on tasks that are missing from the label list)",
+      "Runs only the checks that need no rules (vague titles, stale references, dormant tasks)",
       "Does not invent a label taxonomy or flag tasks for missing kind/* labels"
     ]
   },

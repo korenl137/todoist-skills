@@ -5,11 +5,11 @@ description: >
   tasks, and walks the user through updates and completions with short
   multiple-choice questions. Use when the user wants a full task review with
   questions, e.g. "태스크 전체 점검해줘", "투두이스트 문답으로 정리", "인박스 정리하고
-  물어봐줘", "review all my tasks and ask me". Organizing a scope without
-  questions belongs to todo-tidy, a single edit to todo-update, a plain
-  lookup to todo-find, and a read-only rule audit to todo-doctor.
+  물어봐줘", "할 일 리뷰하면서 물어봐줘", "review all my tasks and ask me".
+  Without questions use todo-tidy; single edit todo-update; lookup todo-find;
+  read-only audit todo-doctor.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # todo-ask

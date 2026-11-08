@@ -6,10 +6,11 @@ description: >
   dormant tasks.
   Read-only, no automatic fixes. Triggers include "audit my Todoist",
   "check my labels", "find tasks to group", "todoist 라벨 점검", "작업 스타일
-  감사", "묶을 작업 찾아줘", "오래 멈춘 작업 찾아줘" (audit sense, not completing or deleting).
+  감사", "묶을 작업 찾아줘", "오래 멈춘 작업 찾아줘", "오래된 참조 점검". A dormant-task
+  request is an audit; completing or deleting belongs to todo-complete.
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.6"
+  version: "1.7"
 ---
 
 # todo-doctor
@@ -67,8 +68,8 @@ Read the settings file (`$TODOIST_SKILLS_CONFIG` or
 `~/.config/todoist-skills/config.toml`) and, if it names one, the `guide`
 file, fresh on every run; they can change. Where the guide's prose and the
 settings lists disagree, report the disagreement as a finding. Without any
-settings, audit only what needs no rules: checks 4, 6, and 7, plus labels
-that exist on tasks but nowhere in the label list.
+settings, audit only what needs no rules: checks 4, 7, and 8. Checks 1–3,
+5 and 6 need label, area or grouping settings.
 
 ## What to check
 
@@ -122,7 +123,9 @@ one scheme to selection and a different one to auditing.
 For a full audit, first run `python3 scripts/jev_audit.py --todoist`
 (Windows: `py -3`) from this skill's own directory. It fetches active
 non-Inbox tasks itself, so the list never enters the conversation, and
-returns checks 1–2 (computed) and 3–5 (Jev judgments from titles and
+returns check 2 (computed against `[labels.allowed]`, `[labels.projects]` and
+`labels.ignore` only; it does not read `[labels.retired]`, so check retired labels
+yourself), check 1 (computed) and 3–5 (Jev judgments from titles and
 parent titles; descriptions are not sent). For a narrower scope, pipe
 `{"tasks": [{"id", "title", "labels", "project": "Parent / Name",
 "parent_title"?, "has_children"?}]}` into it without `--todoist`.

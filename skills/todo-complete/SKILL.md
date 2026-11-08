@@ -7,7 +7,7 @@ description: >
   "reopen it", "delete this task", "이거 완료 처리해줘", "완료 취소해줘",
   "이 작업 삭제해줘". Other field edits belong to todo-update.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # todo-complete
@@ -84,7 +84,7 @@ Otherwise completion/reopening is reversible: proceed once the target and any co
 
 ## Completion criteria (when a guide is set)
 
-If the settings file names a `guide`, read it before completing. Resolve a relative path from the settings file's directory, and expand `~` in absolute paths. Without a guide, complete as before.
+If the settings file names a `guide`, read it before completing. Resolve a relative path from the settings file's directory, and expand `~` in absolute paths. Without a guide, complete as before and skip the criteria check even if the description has a `## 완료 기준` block.
 
 For a task whose description has a `## 완료 기준` block, re-read the block and complete only when the conversation or a readable source confirms every condition in it. Name the confirming source in your report. If a condition is unconfirmed, do not complete: name the condition and ask whether to set the task to `검증 대기`. Change the status only when the user says yes. Do not add a completion comment unless the user asks for one.
 

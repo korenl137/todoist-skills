@@ -9,7 +9,7 @@ description: >
   Without questions use todo-tidy; single edit todo-update; lookup todo-find;
   read-only audit todo-doctor.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # todo-ask
@@ -84,13 +84,21 @@ Follow the same route for every call below.
    condition is unmet); recurring times that no longer match the schedule the description states; label or
    section mismatches against the guide (report them; replace a retired
    label only with its mapped replacement; with no mapping (an empty mapping counts), or a
-   label the settings do not list, keep it and ask; several such labels may share one question);
-   structure against the guide's grouping rules: an uncompletable header that carries completion
-   criteria, a status header, a due date or a deadline (judge by the stored uncompletable flag, not
-   the title prefix); descriptions that pile up dated history blocks where the guide keeps history in
-   comments; and merge candidates (same completion criterion, or one task's scope already listed in
-   another). Merge candidates and structure changes are findings to ask about, never applied without
-   an answer.
+   label the settings do not list, keep it and ask; several such labels may share one question).
+   Then run these three structure checks on every review, and for each say how many
+   tasks it covered and name its findings or say none were found. Structure findings
+   are asked about, never applied without an answer.
+   - **Headers.** Read the stored uncompletable flag (not the title prefix) and the open-child
+     count of every header. Report a header that carries completion criteria, a status header,
+     a due date or a deadline, and one with fewer than two open children.
+   - **History.** Count descriptions that pile up dated history blocks where the guide keeps
+     history in comments; name the longest.
+   - **Merge candidates.** Shortlist first, then read: pair open tasks in the same section or under
+     the same header whose descriptions cite each other's link or ID, or state the same
+     completion criterion. Read the descriptions and comments of up to 6 shortlisted pairs. Report
+     a pair when the same completion criterion, or one task's scope already listed in the other's
+     description, holds and neither has its own recent evidence in comments. Say how many pairs
+     you checked; "none found after N pairs" is a valid result, "not checked" is not.
 4. **Ask.** At most 4 questions per round; pick the highest-consequence items for the
    round and list the rest as findings with an offer of another round. Each question names the task and
    its current value so it stands alone, puts the recommended answer first,

@@ -10,7 +10,7 @@ description: >
   request is an audit; completing or deleting belongs to todo-complete.
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.7"
+  version: "1.8"
 ---
 
 # todo-doctor
@@ -89,6 +89,11 @@ settings, audit only what needs no rules: checks 4, 7, and 8. Checks 1–3,
 6. **Grouping candidate**: with `[grouping] header_prefix` set, two or
    more tasks in one project, not under a header, that share a goal,
    source, or repository. Name the header they could go under.
+   Also report a header (by its stored uncompletable flag) that carries
+   completion criteria, a status header or a due date, or has fewer than two
+   open children, and merge candidates: two open tasks with the same
+   completion criterion, or one whose scope another task's description
+   already lists. Report only; never merge.
 7. **Stale reference**: a description pointing at something that moved on
    (a local path that no longer exists, a document with a newer dated
    version beside it, "after X" where X is already completed). Check only

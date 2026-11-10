@@ -85,5 +85,17 @@
       "Uses the reschedule operation so the recurrence survives, not a due string",
       "Reads the task back to confirm the date and recurrence"
     ]
+  },
+  {
+    "skills": [
+      "todo-ask"
+    ],
+    "query": "태스크 전체 점검해줘 (an uncompletable '* ' header has a '## 완료 기준' block; two open tasks share the same completion criterion; one task description holds many dated history blocks)",
+    "files": [],
+    "expected_behavior": [
+      "Reports the header's completion criteria as a structure finding, judging the header by its stored uncompletable flag rather than the title prefix",
+      "Reports the two tasks as merge candidates and the dated history blocks as a finding, citing the guide's rules",
+      "Asks before any conversion, merge, completion, deletion or history move and applies none of them without an answer"
+    ]
   }
 ]

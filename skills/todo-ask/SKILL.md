@@ -9,7 +9,7 @@ description: >
   Without questions use todo-tidy; single edit todo-update; lookup todo-find;
   read-only audit todo-doctor.
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # todo-ask
@@ -84,7 +84,13 @@ Follow the same route for every call below.
    condition is unmet); recurring times that no longer match the schedule the description states; label or
    section mismatches against the guide (report them; replace a retired
    label only with its mapped replacement; with no mapping (an empty mapping counts), or a
-   label the settings do not list, keep it and ask; several such labels may share one question).
+   label the settings do not list, keep it and ask; several such labels may share one question);
+   structure against the guide's grouping rules: an uncompletable header that carries completion
+   criteria, a status header, a due date or a deadline (judge by the stored uncompletable flag, not
+   the title prefix); descriptions that pile up dated history blocks where the guide keeps history in
+   comments; and merge candidates (same completion criterion, or one task's scope already listed in
+   another). Merge candidates and structure changes are findings to ask about, never applied without
+   an answer.
 4. **Ask.** At most 4 questions per round; pick the highest-consequence items for the
    round and list the rest as findings with an offer of another round. Each question names the task and
    its current value so it stands alone, puts the recommended answer first,

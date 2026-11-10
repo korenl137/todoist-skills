@@ -10,7 +10,7 @@ description: >
   request is an audit; completing or deleting belongs to todo-complete.
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.8"
+  version: "1.9"
 ---
 
 # todo-doctor
@@ -89,11 +89,19 @@ settings, audit only what needs no rules: checks 4, 7, and 8. Checks 1–3,
 6. **Grouping candidate**: with `[grouping] header_prefix` set, two or
    more tasks in one project, not under a header, that share a goal,
    source, or repository. Name the header they could go under.
-   Also report a header (by its stored uncompletable flag) that carries
-   completion criteria, a status header or a due date, or has fewer than two
-   open children, and merge candidates: two open tasks with the same
-   completion criterion, or one whose scope another task's description
-   already lists. Report only; never merge.
+   Also run both of these on every audit, state how many tasks each covered,
+   and name the findings or say none were found:
+   - **Header structure**: read the stored uncompletable flag and the open-child
+     count of every header; report one that carries completion criteria, a
+     status header or a due date, or has fewer than two open children.
+   - **Merge candidate**: shortlist first, then read: pair open tasks in the
+     same section or under the same header whose descriptions cite each
+     other's link or ID, or state the same completion criterion. Read the
+     descriptions and comments of up to 6 shortlisted pairs. Report a pair when
+     the same completion criterion, or one task's scope already listed in the
+     other's description, holds and neither has its own recent evidence in
+     comments. Say how many pairs you checked; "none found after N pairs" is a
+     valid result, "not checked" is not. Report only; never merge.
 7. **Stale reference**: a description pointing at something that moved on
    (a local path that no longer exists, a document with a newer dated
    version beside it, "after X" where X is already completed). Check only

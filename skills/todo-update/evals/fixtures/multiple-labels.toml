@@ -16,5 +16,3 @@ design = "action"
 write = "action"
 waiting = "state"
 community = "project"
-[jev]
-enabled = false

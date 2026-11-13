@@ -10,7 +10,7 @@ description: >
   request is an audit; completing or deleting belongs to todo-complete.
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.9"
+  version: "1.10"
 ---
 
 # todo-doctor
@@ -33,7 +33,7 @@ finding requires a separate user request; diagnosis does not authorize writes.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Read active tasks, labels, projects and completed tasks (read-only) | One Todoist route: Todoist MCP or the `td` CLI (read-only login is enough), whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev audit (`jev_audit.py --todoist`) when `[jev] enabled = true`, which also needs `TODOIST_API_TOKEN` whichever route is chosen | Without Jev, audit the tasks yourself. If the chosen route is unavailable, say so, give its setup, then stop. Report only; never fix. |
+| Read active tasks, labels, projects and completed tasks (read-only) | One Todoist route: Todoist MCP or the `td` CLI (read-only login is enough), whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route | If the chosen route is unavailable, say so, give its setup, then stop. Report only; never fix. |
 
 ## Todoist connection
 
@@ -49,9 +49,7 @@ request only and write nothing to any file. Then add one line: to stop this
 question, put `backend = "mcp"` or `backend = "td"` in your settings file. If
 neither route is available, say how to connect each one and stop. To connect
 Todoist MCP, connect Todoist in your agent. To set up `td`, run `npm install
--g @doist/todoist-cli` (Node 24+) and `td auth login`. Jev is optional;
-without it, audit the tasks yourself. The Jev fast path reads tasks through
-the Todoist API with `TODOIST_API_TOKEN`, not through either route.
+-g @doist/todoist-cli` (Node 24+) and `td auth login`.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|
@@ -131,28 +129,8 @@ A passed date or a missing optional label is not evidence of readiness.
 Disagreements between guide and settings are findings, not a reason to apply
 one scheme to selection and a different one to auditing.
 
-### Jev fast path (only when `[jev] enabled = true`)
-
-For a full audit, first run `python3 scripts/jev_audit.py --todoist`
-(Windows: `py -3`) from this skill's own directory. It fetches active
-non-Inbox tasks itself, so the list never enters the conversation, and
-returns check 2 (computed against `[labels.allowed]`, `[labels.projects]` and
-`labels.ignore` only; it does not read `[labels.retired]`, so check retired labels
-yourself), check 1 (computed) and 3–5 (Jev judgments from titles and
-parent titles; descriptions are not sent). For a narrower scope, pipe
-`{"tasks": [{"id", "title", "labels", "project": "Parent / Name",
-"parent_title"?, "has_children"?}]}` into it without `--todoist`.
-
-Present Jev findings as "review" and drop one only when the user's rules
-clearly say otherwise. Jev judges area from titles alone, so before reporting
-an `area_mismatch`, read that task's description and parent with the chosen
-route (MCP `fetch-object` or `td`). Drop it when they show the configured area
-fits; keep it as "review" when they do not settle the question. Fetch only the
-flagged tasks, never the whole list. Run checks 6–8 yourself; they need
-descriptions or activity.
-Exit 4 (invalid settings): report the diagnostic and stop rule-based classification.
-On exit 2 (key missing), 3 (not enabled), or a model failure, audit manually
-and say the fast path was skipped and why.
+Invalid settings: report the problem and stop rule-based classification;
+do not invent defaults.
 
 ## Read coverage and dates
 

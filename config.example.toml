@@ -60,12 +60,3 @@ community = "project"
 # Title prefix of a header task that groups related subtasks (a non-completable parent).
 # If set, related tasks are added under one header instead of side by side. "" turns grouping off.
 header_prefix = ""
-
-# Optional TypeSafe Jev suggestions (https://typesafe.ai). Off by default.
-# Needs Python 3.11+, TYPESAFE_API_KEY, and for todo-find/todo-doctor also TODOIST_API_TOKEN
-# (environment, or ~/.config/typesafe/.env and ~/.config/todoist/.env).
-# Task titles, parent titles, project and label names are sent to TypeSafe.
-[jev]
-enabled = false
-# Also send up to 1500 characters of task descriptions.
-send_descriptions = false

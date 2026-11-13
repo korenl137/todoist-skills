@@ -45,17 +45,6 @@ First-time setup: copy `config.example.toml` to your settings path, uncomment
 the `backend` line for the option you chose, and keep it. If you skip this,
 the rule above applies.
 
-Optional, per skill:
-
-| Skill | Optional extra | Needs |
-|---|---|---|
-| `todo-add`, `todo-update` | Jev project and label suggestions | Python 3.11+, `TYPESAFE_API_KEY` |
-| `todo-find` | Jev topic search (finds tasks that never name the topic) | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN` |
-| `todo-doctor` | Jev fast audit (the task list stays out of the conversation) | Python 3.11+, `TYPESAFE_API_KEY`, `TODOIST_API_TOKEN` |
-| `todo-complete` | — | — |
-
-Without an optional extra, the skill does the same job itself.
-
 ## Install
 
 Clone the repository and link the skills you want into your agent's skill
@@ -91,7 +80,6 @@ edit it:
 | `grouping.header_prefix` | Group related tasks under a header task |
 | `guide` | Written task conventions; relative paths resolve from the config directory, ~ expands to the local home |
 | `backend` | The Todoist route, `mcp` or `td`; unset means the route your session has, asking when both exist |
-| `[jev]` | Turn on the optional Jev features and choose whether descriptions are sent |
 
 In multiple mode, add a label only when it supports a useful retrieval and the
 context supports its meaning. A task may have no labels, or several topics,
@@ -131,34 +119,11 @@ test with a separate config selected by `TODOIST_SKILLS_CONFIG`. Existing
 skills need no relinking for this documentation-only change. See the
 [local validation scenarios](dev/task-template-guide-scenarios.md).
 
-## Jev (optional)
-
-[TypeSafe Jev](https://typesafe.ai) gives the scripts calibrated judgments
-(which project fits, which tasks relate to a topic, which titles are vague).
-To use it:
-
-1. Set `[jev] enabled = true` in your settings.
-2. Put `TYPESAFE_API_KEY=…` in the environment or `~/.config/typesafe/.env`.
-3. For `todo-find` and `todo-doctor`, also `TODOIST_API_TOKEN=…` (Todoist →
-   Settings → Integrations → Developer) in the environment or
-   `~/.config/todoist/.env`. Logging in to `td` does not provide this token.
-
-To turn Jev off, set `enabled = false` in the settings file, or point
-`TODOIST_SKILLS_CONFIG` at a copy with it off for one session. The scripts
-then exit with code 3, and the skills work without Jev.
-
-The Jev fast paths in `todo-find` and `todo-doctor` read tasks through the
-Todoist API with `TODOIST_API_TOKEN`, whichever route (MCP or `td`) you chose.
-
-What leaves your machine: task titles, parent task titles, project and label
-names, and your label meanings. Descriptions are sent only with
-`send_descriptions = true`.
-
 ## Development
 
-Each skill that uses Jev carries its own copy of `jevlib.py` (and
-`todo-update` a copy of `jev_place.py`) so every folder stands alone. Edit
-`dev/jevlib.py` or `skills/todo-add/scripts/jev_place.py`, then run:
+Each skill folder stands alone, so the shared eval fixture
+`skills/todo-doctor/evals/fixtures/config.toml` is copied into the other
+skills that use it. After editing it, run:
 
 ```bash
 python3 dev/sync.py

@@ -3,7 +3,7 @@
 These are manual decision and live integration scenarios for the optional guide.
 Static review does not establish that an agent reads or follows it.
 Run live cases only with authorization for the agent session and temporary Todoist writes.
-Keep model/API costs within the authorized scope; Jev is unnecessary for these cases.
+Keep model/API costs within the authorized scope.
 
 ## Isolated setup
 
@@ -13,7 +13,7 @@ If skill code changes later, isolate that installation separately before testing
 
 Copy the active config, selected by `TODOIST_SKILLS_CONFIG` or the default config path, into a private temporary directory.
 Preserve its backend, label definitions, areas and grouping rules.
-Change only the copy's top-level `guide` to an absolute path to the candidate guide, and disable optional Jev in that copy.
+Change only the copy's top-level `guide` to an absolute path to the candidate guide.
 Do not copy credentials or change the original config, guide or AEM links.
 An existing personal guide remains the production policy; this test evaluates the candidate independently and does not approve replacing that policy.
 

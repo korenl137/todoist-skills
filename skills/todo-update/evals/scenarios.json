@@ -52,8 +52,7 @@
     ],
     "expected_behavior": [
       "Proposes a Personal project, since the fixture's areas put personal admin under Personal",
-      "Replaces the retired label old-shopping with its mapped replacement kind/buy and keeps the ignored label imported",
-      "Does not run the Jev script, since the fixture has Jev disabled"
+      "Replaces the retired label old-shopping with its mapped replacement kind/buy and keeps the ignored label imported"
     ]
   },
   {

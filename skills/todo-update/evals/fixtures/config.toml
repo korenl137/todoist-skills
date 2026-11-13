@@ -26,6 +26,3 @@ Work = "job projects, meetings, reports"
 
 [grouping]
 header_prefix = "Group: "
-
-[jev]
-enabled = false

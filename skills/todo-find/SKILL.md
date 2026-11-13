@@ -8,7 +8,7 @@ description: >
   about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
   보여줘", "완료한 작업 보여줘". Hygiene audits belong to todo-doctor.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # todo-find
@@ -29,7 +29,7 @@ confirmation is needed.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Read tasks and completion history (read-only) | One Todoist route: Todoist MCP or the `td` CLI (read-only login is enough), whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev topic search (`jev_find.py`) when `[jev] enabled = true`, which also needs `TODOIST_API_TOKEN` whichever route is chosen; label meanings from settings for topic matches and groups, no Jev | Without Jev, match by label meaning, or search by text, project and label. If the chosen route is unavailable, say so, give its setup, then stop. |
+| Read tasks and completion history (read-only) | One Todoist route: Todoist MCP or the `td` CLI (read-only login is enough), whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; label meanings from settings for topic matches and groups | Match by label meaning, or search by text, project and label. If the chosen route is unavailable, say so, give its setup, then stop. |
 
 ## Todoist connection
 
@@ -45,9 +45,7 @@ request only and write nothing to any file. Then add one line: to stop this
 question, put `backend = "mcp"` or `backend = "td"` in your settings file. If
 neither route is available, say how to connect each one and stop. To connect
 Todoist MCP, connect Todoist in your agent. To set up `td`, run `npm install
--g @doist/todoist-cli` (Node 24+) and `td auth login`. Jev topic search is
-optional; it reads tasks through the Todoist API with `TODOIST_API_TOKEN`, not
-through either route.
+-g @doist/todoist-cli` (Node 24+) and `td auth login`.
 
 | Question | Todoist MCP | `td` |
 |---|---|---|
@@ -70,21 +68,11 @@ topic query:
 1. If an existing label or project covers the topic, filter by it first.
 2. Else, match the topic against the meaning of each label in
    `[labels.allowed]` (for example `topic/food` = "recipes, cooking,
-   groceries") and filter by the labels whose meaning fits. This needs no
-   Jev. Say which labels were used, and that tasks about the topic without
+   groceries") and filter by the labels whose meaning fits. Say which labels were used, and that tasks
+   about the topic without
    those labels are not included.
-3. Else, if the settings file (`$TODOIST_SKILLS_CONFIG` or
-   `~/.config/todoist-skills/config.toml`) has `[jev] enabled = true`, run
-   `python3 scripts/jev_find.py "<concept>" ["<concept>" ...]` (Windows:
-   `py -3`) from this skill's own directory. Give one concept per argument;
-   a combined query for two unrelated things tends to find neither. It
-   fetches active tasks itself and prints only related ones (`p >= 0.65`),
-   best first, so the full list never enters the conversation. Add
-   `--with-description` only when titles are clearly not enough (it takes
-   effect only if `send_descriptions = true`). Treat `p` near 0.65 as
-   "possibly related".
-4. Otherwise, or on exit 2 (key missing), 3 (not enabled), or any failure:
-   search by text and say that topic matching was not available.
+3. Otherwise, search by text and say that tasks about the topic that never
+   name it may be missed.
 
 Completed tasks are outside the topic path; use the completed-task lookup.
 
@@ -114,7 +102,7 @@ the user asked for broader coverage. Parent labels are not stored child labels.
 For executable-work queries, inspect relevant dependencies and conditions.
 The absence of waiting/on-hold is not proof of readiness; report unverified
 conditions separately. Do not change any task while interpreting its state.
-Invalid settings (exit 4 from a helper) are a reported gap, not permission to
+Invalid settings are a reported gap, not permission to
 substitute an assumed taxonomy.
 
 ## Read coverage and dates

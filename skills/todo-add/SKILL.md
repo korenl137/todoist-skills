@@ -8,7 +8,7 @@ description: >
   Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
   추가해줘", "할 일로 남겨줘". Existing-task edits belong to todo-update.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # todo-add
@@ -31,7 +31,7 @@ meaning, not trigger phrases, and do not require a fixed command format.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Create tasks; read project, section and label names | One Todoist route: Todoist MCP or the `td` CLI, whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev suggestions when `[jev] enabled = true` | Without Jev, choose project and labels yourself. If the chosen route is unavailable, say so, give its setup, then stop. |
+| Create tasks; read project, section and label names | One Todoist route: Todoist MCP or the `td` CLI, whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route | Choose project and labels yourself. If the chosen route is unavailable, say so, give its setup, then stop. |
 
 ## Todoist connection
 
@@ -47,7 +47,7 @@ Then add one line: to stop this question, put `backend = "mcp"` or `backend =
 "td"` in your settings file. If neither route is available, say how to connect
 each one and stop. To connect Todoist MCP, connect Todoist in your agent. To
 set up `td`, run `npm install -g @doist/todoist-cli` (Node 24+) and `td auth
-login`. Jev is optional; without it, choose the project and labels yourself.
+login`.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|
@@ -99,27 +99,7 @@ new projects, sections, or labels to get an exact match.
   the description. No waiting label is not proof a task is executable. If
   prerequisites/access cannot be checked, report the uncertainty.
 
-### Jev suggestions (only when `[jev] enabled = true`)
-
-Before choosing project and labels yourself, pipe `{"title",
-"description", "parent_title"?, "projects": [{"id", "name", "parent"?,
-"description"?, "inbox"?}]}` into `python3 scripts/jev_place.py`
-(Windows: `py -3`), run from this skill's own directory. It returns a
-project and label hints with probabilities. Multiple mode returns a `labels`
-list (label, p, role); legacy mode retains act/project_label/extra_labels.
-
-- In legacy mode, consider `project_label` and `extra_labels` with `p >= 0.5`, and `project`
-  with `confidence >= 0.7`; below that, choose yourself.
-- In multiple mode, review each independent `labels` hint against its meaning
-  and actual evidence; do not pick exactly one or require any. Action and state
-  hints always need judgment; model probability alone does not establish a state.
-- Treat legacy `act` as a hint only and choose the action label yourself.
-- Values the user stated always win.
-
-These thresholds were measured on the author's tasks; they are defaults.
-Invalid settings (exit 4): report and stop classification until resolved; do not invent defaults.
-Exit 2 (key missing), 3 (not enabled), or a model failure: place the task
-yourself without mentioning Jev unless asked.
+Invalid settings: report and stop classification until resolved; do not invent defaults.
 
 ### Existing work and explicit extra fields
 

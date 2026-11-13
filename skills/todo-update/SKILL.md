@@ -9,7 +9,7 @@ description: >
   옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
   Independent project freshness checks belong to todo-reconcile; organization belongs to todo-tidy.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # todo-update
@@ -32,7 +32,7 @@ Modify an existing Todoist task.
 
 | Need | Required | Recommended | Fallback |
 |---|---|---|---|
-| Read a task; change only the fields the user named | One Todoist route: Todoist MCP or the `td` CLI, whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route; Jev placement suggestions when `[jev] enabled = true` | Without Jev, decide project and labels yourself. If the chosen route is unavailable, say so, give its setup, then stop. |
+| Read a task; change only the fields the user named | One Todoist route: Todoist MCP or the `td` CLI, whichever the user names or `backend` sets | `backend` setting (`mcp` or `td`) to fix the route | Decide project and labels yourself. If the chosen route is unavailable, say so, give its setup, then stop. |
 
 ## Todoist connection
 
@@ -48,7 +48,7 @@ Then add one line: to stop this question, put `backend = "mcp"` or `backend =
 "td"` in your settings file. If neither route is available, say how to connect
 each one and stop. To connect Todoist MCP, connect Todoist in your agent. To
 set up `td`, run `npm install -g @doist/todoist-cli` (Node 24+) and `td auth
-login`. Jev is optional; without it, choose the project and labels yourself.
+login`.
 
 | Step | Todoist MCP | `td` |
 |---|---|---|
@@ -107,15 +107,8 @@ The user rarely gives an ID.
   against confirmed conditions and remaining dependencies. Preserve a state if
   evidence is missing or a blocking condition remains. Dates alone do not release
   waiting/on-hold, and no state label does not prove readiness.
-- With `[jev] enabled = true`, you may get suggestions first: pipe
-  `{"title", "description", "parent_title"?, "projects": [...]}` into
-  `python3 scripts/jev_place.py` (Windows: `py -3`) from this skill's own
-  directory. Adopt project labels and other labels with `p >= 0.5` and a
-  project with `confidence >= 0.7`; treat the action label as a hint.
-  In multiple mode, review each returned labels hint independently; never infer
-  a confirmed action/state from probability alone. Exit 4 means invalid settings:
-  report and stop relabeling rather than applying another scheme. On
-  exit 2, 3, or a model failure, decide yourself without mentioning Jev.
+- Invalid settings: report and stop relabeling rather than applying another
+  scheme; do not invent defaults.
 
 ## Reflecting session changes in an existing plan
 

@@ -1,5 +1,4 @@
 ---
-model: haiku
 name: todo-find
 description: >
   Looks up and lists Todoist tasks by date range, project, label, search

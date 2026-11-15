@@ -7,7 +7,7 @@ description: >
   about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
   보여줘", "완료한 작업 보여줘". Hygiene audits belong to todo-doctor.
 metadata:
-  version: "1.6"
+  version: "1.7"
 ---
 
 # todo-find
@@ -55,6 +55,7 @@ Todoist MCP, connect Todoist in your agent. To set up `td`, run `npm install
 | Completion history | `find-activity` | `td activity --type task --event completed` |
 
 For MCP completion history, query the relevant object/event type and date window and follow all pages.
+For the user's own completions, call `user-info` for the user ID, then `find-activity` with `objectType: task`, `eventType: completed`, `initiatorId` and the date window; without `initiatorId` the result covers every collaborator. `find-completed-tasks` lists tasks and is not the same question.
 Do not rely on `objectId` filtering: retain only events whose task ID exactly matches the intended task.
 Missing or delayed activity limits the completion claim; unrelated events are not evidence.
 

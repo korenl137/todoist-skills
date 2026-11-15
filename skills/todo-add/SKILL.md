@@ -7,7 +7,7 @@ description: >
   Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
   추가해줘", "할 일로 남겨줘". Existing-task edits belong to todo-update.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # todo-add
@@ -114,7 +114,7 @@ Report unsupported fields; never substitute a scheduled date for an actual remin
   prefix) or open tasks sharing the new task's goal, source, or repository.
 - A matching header exists → preserve the group and add the task under it.
   If it is an ordinary completable parent, warn that completing it can also complete its children.
-- Two or more tasks from one request, or one related task already loose →
+- Tasks from one request that reach the personal guide's header threshold (three or more), or one related task already loose →
   first verify that the selected route stores uncompletable headers, then add the
   header (non-completable, no required action label), add the tasks and move the loose one there.
   MCP may ignore `isUncompletable` on creation or reject it on update; the advertised schema alone is not verification.

@@ -9,7 +9,7 @@ description: >
   Without questions use todo-tidy; single edit todo-update; lookup todo-find;
   read-only audit todo-doctor.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # todo-ask
@@ -32,7 +32,7 @@ Use for a full or inbox-plus-schedule review where the user expects questions.
 Do not use for one named edit (todo-update), a quiet reorganization of a
 scope (todo-tidy), a lookup (todo-find) or a rules audit (todo-doctor).
 Each skill works alone: when a sibling is installed, follow it for its
-responsibility; when not, apply the same field rule from this file without running the review flow.
+responsibility; when not, say the rule is unavailable and ask.
 
 ## Tools
 

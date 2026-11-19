@@ -9,7 +9,7 @@ description: >
   옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
   Independent project freshness checks belong to todo-reconcile; organization belongs to todo-tidy.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # todo-update
@@ -128,8 +128,9 @@ complete the parent. Do not add a session-summary comment unless requested.
 
 If the user says the whole task is done ("update it, this is all finished"),
 add the note as a comment (or in the description if that is where the
-user keeps notes), then complete the task. Completion is reversible, so no
-confirmation is needed. If the progress is partial, only edit.
+user keeps notes), then complete the task: count open children before
+completing a parent, and check a `## 완료 기준` block when a guide is set.
+Completion is reversible, so no other confirmation is needed. If the progress is partial, only edit.
 
 ## Read coverage and dates
 

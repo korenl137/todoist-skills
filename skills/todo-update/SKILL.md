@@ -128,9 +128,11 @@ complete the parent. Do not add a session-summary comment unless requested.
 
 If the user says the whole task is done ("update it, this is all finished"),
 add the note as a comment (or in the description if that is where the
-user keeps notes), then complete the task: count open children before
-completing a parent, and check a `## 완료 기준` block when a guide is set.
-Completion is reversible, so no other confirmation is needed. If the progress is partial, only edit.
+user keeps notes), then complete the task. For a parent, count the open
+children it would also complete and say so first. When a guide is set,
+complete only if every `## 완료 기준` condition is confirmed; otherwise name
+the unconfirmed condition and ask. Completion is reversible, so no other
+confirmation is needed. If the progress is partial, only edit.
 
 ## Read coverage and dates
 

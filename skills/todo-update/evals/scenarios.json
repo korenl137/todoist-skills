@@ -46,6 +46,17 @@
     "skills": [
       "todo-update"
     ],
+    "query": "Update the 'Release 2.0' task: everything is finished. It is a parent task with open subtasks.",
+    "files": [],
+    "expected_behavior": [
+      "Inspects the open subtasks before completing and states how many completing the parent will affect",
+      "Completes the parent only after that check, without a separate confirmation for the reversible completion"
+    ]
+  },
+  {
+    "skills": [
+      "todo-update"
+    ],
     "query": "Move this task to where it belongs and fix its labels (task 'Pay electricity bill' in Work / Admin with labels ['old-shopping', 'imported']). Settings: TODOIST_SKILLS_CONFIG=evals/fixtures/config.toml.",
     "files": [
       "evals/fixtures/config.toml"

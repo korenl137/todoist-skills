@@ -8,7 +8,7 @@ description: >
   Read-only hygiene audits belong to todo-doctor; a specified single-field edit belongs to todo-update.
   Project freshness comparison belongs to todo-reconcile; a full review with questions belongs to todo-ask.
 metadata:
-  version: "1.6"
+  version: "1.7"
 ---
 
 # Todo Tidy
@@ -72,7 +72,6 @@ Do not create new taxonomy merely to obtain an exact fit.
    Add established labels only when their meanings and retrieval value fit the task.
    Labels need not use a prefix; use configured role/meaning metadata. Parent
    context helps resolve a goal but does not justify copying every parent label.
-   Current user decisions override older required-action conventions.
 1. Show a compact per-task plan: current -> proposed changed fields, short evidence, and any unresolved question.
    A clear edit is supported by context and conventions with no materially different plausible intent.
    Unsupported intent, ownership or substantive restructuring stays pending; ask only after safe discovery.

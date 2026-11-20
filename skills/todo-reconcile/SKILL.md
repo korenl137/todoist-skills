@@ -3,12 +3,13 @@ name: todo-reconcile
 description: >
   Checks whether existing Todoist tasks reflect current project decisions,
   implementation and documents, reports evidence-backed differences, and applies
-  only clearly requested updates. Triggers include "태스크가 최신 변경을 반영하는지 확인",
-  "프로젝트 현황과 작업 대조", "check task freshness". Known session changes belong
+  only clearly requested updates. Triggers include "check whether my tasks
+  reflect the latest changes", "compare tasks with project status", "check task
+  freshness". Known session changes belong
   to todo-update; template formatting and organization belong to todo-tidy;
   label and naming audits belong to todo-doctor.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Todo Reconcile

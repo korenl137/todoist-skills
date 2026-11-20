@@ -4,10 +4,10 @@ description: >
   Captures a new Todoist task from natural conversation: title, description,
   priority, due date, project/section, and labels inferred from context and
   the user's existing Todoist structure. Triggers include "add this to
-  Todoist", "make a task for this", "remind me to", "작업 등록", "Todoist에
-  추가해줘", "할 일로 남겨줘". Existing-task edits belong to todo-update.
+  Todoist", "make a task for this", "remind me to". Existing-task edits belong
+  to todo-update.
 metadata:
-  version: "1.6"
+  version: "1.7"
 ---
 
 # todo-add

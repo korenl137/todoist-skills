@@ -5,11 +5,11 @@ description: >
   deadline, project/section, or labels from natural conversation, including
   reflecting confirmed session progress and plan changes. Triggers
   include "change this task's priority", "push the due date to next week",
-  "add a label", "move this task", "우선순위 P1로 바꿔줘", "마감일 다음 주로
-  옮겨줘", "라벨 추가해줘", "이번 세션 변경사항을 기존 계획에 반영해줘".
+  "add a label", "move this task", "reflect this session's changes in the
+  existing plan".
   Independent project freshness checks belong to todo-reconcile; organization belongs to todo-tidy.
 metadata:
-  version: "1.6"
+  version: "1.7"
 ---
 
 # todo-update

@@ -3,10 +3,9 @@ name: todo-complete
 description: >
   Marks Todoist tasks done or reopens them, and deletes tasks after
   confirmation. Triggers include "mark this done", "I finished this",
-  "reopen it", "delete this task", "이거 완료 처리해줘", "완료 취소해줘",
-  "이 작업 삭제해줘". Other field edits belong to todo-update.
+  "reopen it", "delete this task". Other field edits belong to todo-update.
 metadata:
-  version: "1.7"
+  version: "1.8"
 ---
 
 # todo-complete

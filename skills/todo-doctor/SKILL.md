@@ -5,8 +5,8 @@ description: >
   and flags vague titles, loose related tasks, stale descriptions and
   dormant tasks.
   Read-only, no automatic fixes. Triggers include "audit my Todoist",
-  "check my labels", "find tasks to group", "find stalled tasks", "check stale
-  references". A dormant-task
+  "check my labels", "audit my task style", "find tasks to group", "find stalled
+  tasks", "check stale references". A dormant-task
   request is an audit; completing or deleting belongs to todo-complete.
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:

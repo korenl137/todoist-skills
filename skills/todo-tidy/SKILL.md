@@ -3,8 +3,8 @@ name: todo-tidy
 description: >
   Organizes Todoist Inbox or a specified set of existing tasks: inspects context,
   checks section fit, shows concrete title, description, placement and label changes, applies clear edits,
-  and asks only about unresolved intent. Use for "tidy my inbox", "organize these tasks",
-  "sort these tasks", "check section placement", "apply the task template", "fix task formatting".
+  and asks only about unresolved intent. Use for "tidy my inbox", "tidy up my Todoist", "organize these tasks",
+  "classify these tasks", "check section placement", "apply the task template", "fix task formatting".
   Read-only hygiene audits belong to todo-doctor; a specified single-field edit belongs to todo-update.
   Project freshness comparison belongs to todo-reconcile; a full review with questions belongs to todo-ask.
 metadata:

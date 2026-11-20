@@ -4,10 +4,9 @@ description: >
   Looks up and lists Todoist tasks by date range, project, label, search
   text, or topic; also answers what was completed. Read-only. Triggers
   include "what's on my list today", "show this week's tasks", "find tasks
-  about X", "what did I finish", "오늘 할 일 뭐 있어", "이번 주 작업 목록
-  보여줘", "완료한 작업 보여줘". Hygiene audits belong to todo-doctor.
+  about X", "what did I finish". Hygiene audits belong to todo-doctor.
 metadata:
-  version: "1.7"
+  version: "1.8"
 ---
 
 # todo-find

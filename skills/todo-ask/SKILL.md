@@ -4,12 +4,12 @@ description: >
   Reviews the whole Todoist account, researches linked material for review
   tasks, and walks the user through updates and completions with short
   multiple-choice questions. Use when the user wants a full task review with
-  questions, e.g. "태스크 전체 점검해줘", "투두이스트 문답으로 정리", "인박스 정리하고
-  물어봐줘", "할 일 리뷰하면서 물어봐줘", "review all my tasks and ask me".
+  questions, e.g. "review all my tasks and ask me", "go through my Todoist
+  with questions", "clean up my inbox and ask me as you go".
   Without questions use todo-tidy; single edit todo-update; lookup todo-find;
   read-only audit todo-doctor.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # todo-ask

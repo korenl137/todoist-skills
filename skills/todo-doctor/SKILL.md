@@ -5,12 +5,12 @@ description: >
   and flags vague titles, loose related tasks, stale descriptions and
   dormant tasks.
   Read-only, no automatic fixes. Triggers include "audit my Todoist",
-  "check my labels", "find tasks to group", "todoist 라벨 점검", "작업 스타일
-  감사", "묶을 작업 찾아줘", "오래 멈춘 작업 찾아줘", "오래된 참조 점검". A dormant-task
+  "check my labels", "find tasks to group", "find stalled tasks", "check stale
+  references". A dormant-task
   request is an audit; completing or deleting belongs to todo-complete.
   Organization belongs to todo-tidy; project freshness comparison belongs to todo-reconcile.
 metadata:
-  version: "1.10"
+  version: "1.11"
 ---
 
 # todo-doctor
